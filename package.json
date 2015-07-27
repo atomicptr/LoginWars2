@@ -1,0 +1,10 @@
+{
+  "name": "dynamics",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-electron": "^0.0.8",
+    "gulp-less": "^3.0.3",
+    "gulp-run-electron": "^1.2.1",
+    "merge-stream": "^0.1.8"
+  }
+}
