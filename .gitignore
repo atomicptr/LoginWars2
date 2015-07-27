@@ -1,4 +1,7 @@
 bower_components
+/cache
+/build
+/app/browser/css
 
 # Created by https://www.gitignore.io
 
