@@ -1,12 +1,27 @@
 var gulp = require("gulp");
+var merge = require("merge-stream");
 var electron = require("gulp-electron");
-//var less = require("gulp-less");
+var less = require("gulp-less");
+var run = require("gulp-run-electron");
 var dynamics = require("./app/package.json");
 
-gulp.task("package", function() {
-    //gulp.src("./app/browser/less/*.less").pipe(less()).pipe(gulp.dest("./app/browser/css"));
+function buildLess() {
+    var lessSettings = less({
+    });
 
-    var elec = electron({
+    return gulp.src("./app/browser/less/*.less").pipe(lessSettings).pipe(gulp.dest("./app/browser/css"));
+}
+
+gulp.task("run", function() {
+    var _less = buildLess();
+
+    gulp.src("app").pipe(run([], {}));
+});
+
+gulp.task("package", function() {
+    var _less = buildLess();
+
+    var electronSettings = electron({
         src: "./app",
         packageJson: dynamics,
         release: "./build",
@@ -31,5 +46,7 @@ gulp.task("package", function() {
         }
     });
 
-    gulp.src("").pipe(elec).pipe(gulp.dest(""));
+    var _electron = gulp.src("").pipe(electronSettings).pipe(gulp.dest(""));
+
+    return merge(_less, _electron);
 });
