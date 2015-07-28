@@ -23,10 +23,6 @@ body {
     -webkit-app-region: no-drag;
 }
 
-.no-text-selection {
-    -webkit-user-select: none;
-}
-
 app {
     position: absolute;
 
@@ -88,7 +84,7 @@ actions {
     padding-left: 20px;
 }
 
-.close-button-container {
+close-button {
     position: absolute;
     display: block;
 
@@ -99,7 +95,7 @@ actions {
     height: 24px;
 }
 
-#close-button {
+#close-button-text {
     color: white;
     font-size: 24px;
 
@@ -108,7 +104,7 @@ actions {
     transition: color 0.5s ease;
 }
 
-#close-button:hover {
+#close-button-text:hover {
     color: red;
 }
 
