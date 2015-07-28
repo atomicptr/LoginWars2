@@ -1,3 +1,39 @@
 <!doctype html>
+<link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
-<h1>Testa</h1>
+
+<app ng-app="DynamicsApp" class="drag">
+    <div ng-controller="CloseController" class="close-button-container no-drag"><i id="close-button" class="fa fa-times" ng-click="close()"></i></div>
+
+    <content>
+        <news>
+            <h1>Latest News</h1>
+            <div class="latest-news">
+                <h2>Meet the Tempest: Elementalist's Elite Specialization</h2>
+                Prepare for elemental overload as we reveal the next elite specialization! <a href="#">Read more!</a>
+            </div>
+        </news>
+        <accounts>
+            <h1>Accounts</h1>
+            <div class="account-list" ng-controller="AccountsController">
+                <item ng-repeat="account in accounts">
+                    <div class="accicon">
+                        <img src="assets/acc.png" />
+                    </div>
+                    <div class="accname">
+                        <mail>{{account.mail}}</mail><br/>
+                        <name>{{account.name}}</name>
+                    </div>
+                </item>
+            </div>
+        </accounts>
+        <actions class="no-drag">
+            <button>Update Client</button>
+            <button>Add Account</button>
+            <button>Edit Accounts</button>
+        </actions>
+    </content>
+</app>
+
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="js/main.js"></script>

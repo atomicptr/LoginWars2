@@ -1,3 +1,162 @@
+@font-face {
+    font-family: 'gw2';
+    src: url('../assets/gw2_font.ttf');
+}
+
+// TODO: need to rewrite lots of this at some point :P
+
 body {
-    background-color: yellow;
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+
+    font-family: "Helvetica";
+    background-color: black;
+}
+
+.drag {
+    -webkit-app-region: drag;
+}
+
+.no-drag {
+    -webkit-app-region: no-drag;
+}
+
+.no-text-selection {
+    -webkit-user-select: none;
+}
+
+app {
+    position: absolute;
+
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+
+    background-image: url("../assets/logo.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+content {
+    position: absolute;
+
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    width: 622px;
+
+    background-color: white;
+}
+
+news {
+    position: absolute;
+
+    left: 10px;
+    top: 20px;
+
+    width: 600px;
+    height: 150px;
+
+    padding-left: 20px;
+}
+
+accounts {
+    position: absolute;
+
+    left: 10px;
+    top: 170px;
+
+    width: 600px;
+    height: 320px;
+    max-height: 320px;
+
+    padding-left: 20px;
+}
+
+actions {
+    position: absolute;
+
+    bottom: 10px;
+    left: 10px;
+
+    width: 607px;
+    height: 50px;
+
+    padding-left: 20px;
+}
+
+.close-button-container {
+    position: absolute;
+    display: block;
+
+    right: 10px;
+    top: 5px;
+
+    width: 24px;
+    height: 24px;
+}
+
+#close-button {
+    color: white;
+    font-size: 24px;
+
+    text-shadow: 0px 0px 5px black;
+
+    transition: color 0.5s ease;
+}
+
+#close-button:hover {
+    color: red;
+}
+
+h1 {
+    font-family: "gw2";
+    font-size: 23px;
+}
+
+.latest-news {
+    font-size: 16px;
+}
+
+.account-list {
+    overflow: auto;
+
+    height: 260px;
+
+    border-bottom: 1px solid #DDD;
+}
+
+.account-list item {
+    display: block;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid #DDD;
+}
+
+.account-list item:hover {
+    background-color: #DDD;
+}
+
+.accicon {
+    display: inline-block;
+}
+
+.accicon img {
+    width: 32px;
+    height: 32px;
+    margin-left: 10px;
+}
+
+.accname {
+    margin-left: 20px;
+    display: inline-block;
+}
+
+.accname mail {
+    font-size: 24px;
 }

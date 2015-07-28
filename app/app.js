@@ -11,7 +11,8 @@ app.on("ready", function() {
     win = new BrowserWindow({
         width: 1024,
         height: 600,
-        frame: false
+        frame: false,
+        resizable: false
     });
 
     win.loadUrl("file://" + __dirname + "/browser/app.html");
