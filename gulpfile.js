@@ -1,26 +1,21 @@
 var gulp = require("gulp");
-var merge = require("merge-stream");
 var electron = require("gulp-electron");
 var less = require("gulp-less");
 var run = require("gulp-run-electron");
 var dynamics = require("./app/package.json");
 
-function buildLess() {
+gulp.task("build-less", function() {
     var lessSettings = less({
     });
 
     return gulp.src("./app/browser/less/*.less").pipe(lessSettings).pipe(gulp.dest("./app/browser/css"));
-}
+});
 
-gulp.task("run", function() {
-    var _less = buildLess();
-
+gulp.task("run", ["build-less"], function() {
     gulp.src("app").pipe(run([], {}));
 });
 
-gulp.task("package", function() {
-    var _less = buildLess();
-
+gulp.task("package", ["build-less"], function() {
     var electronSettings = electron({
         src: "./app",
         packageJson: dynamics,
@@ -46,7 +41,5 @@ gulp.task("package", function() {
         }
     });
 
-    var _electron = gulp.src("").pipe(electronSettings).pipe(gulp.dest(""));
-
-    return merge(_less, _electron);
+    return gulp.src("").pipe(electronSettings).pipe(gulp.dest(""));
 });
