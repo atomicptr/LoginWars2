@@ -6,7 +6,23 @@ var fs = require("fs");
 
 var ipc = require("ipc");
 
+var packageJson = require("./package.json");
+
 var win = null;
+
+var osValues = {
+    darwin: {
+        executableName: "GuildWars2.app",
+        defaultPath: "/Applications/GuildWars2.app",
+        defaultSearchPath: "/Applications"
+    },
+
+    win32: {
+        executableName: "Gw2.exe",
+        defaultPath: "C:\\Program Files (x86)\\Guild Wars 2\\Gw2.exe",
+        defaultSearchPath: "C:\\Program Files (x86)\\"
+    }
+}
 
 app.on("window-all-closed", function() {
     app.quit();
@@ -31,7 +47,7 @@ app.on("ready", function() {
     });
 });
 
-ipc.on("gw2-find-path", function(event, knownPath) {    
+ipc.on("gw2-find-path", function(event, knownPath) {
     fs.exists(knownPath, function(knownPathStillValid) {
         if(knownPathStillValid) {
             console.log("known path: " + knownPath + " is valid");
@@ -40,10 +56,11 @@ ipc.on("gw2-find-path", function(event, knownPath) {
             return;
         }
 
-        // TODO: this isn't OS X friendly yet
+        var values = osValues[process.platform];
+
         // We don't know where the Gw2.exe is atm...
         // Maybe at the default location?
-        var path = "C:\\Program Files (x86)\\Guild Wars 2\\Gw2.exe";
+        var path = values.defaultPath;
 
         fs.exists(path, function(executableExists) {
             if(executableExists) {
@@ -56,14 +73,14 @@ ipc.on("gw2-find-path", function(event, knownPath) {
             // Not at the default location... user needs to tell us him/herself where it is...
             Dialog.showMessageBox(win, {
                 type: "info",
-                title: "dynamics: Select Gw2.exe",
+                title: packageJson.name + ": Select " + values.executableName,
                 buttons: ["Close"],
-                message: "dynamics couldn't find your Guild Wars 2 executable (Gw2.exe). Please select it now!"
+                message: packageJson.name + " couldn't find your Guild Wars 2 executable (" + values.executableName + "). Please select it now!"
             });
 
             path = Dialog.showOpenDialog({
-                title: "Select Gw2.exe",
-                defaultPath: "C:\\Program Files (x86)\\",
+                title: packageJson.name + ": Select " + values.executableName,
+                defaultPath: values.defaultSearchPath,
                 properties: ["openFile"],
                 filters: [
                     {
@@ -77,4 +94,7 @@ ipc.on("gw2-find-path", function(event, knownPath) {
             event.sender.send("gw2-find-path-reply", path);
         });
     });
+});
+
+ipc.on("gw2-add-account", function(event) {
 });
