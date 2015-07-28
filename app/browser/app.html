@@ -30,9 +30,32 @@
         </accounts>
 
         <actions class="no-drag" ng-controller="ActionsController">
-            <button ng-click="update()">Update Client</button>
-            <button>Add Account</button>
-            <button>Edit Accounts</button>
+            <button ng-click="updateGameClient()" class="btn"><span>Update Client</span></button>
+            <button ng-click="showAddAccountDialog()" class="btn"><span>Add Account</span></button>
+            <button class="btn"><span>Edit Accounts</span></button>
+
+            <dialog id="add-account-dialog" class="no-drag">
+                <p>Please enter your account details below.</p>
+
+                <form>
+                    <label for="add-account-email">E-Mail</label>
+                    <input type="email" id="add-account-email" class="textfield" placeholder="zojja@ratasum.com" required />
+
+                    <label for="add-account-password">Password</label>
+                    <input type="password" id="add-account-password" class="textfield" required />
+
+                    <label for="add-account-apikey">API Key</label>
+                    <input type="text" id="add-account-password" class="textfield" placeholder="(Optional) Enter your API key." />
+
+                    <label for="add-account-apikey">Additional command line parameters</label>
+                    <input type="text" id="add-account-password" class="textfield" placeholder="(Optional) Add additional parameters here." />
+
+                    <div class="dialog-button-container">
+                        <button ng-click="closeAddAccountDialog()" class="btn right"><span>Close</span></button>
+                        <button type="submit" id="add-account-save" class="btn"><span>Save</span></button>
+                    </div>
+                </form>
+            </dialog>
         </actions>
     </content>
 </app>

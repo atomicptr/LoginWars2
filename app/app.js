@@ -95,6 +95,3 @@ ipc.on("gw2-find-path", function(event, knownPath) {
         });
     });
 });
-
-ipc.on("gw2-add-account", function(event) {
-});

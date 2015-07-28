@@ -92,9 +92,19 @@ app.controller("AccountsController", function($scope) {
 });
 
 app.controller("ActionsController", function($scope) {
-    $scope.update = function() {
+    $scope._addAccountDialog = document.querySelector("#add-account-dialog");
+
+    $scope.updateGameClient = function() {
         spawn($scope.executable(), ["-image"]);
     };
+
+    $scope.showAddAccountDialog = function() {
+        $scope._addAccountDialog.showModal();
+    }
+
+    $scope.closeAddAccountDialog = function() {
+        $scope._addAccountDialog.close();
+    }
 });
 
 app.factory("FeedService", ["$http", function($http) {

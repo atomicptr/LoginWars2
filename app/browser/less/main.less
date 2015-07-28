@@ -167,5 +167,114 @@ h1 {
 
 a {
     text-decoration: none;
-    color: red;
+    color: #B31B1B;
+    font-weight: bold;
+
+    transition: color 0.4s ease-in-out;
+}
+
+a:hover {
+    color: #851414;
+}
+
+dialog {
+    border: none;
+    background-color: white;
+    box-shadow:0 1px 2px #aaa;
+    border-radius: 3px;
+
+    width: 468px;
+}
+
+dialog label {
+    display: block;
+    margin-bottom: 3px;
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+dialog .textfield {
+    display: block;
+    width: 100%;
+    border: 2px solid #CCC;
+
+    font-size: 18px;
+
+    margin-bottom: 10px;
+}
+
+dialog::backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.right {
+    marign-left: auto;
+}
+
+.dialog-button-container {
+    text-align: right;
+    margin-top: 20px;
+}
+
+// Button code is based on Material Design buttons from Sébastien JEAN
+.btn {
+  position: relative;
+
+  padding: 0;
+
+  overflow: hidden;
+
+  border-width: 0;
+  outline: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+
+  background-color: #B31B1B;
+  color: #ecf0f1;
+
+  transition: background-color .3s;
+}
+
+.btn:hover, .btn:focus {
+  background-color: #851414;
+}
+
+.btn > * {
+  position: relative;
+}
+
+.btn span {
+  display: block;
+  padding: 12px 24px;
+}
+
+.btn:before {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: block;
+  width: 0;
+  padding-top: 0;
+
+  border-radius: 100%;
+
+  background-color: rgba(236, 240, 241, .3);
+
+  transform: translate(-50%, -50%);
+}
+
+.btn:active:before {
+  width: 120%;
+  padding-top: 120%;
+
+  transition: width .2s ease-out, padding-top .2s ease-out;
 }
