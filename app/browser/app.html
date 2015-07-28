@@ -6,15 +6,15 @@
     <close-button ng-controller="CloseController" class="no-drag"><i id="close-button-text" class="fa fa-times" ng-click="close()"></i></close-button>
 
     <content>
-        <news class="no-drag">
+        <news class="no-drag" ng-controller="NewsController">
             <h1>Latest News</h1>
             <div class="latest-news">
-                <h2>Meet the Tempest: Elementalist's Elite Specialization</h2>
-                Prepare for elemental overload as we reveal the next elite specialization! <a href="http://google.de">Read more!</a>
+                <h2>{{feed.title}}</h2>
+                {{feed.news}} <a href="{{feed.link}}">Read more...</a>
             </div>
         </news>
 
-        <accounts>
+        <accounts class="no-drag">
             <h1>Accounts</h1>
             <div class="account-list" ng-controller="AccountsController">
                 <item ng-repeat="account in accounts">
@@ -30,7 +30,7 @@
         </accounts>
 
         <actions class="no-drag" ng-controller="ActionsController">
-            <button>Update Client</button>
+            <button ng-click="update()">Update Client</button>
             <button>Add Account</button>
             <button>Edit Accounts</button>
         </actions>
