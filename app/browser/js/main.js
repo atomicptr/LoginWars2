@@ -1,20 +1,29 @@
 var app = angular.module("DynamicsApp", []);
 var spawn = require("child_process").spawn;
 
+var fs = require("fs");
+
+var ipc = require("ipc");
+
+function decodeHtml(html) {
+    var textArea = document.createElement("textarea");
+    textArea.innerHTML = html;
+    return textArea.value;
+}
+
 app.run(function($rootScope) {
     var path = localStorage.getItem("gw2_path");
-    var valid = false;
 
-    if(path) {
-        // TODO: check if item exists
+    ipc.send("gw2-find-path", path);
+
+    ipc.on("gw2-find-path-reply", function(path) {
+        localStorage.setItem("gw2_path", path);
+    });
+
+    $rootScope.executable = function() {
+        return localStorage.getItem("gw2_path");
     }
 
-    if(!valid) {
-        // TODO: ask user for gw2.exe path
-    }
-
-    path = "C:\\Program Files (x86)\\Guild Wars 2\\Gw2.exe";
-    $rootScope.gw2Executable = path;
     $rootScope.feedUrl = "https://www.guildwars2.com/en/feed/";
 
     $rootScope.cachedFeed = {
@@ -60,7 +69,7 @@ app.controller("NewsController", ["$scope", "FeedService", function($scope, Feed
 
         // get the latest feed
         $scope.feed = $scope.feeds[0];
-        $scope.feed.news = $scope.feed.contentSnippet.replace("Read More", "");
+        $scope.feed.news = decodeHtml($scope.feed.contentSnippet.replace("Read More", ""));
 
         // cache news
         localStorage.setItem("cached_news_title", $scope.feed.title);
@@ -84,7 +93,7 @@ app.controller("AccountsController", function($scope) {
 
 app.controller("ActionsController", function($scope) {
     $scope.update = function() {
-        spawn($scope.gw2Executable, ["-image"]);
+        spawn($scope.executable(), ["-image"]);
     };
 });
 
