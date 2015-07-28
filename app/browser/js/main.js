@@ -18,3 +18,6 @@ DynamicsApp.controller("AccountsController", function($scope) {
         }
     ];
 });
+
+DynamicsApp.controller("ActionsController", function($scope) {
+});

@@ -23,5 +23,5 @@ app.on("ready", function() {
 
     win.on("closed", function() {
         win = null;
-    })
+    });
 });
