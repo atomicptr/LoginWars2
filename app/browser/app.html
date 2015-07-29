@@ -18,7 +18,7 @@
             <accounts class="no-drag no-text-selection">
                 <h1>Accounts</h1>
                 <div class="account-list">
-                    <item ng-repeat="account in accounts">
+                    <item ng-click="login(account.email, account.password, account.addparams)" ng-repeat="account in accounts">
                         <div class="accicon">
                             <img src="assets/acc.png" />
                         </div>
@@ -34,7 +34,7 @@
             <actions class="no-drag" ng-controller="ActionsController">
                 <button ng-click="updateGameClient()" class="btn"><span>Update Client</span></button>
                 <button ng-click="showAddAccountDialog()" class="btn"><span>Add Account</span></button>
-                <button class="btn"><span>Edit Accounts</span></button>
+                <button ng-click="clear()" class="btn"><span>Clear Accounts</span></button>
                 <button class="btn"><span>Settings</span></button>
 
                 <dialog id="add-account-dialog" class="no-drag">

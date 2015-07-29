@@ -96,9 +96,23 @@ app.controller("AccountsController", function($scope, $localStorage) {
         $localStorage.accounts = $scope.accounts;
     });
 
+    $scope.login = function(email, password, parametersString) {
+        var parameters = parametersString.split(" ");
+
+        var launchParams = [
+            "-email", email,
+            "-password", password,
+            "-nopatchui",
+        ];
+
+        launchParams.concat(parameters);
+
+        spawn($scope.executable(), launchParams);
+    }
+
     $scope.clear = function() {
-        $localStorage.accounts.clear();
-        $scope.accounts.clear();
+        $localStorage.accounts = [];
+        $scope.accounts = [];
     }
 });
 

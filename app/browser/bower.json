@@ -1,0 +1,8 @@
+{
+  "name": "dynamics",
+  "dependencies": {
+    "font-awesome": "~4.3.0",
+    "angular": "~1.4.3",
+    "ngstorage": "~0.3.7"
+  }
+}
