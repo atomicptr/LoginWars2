@@ -1,5 +1,6 @@
 var app = angular.module("DynamicsApp", ["ngStorage"]);
 var spawn = require("child_process").spawn;
+var exec = require("child_process").exec;
 
 var fs = require("fs");
 
@@ -82,7 +83,7 @@ app.controller("NewsController", ["$scope", "$localStorage", "FeedService", func
     });
 }]);
 
-app.controller("AccountsController", function($scope, $localStorage) {
+app.controller("AccountsController", function($scope, $localStorage, Gw2Service) {
     // TODO: load existing accounts
     $scope.accounts = [];
 
@@ -92,28 +93,51 @@ app.controller("AccountsController", function($scope, $localStorage) {
 
     $scope.$on("gw2-new-account-added", function(event, account) {
         $scope.accounts.push(account);
-
-        $localStorage.accounts = $scope.accounts;
+        $scope._updateAccountInformations(account);
     });
 
     $scope.login = function(email, password, parametersString) {
         var parameters = parametersString.split(" ");
 
         var launchParams = [
-            "-email", email,
-            "-password", password,
-            "-nopatchui",
+            "-email", "\"" + email + "\"",
+            "-password", "\"" + password + "\"",
+            "-nopatchui"
         ];
 
-        launchParams.concat(parameters);
+        launchParams = launchParams.concat(parameters);
 
-        spawn($scope.executable(), launchParams);
+        var launch = "\"" + $scope.executable() + "\" " + launchParams.join(" ");
+
+        exec(launch, function(error, stdout, stderr) {
+            console.log('stdout: ' + stdout);
+            console.log('stderr: ' + stderr);
+
+            if (error) {
+                console.log('exec error: ' + error);
+            }
+        });
     }
 
     $scope.clear = function() {
         $localStorage.accounts = [];
         $scope.accounts = [];
     }
+
+    $scope._updateAccountInformations = function(account) {
+        Gw2Service.getAccountInformations(account.apikey).then(function(res) {
+            var data = res.data;
+
+            account.name = data.name;
+
+            $localStorage.accounts = $scope.accounts;
+        });
+    };
+
+    // update known account informations
+    $scope.accounts.forEach(function(account) {
+        $scope._updateAccountInformations(account);
+    });
 });
 
 app.controller("ActionsController", function($scope) {
@@ -152,3 +176,13 @@ app.factory("FeedService", ["$http", function($http) {
         }
     }
 }]);
+
+app.factory("Gw2Service", function($http) {
+    return {
+        getAccountInformations(apikey) {
+            return $http.get("https://api.guildwars2.com/v2/account", {
+                headers: {"Authorization": "Bearer " + apikey}
+            });
+        }
+    };
+});
