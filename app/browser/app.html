@@ -7,58 +7,63 @@
 
     <content>
         <news class="no-drag" ng-controller="NewsController">
-            <h1>Latest News</h1>
+            <h1 class="no-text-selection">Latest News</h1>
             <div class="latest-news">
                 <h2>{{feed.title}}</h2>
                 {{feed.news}} <a href="{{feed.link}}">Read more...</a>
             </div>
         </news>
 
-        <accounts class="no-drag">
-            <h1>Accounts</h1>
-            <div class="account-list" ng-controller="AccountsController">
-                <item ng-repeat="account in accounts">
-                    <div class="accicon">
-                        <img src="assets/acc.png" />
-                    </div>
-                    <div class="accname">
-                        <mail>{{account.mail}}</mail><br/>
-                        <name>{{account.name}}</name>
-                    </div>
-                </item>
-            </div>
-        </accounts>
+        <account-controller ng-controller="AccountsController">
+            <accounts class="no-drag no-text-selection">
+                <h1>Accounts</h1>
+                <div class="account-list">
+                    <item ng-repeat="account in accounts">
+                        <div class="accicon">
+                            <img src="assets/acc.png" />
+                        </div>
+                        <div class="accname">
+                            <mail>{{account.email}}</mail><br/>
+                            <name ng-if="account.apikey">{{account.name}}</name>
+                            <name ng-if="!account.apikey">No API key specified</name>
+                        </div>
+                    </item>
+                </div>
+            </accounts>
 
-        <actions class="no-drag" ng-controller="ActionsController">
-            <button ng-click="updateGameClient()" class="btn"><span>Update Client</span></button>
-            <button ng-click="showAddAccountDialog()" class="btn"><span>Add Account</span></button>
-            <button class="btn"><span>Edit Accounts</span></button>
+            <actions class="no-drag" ng-controller="ActionsController">
+                <button ng-click="updateGameClient()" class="btn"><span>Update Client</span></button>
+                <button ng-click="showAddAccountDialog()" class="btn"><span>Add Account</span></button>
+                <button class="btn"><span>Edit Accounts</span></button>
+                <button class="btn"><span>Settings</span></button>
 
-            <dialog id="add-account-dialog" class="no-drag">
-                <p>Please enter your account details below.</p>
+                <dialog id="add-account-dialog" class="no-drag">
+                    <p>Please enter your account details below.</p>
 
-                <form>
-                    <label for="add-account-email">E-Mail</label>
-                    <input type="email" id="add-account-email" class="textfield" placeholder="zojja@ratasum.com" required />
+                    <form id="accountform" name="accountform" ng-submit="submitAddAccountDialog()">
+                        <label for="add-account-email">E-Mail</label>
+                        <input type="email" id="add-account-email" class="textfield" placeholder="zojja@ratasum.com" required />
 
-                    <label for="add-account-password">Password</label>
-                    <input type="password" id="add-account-password" class="textfield" required />
+                        <label for="add-account-password">Password</label>
+                        <input type="password" id="add-account-password" class="textfield" placeholder="snaff1234" required />
 
-                    <label for="add-account-apikey">API Key</label>
-                    <input type="text" id="add-account-password" class="textfield" placeholder="(Optional) Enter your API key." />
+                        <label for="add-account-apikey">API Key <a href="https://account.arena.net/applications/create">(Create one here)</a></label>
+                        <input type="text" id="add-account-apikey" class="textfield" placeholder="(Optional) Enter your API key." />
 
-                    <label for="add-account-apikey">Additional command line parameters</label>
-                    <input type="text" id="add-account-password" class="textfield" placeholder="(Optional) Add additional parameters here." />
+                        <label for="add-account-apikey">Additional command line parameters <a href="https://wiki.guildwars2.com/wiki/Command_line_arguments">(Docs)</a></label>
+                        <input type="text" id="add-account-addparams" class="textfield" placeholder="(Optional) Add additional parameters here." />
 
-                    <div class="dialog-button-container">
-                        <button ng-click="closeAddAccountDialog()" class="btn right"><span>Close</span></button>
-                        <button type="submit" id="add-account-save" class="btn"><span>Save</span></button>
-                    </div>
-                </form>
-            </dialog>
-        </actions>
+                        <div class="dialog-button-container">
+                            <button ng-click="closeAddAccountDialog()" class="btn right"><span>Close</span></button>
+                            <button type="submit" id="add-account-save" class="btn"><span>Save</span></button>
+                        </div>
+                    </form>
+                </dialog>
+            </actions>
+        </account-controller>
     </content>
 </app>
 
 <script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/ngstorage/ngStorage.min.js"></script>
 <script src="js/main.js"></script>

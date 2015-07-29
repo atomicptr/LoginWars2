@@ -136,14 +136,22 @@ h1 {
 .account-list item {
     display: block;
 
+    cursor: pointer;
+
     padding-top: 10px;
     padding-bottom: 10px;
 
     border-bottom: 1px solid #DDD;
+
+    transition: background-color 0.25s ease-in-out;
 }
 
 .account-list item:hover {
     background-color: #DDD;
+}
+
+.account-list item:active {
+    background-color: #CCC;
 }
 
 .accicon {
