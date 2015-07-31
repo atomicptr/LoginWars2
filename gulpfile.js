@@ -13,6 +13,7 @@ gulp.task("build-less", function() {
 
 gulp.task("run", ["build-less"], function() {
     gulp.src("app").pipe(run([], {}));
+    gulp.watch("app/browser/less/*.less", ["build-less"]);
 });
 
 gulp.task("package", ["build-less"], function() {

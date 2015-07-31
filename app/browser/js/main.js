@@ -100,6 +100,7 @@ app.controller("NewsController", ["$scope", "$localStorage", "FeedService", func
 app.controller("AccountsController", function($scope, $localStorage, Gw2Service) {
     // TODO: load existing accounts
     $scope.accounts = [];
+    $scope.loadingDialog = query("#game-starting-dialog");
 
     if($localStorage.accounts && $localStorage.accounts.length > 0) {
         $scope.accounts = $localStorage.accounts;
@@ -119,6 +120,10 @@ app.controller("AccountsController", function($scope, $localStorage, Gw2Service)
     });
 
     $scope.login = function(email, password, parametersString) {
+        if(!parametersString) {
+            parametersString = "";
+        }
+
         var parameters = parametersString.split(" ");
 
         var launchParams = [
@@ -131,13 +136,20 @@ app.controller("AccountsController", function($scope, $localStorage, Gw2Service)
 
         var launch = "\"" + $scope.executable() + "\" " + launchParams.join(" ");
 
-        exec(launch, function(error, stdout, stderr) {
-            console.log('stdout: ' + stdout);
-            console.log('stderr: ' + stderr);
+        $scope.loadingDialog.showModal();
 
-            if (error) {
-                console.log('exec error: ' + error);
-            }
+        var game = exec(launch);
+
+        game.stdout.on("data", function(data) {
+            console.log(data.toString());
+        });
+
+        game.stderr.on("data", function(data) {
+            console.error(data.toString());
+        });
+
+        game.on("exit", function(code, signal) {
+            $scope.loadingDialog.close();
         });
     }
 
@@ -207,7 +219,12 @@ app.controller("ActionsController", function($scope) {
     $scope._addAccountDialog = query("#add-account-dialog");
 
     $scope.updateGameClient = function() {
-        spawn($scope.executable(), ["-image"]);
+        $scope.loadingDialog.showModal();
+        var game = spawn($scope.executable(), ["-image"]);
+
+        game.on("exit", function(code, signal) {
+            $scope.loadingDialog.close();
+        });
     };
 
     $scope.showAddAccountDialog = function() {
