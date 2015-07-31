@@ -1,0 +1,72 @@
+dialog {
+    border: none;
+    background-color: white;
+    box-shadow:0 1px 2px #aaa;
+    border-radius: 3px;
+
+    width: 468px;
+}
+
+.dialog-game-starting {
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: none;
+
+    width: 150px;
+    height: 150px;
+}
+
+.dialog-game-starting img {
+    transform-origin: 50% 50%;
+
+    transition-property: transform;
+    transition-duration: 1s;
+
+    animation-name: rotate;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes rotate {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+dialog label {
+    display: block;
+    margin-bottom: 3px;
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+dialog .textfield {
+    display: block;
+    width: 100%;
+    border: 2px solid #CCC;
+
+    font-size: 18px;
+
+    margin-bottom: 10px;
+}
+
+dialog::backdrop {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.right {
+    marign-left: auto;
+}
+
+.dialog-button-container {
+    text-align: right;
+    margin-top: 20px;
+}

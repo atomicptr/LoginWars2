@@ -1,7 +1,9 @@
-@font-face {
-    font-family: 'gw2';
-    src: url('../assets/gw2_font.ttf');
-}
+@import "fonts";
+@import "buttons";
+@import "account";
+@import "news";
+@import "window-controls";
+@import "dialog";
 
 // TODO: need to rewrite lots of this at some point :P
 
@@ -11,7 +13,7 @@ body {
 
     overflow: hidden;
 
-    font-family: "Helvetica";
+    font-family: "Helvetica", "Arial", "sans-serif";
     background-color: black;
 }
 
@@ -51,31 +53,6 @@ content {
     background-color: white;
 }
 
-news {
-    position: absolute;
-
-    left: 10px;
-    top: 20px;
-
-    width: 600px;
-    height: 150px;
-
-    padding-left: 20px;
-}
-
-accounts {
-    position: absolute;
-
-    left: 10px;
-    top: 200px;
-
-    width: 600px;
-    height: 300px;
-    max-height: 300px;
-
-    padding-left: 20px;
-}
-
 actions {
     position: absolute;
 
@@ -88,89 +65,9 @@ actions {
     padding-left: 20px;
 }
 
-close-button {
-    position: absolute;
-    display: block;
-
-    right: 10px;
-    top: 5px;
-
-    width: 24px;
-    height: 24px;
-}
-
-#close-button-text {
-    color: white;
-    font-size: 24px;
-
-    text-shadow: 0px 0px 5px black;
-
-    transition: color 0.5s ease;
-}
-
-#close-button-text:hover {
-    color: red;
-}
-
 h1 {
     font-family: "gw2";
     font-size: 23px;
-}
-
-.latest-news {
-    font-size: 16px;
-}
-
-.latest-news h2 {
-    .latest-news;
-}
-
-.account-list {
-    overflow: auto;
-
-    height: 260px;
-
-    border-bottom: 1px solid #DDD;
-}
-
-.account-list item {
-    display: block;
-
-    cursor: pointer;
-
-    padding-top: 10px;
-    padding-bottom: 10px;
-
-    border-bottom: 1px solid #DDD;
-
-    transition: background-color 0.25s ease-in-out;
-}
-
-.account-list item:hover {
-    background-color: #DDD;
-}
-
-.account-list item:active {
-    background-color: #CCC;
-}
-
-.accicon {
-    display: inline-block;
-}
-
-.accicon img {
-    width: 32px;
-    height: 32px;
-    margin-left: 10px;
-}
-
-.accname {
-    margin-left: 20px;
-    display: inline-block;
-}
-
-.accname mail {
-    font-size: 24px;
 }
 
 a {
@@ -183,134 +80,4 @@ a {
 
 a:hover {
     color: #851414;
-}
-
-dialog {
-    border: none;
-    background-color: white;
-    box-shadow:0 1px 2px #aaa;
-    border-radius: 3px;
-
-    width: 468px;
-}
-
-.dialog-game-starting {
-    background-color: transparent;
-    box-shadow: none;
-    border-radius: none;
-
-    width: 150px;
-    height: 150px;
-}
-
-.dialog-game-starting img {
-    transform-origin: 50% 50%;
-
-    transition-property: transform;
-    transition-duration: 1s;
-
-    animation-name: rotate;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-}
-
-@keyframes rotate {
-    from {transform: rotate(0deg);}
-    to {transform: rotate(360deg);}
-}
-
-dialog label {
-    display: block;
-    margin-bottom: 3px;
-    margin-top: 5px;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-dialog .textfield {
-    display: block;
-    width: 100%;
-    border: 2px solid #CCC;
-
-    font-size: 18px;
-
-    margin-bottom: 10px;
-}
-
-dialog::backdrop {
-    position: fixed;
-
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    background-color: rgba(0, 0, 0, 0.6);
-}
-
-.right {
-    marign-left: auto;
-}
-
-.dialog-button-container {
-    text-align: right;
-    margin-top: 20px;
-}
-
-// Button code is based on Material Design buttons from Sébastien JEAN
-.btn {
-    position: relative;
-
-    padding: 0;
-
-    overflow: hidden;
-
-    border-width: 0;
-    outline: none;
-    border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
-
-    background-color: #B31B1B;
-    color: #ecf0f1;
-
-    transition: background-color .3s;
-}
-
-.btn:hover, .btn:focus {
-    background-color: #851414;
-}
-
-.btn > * {
-    position: relative;
-}
-
-.btn span {
-    display: block;
-    padding: 12px 24px;
-}
-
-.btn:before {
-    content: "";
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    display: block;
-    width: 0;
-    padding-top: 0;
-
-    border-radius: 100%;
-
-    background-color: rgba(236, 240, 241, .3);
-
-    transform: translate(-50%, -50%);
-}
-
-.btn:active:before {
-    width: 120%;
-    padding-top: 120%;
-
-    transition: width .2s ease-out, padding-top .2s ease-out;
 }
