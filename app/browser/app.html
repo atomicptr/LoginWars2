@@ -41,16 +41,16 @@
 
                     <form ng-submit="submitAddAccountDialog()">
                         <label for="add-account-email">E-Mail</label>
-                        <input ng-model="account.email" type="email" id="add-account-email" class="textfield" placeholder="zojja@ratasum.com" required />
+                        <input ng-model="account.email" type="email" id="add-account-email" class="textfield" placeholder="zojja@ratasum.com" tabindex="1" required />
 
                         <label for="add-account-password">Password</label>
-                        <input ng-model="account.password" type="password" id="add-account-password" class="textfield" placeholder="snaff1234" required />
+                        <input ng-model="account.password" type="password" id="add-account-password" class="textfield" placeholder="snaff1234" tabindex="2" required />
 
                         <label for="add-account-apikey">API Key <a href="https://account.arena.net/applications/create">(Create one here)</a></label>
-                        <input ng-model="account.apikey" type="text" id="add-account-apikey" class="textfield" placeholder="(Optional) Enter your API key." />
+                        <input ng-model="account.apikey" type="text" id="add-account-apikey" class="textfield" placeholder="(Optional) Enter your API key." tabindex="3" />
 
                         <label for="add-account-addparams">Additional command line parameters <a href="https://wiki.guildwars2.com/wiki/Command_line_arguments">(Docs)</a></label>
-                        <input ng-model="account.addparams" type="text" id="add-account-addparams" class="textfield" placeholder="(Optional) Add additional parameters here." />
+                        <input ng-model="account.addparams" type="text" id="add-account-addparams" class="textfield" placeholder="(Optional) Add additional parameters here." tabindex="4" />
 
                         <div class="dialog-button-container">
                             <button ng-click="closeAddAccountDialog()" class="btn right"><span>Close</span></button>
