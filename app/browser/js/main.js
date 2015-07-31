@@ -109,7 +109,7 @@ app.controller("AccountsController", function($scope, $localStorage, Gw2Service)
         if($scope.useEncryption()) {
             account.password = AES.encrypt(account.password, $scope._masterPassword);
 
-            if(account.apikey != undefined) {
+            if(account.apikey) {
                 account.apikey = AES.encrypt(account.apikey, $scope._masterPassword);
             }
         }
@@ -155,15 +155,20 @@ app.controller("AccountsController", function($scope, $localStorage, Gw2Service)
     }
 
     $scope._updateAccountInformations = function(account) {
-        var apikey = $scope.decrypt(account.apikey);
-        Gw2Service.getAccountInformations(apikey).then(function(res) {
-            var data = res.data;
+        if(account.apikey) {
+            var apikey = $scope.decrypt(account.apikey);
+            Gw2Service.getAccountInformations(apikey).then(function(res) {
+                var data = res.data;
 
-            account.name = data.name;
+                account.name = data.name;
 
+                // update accounts in localStorage
+                $localStorage.accounts = $scope.accounts;
+            });
+        } else {
             // update accounts in localStorage
             $localStorage.accounts = $scope.accounts;
-        });
+        }
     };
 
     $scope.$on("encrypt-data", function(event, masterPassword) {
@@ -214,7 +219,8 @@ app.controller("ActionsController", function($scope) {
     }
 
     $scope.submitAddAccountDialog = function() {
-        $scope.$emit("gw2-new-account-added", $scope.account);
+        $scope.$emit("gw2-new-account-added", angular.copy($scope.account));
+        $scope.account = {};
 
         $scope.closeAddAccountDialog();
     }
