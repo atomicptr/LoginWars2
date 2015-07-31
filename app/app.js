@@ -14,13 +14,17 @@ var osValues = {
     darwin: {
         executableName: "GuildWars2.app",
         defaultPath: "/Applications/GuildWars2.app",
-        defaultSearchPath: "/Applications"
+        defaultSearchPath: "/Applications",
+        typeName: "Application",
+        typeExtension: "app"
     },
 
     win32: {
         executableName: "Gw2.exe",
         defaultPath: "C:\\Program Files (x86)\\Guild Wars 2\\Gw2.exe",
-        defaultSearchPath: "C:\\Program Files (x86)\\"
+        defaultSearchPath: "C:\\Program Files (x86)\\",
+        typeName: "Executable",
+        typeExtension: "exe"
     }
 }
 
@@ -89,8 +93,8 @@ ipc.on("gw2-find-path", function(event, knownPath) {
                 properties: ["openFile"],
                 filters: [
                     {
-                        name: "Executable",
-                        extensions: ["exe"]
+                        name: values.typeName,
+                        extensions: [values.typeExtension]
                     }
                 ]
             });
