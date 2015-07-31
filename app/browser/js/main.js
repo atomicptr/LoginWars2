@@ -2,9 +2,19 @@ var app = angular.module("DynamicsApp", ["ngStorage"]);
 var spawn = require("child_process").spawn;
 var exec = require("child_process").exec;
 
-var fs = require("fs");
-
 var ipc = require("ipc");
+
+var ENCRYPTION_TEST_STRING = "Bookah!";
+
+var AES = {};
+
+AES.encrypt = function(string, password) {
+    return CryptoJS.AES.encrypt(string, password).toString();
+};
+
+AES.decrypt = function(string, password) {
+    return CryptoJS.AES.decrypt(string, password).toString(CryptoJS.enc.Utf8);
+}
 
 function query(queryString) {
     return document.querySelector(queryString);
@@ -17,7 +27,7 @@ function decodeHtml(html) {
 }
 
 app.run(function($rootScope, $localStorage) {
-    var path = localStorage.getItem("gw2_path");
+    var path = $localStorage.gw2Path;
 
     ipc.send("gw2-find-path", path);
 
@@ -27,6 +37,10 @@ app.run(function($rootScope, $localStorage) {
 
     $rootScope.executable = function() {
         return $localStorage.gw2Path;
+    }
+
+    $rootScope.useEncryption = function() {
+        return $localStorage.useEncryption;
     }
 
     $rootScope.feedUrl = "https://www.guildwars2.com/en/feed/";
@@ -92,6 +106,14 @@ app.controller("AccountsController", function($scope, $localStorage, Gw2Service)
     }
 
     $scope.$on("gw2-new-account-added", function(event, account) {
+        if($scope.useEncryption()) {
+            account.password = AES.encrypt(account.password, $scope._masterPassword);
+
+            if(account.apikey != undefined) {
+                account.apikey = AES.encrypt(account.apikey, $scope._masterPassword);
+            }
+        }
+
         $scope.accounts.push(account);
         $scope._updateAccountInformations(account);
     });
@@ -101,7 +123,7 @@ app.controller("AccountsController", function($scope, $localStorage, Gw2Service)
 
         var launchParams = [
             "-email", "\"" + email + "\"",
-            "-password", "\"" + password + "\"",
+            "-password", "\"" + $scope.decrypt(password) + "\"",
             "-nopatchui"
         ];
 
@@ -119,24 +141,60 @@ app.controller("AccountsController", function($scope, $localStorage, Gw2Service)
         });
     }
 
+    $scope.decrypt = function(string) {
+        if($scope.useEncryption()) {
+            return AES.decrypt(string, $scope._masterPassword);
+        }
+
+        return string;
+    }
+
     $scope.clear = function() {
         $localStorage.accounts = [];
         $scope.accounts = [];
     }
 
     $scope._updateAccountInformations = function(account) {
-        Gw2Service.getAccountInformations(account.apikey).then(function(res) {
+        var apikey = $scope.decrypt(account.apikey);
+        Gw2Service.getAccountInformations(apikey).then(function(res) {
             var data = res.data;
 
             account.name = data.name;
 
+            // update accounts in localStorage
             $localStorage.accounts = $scope.accounts;
         });
     };
 
-    // update known account informations
-    $scope.accounts.forEach(function(account) {
-        $scope._updateAccountInformations(account);
+    $scope.$on("encrypt-data", function(event, masterPassword) {
+        $localStorage.useEncryption = true;
+
+        $localStorage.encryptionTest = AES.encrypt(ENCRYPTION_TEST_STRING, masterPassword);
+
+        // encrypt existing accounts
+        $scope.accounts.forEach(function(account) {
+            account.password = AES.encrypt(account.password, masterPassword);
+
+            if(account.apikey != undefined) {
+                account.apikey = AES.encrypt(account.apikey, masterPassword);
+            }
+        });
+
+        // update accounts in localStorage
+        $localStorage.accounts = $scope.accounts;
+
+        $scope.$emit("encryption-ready", masterPassword);
+    });
+
+    $scope.$on("encryption-ready", function(event, masterPassword) {
+        if($scope.useEncryption()) {
+            $scope._masterPassword = masterPassword;
+        }
+
+        // update known account informations
+        $scope.accounts.forEach(function(account) {
+            $scope._updateAccountInformations(account);
+        });
     });
 });
 
@@ -156,17 +214,72 @@ app.controller("ActionsController", function($scope) {
     }
 
     $scope.submitAddAccountDialog = function() {
-        var account = {
-            email:  query("#add-account-email").value,
-            password: query("#add-account-password").value,
-            apikey: query("#add-account-apikey").value,
-            addparams: query("#add-account-addparams").value,
-        };
-
-        $scope.$emit("gw2-new-account-added", account);
+        $scope.$emit("gw2-new-account-added", $scope.account);
 
         $scope.closeAddAccountDialog();
     }
+});
+
+app.controller("EncryptionController", function($scope, $localStorage) {
+    $scope._askEncryptionDialog = query("#ask-encryption-dialog");
+    $scope._enterEncryptionDialog = query("#enter-encryption-dialog");
+    $scope._decryptDialog = query("#decrypt-dialog");
+
+    if($scope.useEncryption() == undefined) {
+        // open ask encryption dialog
+        $scope._askEncryptionDialog.showModal();
+    } else if($scope.useEncryption()) {
+        // ask for password
+        $scope._decryptDialog.showModal();
+    } else {
+        // no encryption used, be ready
+        $scope.$emit("encryption-ready", null);
+    }
+
+    $scope.askDialogYes = function() {
+        // show encryption enter dialog
+        $scope._askEncryptionDialog.close();
+        $scope._enterEncryptionDialog.showModal();
+    };
+
+    $scope.askDialogNo = function() {
+        $localStorage.useEncryption = false;
+        $scope._askEncryptionDialog.close();
+    };
+
+    $scope.enterDialogCancel = function() {
+        $scope._enterEncryptionDialog.close();
+        $scope._askEncryptionDialog.showModal();
+    };
+
+    $scope.submitEncryptionDialog = function() {
+        if($scope.encryption.password == $scope.encryption.passwordConfirm) {
+            $scope.$emit("encrypt-data", $scope.encryption.password);
+            $scope._enterEncryptionDialog.close();
+        } else {
+            // TODO: do error stuff
+            console.log("Passwords don't match");
+        }
+    };
+
+    $scope.decryptCancel = function() {
+        window.close();
+    };
+
+    $scope.submitDecryptDialog = function() {
+        var password = $scope.decryptPassword;
+
+        var encryptionTest = AES.decrypt($localStorage.encryptionTest, password);
+
+        if(encryptionTest == ENCRYPTION_TEST_STRING) {
+            // master password is right
+            $scope.$emit("encryption-ready", password);
+            $scope._decryptDialog.close();
+        } else {
+            // TODO: password wrong add error message
+            console.log("Wrong password " + $localStorage.encryptionTest);
+        }
+    };
 });
 
 app.factory("FeedService", ["$http", function($http) {

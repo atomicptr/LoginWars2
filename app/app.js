@@ -48,6 +48,11 @@ app.on("ready", function() {
 });
 
 ipc.on("gw2-find-path", function(event, knownPath) {
+    if(knownPath == undefined) {
+        // need some path which is def. invalid (SHA-256 of Bookah!)
+        knownPath = "./A3AB445C5D0DDB8A833EA7C6E7B2900FAF38A7D326F6C8C4054455879B59236F";
+    }
+
     fs.exists(knownPath, function(knownPathStillValid) {
         if(knownPathStillValid) {
             console.log("known path: " + knownPath + " is valid");

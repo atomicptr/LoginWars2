@@ -34,24 +34,23 @@
             <actions class="no-drag" ng-controller="ActionsController">
                 <button ng-click="updateGameClient()" class="btn"><span>Update Client</span></button>
                 <button ng-click="showAddAccountDialog()" class="btn"><span>Add Account</span></button>
-                <button ng-click="clear()" class="btn"><span>Clear Accounts</span></button>
                 <button class="btn"><span>Settings</span></button>
 
                 <dialog id="add-account-dialog" class="no-drag">
                     <p>Please enter your account details below.</p>
 
-                    <form id="accountform" name="accountform" ng-submit="submitAddAccountDialog()">
+                    <form ng-submit="submitAddAccountDialog()">
                         <label for="add-account-email">E-Mail</label>
-                        <input type="email" id="add-account-email" class="textfield" placeholder="zojja@ratasum.com" required />
+                        <input ng-model="account.email" type="email" id="add-account-email" class="textfield" placeholder="zojja@ratasum.com" required />
 
                         <label for="add-account-password">Password</label>
-                        <input type="password" id="add-account-password" class="textfield" placeholder="snaff1234" required />
+                        <input ng-model="account.password" type="password" id="add-account-password" class="textfield" placeholder="snaff1234" required />
 
                         <label for="add-account-apikey">API Key <a href="https://account.arena.net/applications/create">(Create one here)</a></label>
-                        <input type="text" id="add-account-apikey" class="textfield" placeholder="(Optional) Enter your API key." />
+                        <input ng-model="account.apikey" type="text" id="add-account-apikey" class="textfield" placeholder="(Optional) Enter your API key." />
 
-                        <label for="add-account-apikey">Additional command line parameters <a href="https://wiki.guildwars2.com/wiki/Command_line_arguments">(Docs)</a></label>
-                        <input type="text" id="add-account-addparams" class="textfield" placeholder="(Optional) Add additional parameters here." />
+                        <label for="add-account-addparams">Additional command line parameters <a href="https://wiki.guildwars2.com/wiki/Command_line_arguments">(Docs)</a></label>
+                        <input ng-model="account.addparams" type="text" id="add-account-addparams" class="textfield" placeholder="(Optional) Add additional parameters here." />
 
                         <div class="dialog-button-container">
                             <button ng-click="closeAddAccountDialog()" class="btn right"><span>Close</span></button>
@@ -60,10 +59,56 @@
                     </form>
                 </dialog>
             </actions>
+
+            <encryption-controller ng-controller="EncryptionController">
+                <dialog id="ask-encryption-dialog" class="no-drag">
+                    <p>Do you want to encrypt your accounts?</p>
+                    <p>
+                        <b>Note</b>: It's recommended to encrypt your account data, or else your password will be stored in plain text.
+                    </p>
+
+                    <div class="dialog-button-container">
+                        <button ng-click="askDialogYes()"class="btn right"><span>Yes</span></button>
+                        <button ng-click="askDialogNo()"class="btn"><span>No</span></button>
+                    </div>
+                </dialog>
+
+                <dialog id="enter-encryption-dialog" class="no-drag">
+                    <p>Please specify a master password which will be used to encrypt your account data.</p>
+
+                    <form ng-submit="submitEncryptionDialog()">
+                        <label for="enter-encryption-master-password">Master password</label>
+                        <input ng-model="encryption.password" type="password" id="enter-encryption-master-password" class="textfield" required />
+
+                        <label for="enter-encryption-master-password-retype">Confirm your master password</label>
+                        <input ng-model="encryption.passwordConfirm" type="password" id="enter-encryption-master-password-retype" class="textfield" required />
+
+                        <div class="dialog-button-container">
+                            <button type="button" ng-click="enterDialogCancel()"class="btn right"><span>Cancel</span></button>
+                            <button type="submit" class="btn"><span>Save</span></button>
+                        </div>
+                    </form>
+                </dialog>
+
+                <dialog id="decrypt-dialog" class="no-drag">
+                    <p>Please enter your master password to decrypt your account data.</p>
+
+                    <form ng-submit="submitDecryptDialog()">
+                        <label for="decrypt-password">Confirm your master password</label>
+                        <input ng-model="decryptPassword" type="password" id="decrypt-password" class="textfield" required />
+
+                        <div class="dialog-button-container">
+                            <button type="button" ng-click="decryptCancel()" class="btn right"><span>Cancel</span></button>
+                            <button type="submit" class="btn"><span>Ok</span></button>
+                        </div>
+                    </form>
+                </dialog>
+            </encryption-controller>
         </account-controller>
     </content>
 </app>
 
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/ngstorage/ngStorage.min.js"></script>
+<script src="bower_components/cryptojslib/rollups/aes.js"></script>
 <script src="js/main.js"></script>
