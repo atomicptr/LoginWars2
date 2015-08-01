@@ -1,4 +1,4 @@
-app.controller("NewsController", function($scope, $localStorage, FeedService, Gw2Service) {
+app.controller("NewsController", function($scope, $rootScope, $localStorage, FeedService, Gw2Service) {
     $scope.feed = $scope.cachedFeed;
     $scope.current = $localStorage.lastUsedTab != undefined ? $localStorage.lastUsedTab : 0;
 
@@ -34,15 +34,17 @@ app.controller("NewsController", function($scope, $localStorage, FeedService, Gw
         $localStorage.cachedNewsLink = $scope.feed.link;
     });
 
-    ($localStorage.accounts ? $localStorage.accounts : []).forEach(function(account) {
-        Gw2Service.getTokenInfo($scope.decrypt(account.apikey)).then(function(res) {
-            var canAccessTradingPost = res.data.permissions.indexOf("tradingpost") > -1;
+    $rootScope.$on("master-password-set", function() {
+        ($localStorage.accounts ? $localStorage.accounts : []).forEach(function(account) {
+            Gw2Service.getTokenInfo($scope.decrypt(account.apikey)).then(function(res) {
+                var canAccessTradingPost = res.data.permissions.indexOf("tradingpost") > -1;
 
-            if(canAccessTradingPost) {
-                $scope.tradingPostEnabledAccounts.push(account);
-            }
+                if(canAccessTradingPost) {
+                    $scope.tradingPostEnabledAccounts.push(account);
+                }
 
-            $scope.tradingPostEnabled = $scope.tradingPostEnabled || canAccessTradingPost;
+                $scope.tradingPostEnabled = $scope.tradingPostEnabled || canAccessTradingPost;
+            });
         });
     });
 });

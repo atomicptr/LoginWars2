@@ -1,4 +1,4 @@
-app.controller("AccountsController", function($scope, $localStorage, $sessionStorage, Gw2Service) {
+app.controller("AccountsController", function($scope, $rootScope, $localStorage, $sessionStorage, Gw2Service) {
     // TODO: load existing accounts
     $scope.accounts = [];
     $scope.loadingDialog = query("#game-starting-dialog");
@@ -101,6 +101,10 @@ app.controller("AccountsController", function($scope, $localStorage, $sessionSto
             $sessionStorage.masterPassword = masterPassword;
         }
 
+        // before the master password is set every operation with decrypt will fail
+        // so we need to broadcast that it's now ready
+        $rootScope.$broadcast("master-password-set");
+
         // update known account informations
         $scope.accounts.forEach(function(account) {
             $scope._updateAccountInformations(account);
@@ -108,7 +112,7 @@ app.controller("AccountsController", function($scope, $localStorage, $sessionSto
     });
 });
 
-app.controller("ActionsController", function($scope, $localStorage, Gw2Service) {
+app.controller("ActionsController", function($scope, $rootScope, $localStorage, Gw2Service) {
     $scope._addAccountDialog = query("#add-account-dialog");
 
     $scope.updateGameClient = function() {
@@ -135,22 +139,24 @@ app.controller("ActionsController", function($scope, $localStorage, Gw2Service) 
         $scope.closeAddAccountDialog();
     }
 
-    // check last known build number with the current one from the server, if they don't match
-    // start update
-    Gw2Service.getBuildNumber().then(function(res) {
-        var lastBuildNumber = $localStorage.buildNumber;
-        $localStorage.buildNumber = res.data.id;
+    $rootScope.$on("master-password-set", function() {
+        // check last known build number with the current one from the server, if they don't match
+        // start update
+        Gw2Service.getBuildNumber().then(function(res) {
+            var lastBuildNumber = $localStorage.buildNumber;
+            $localStorage.buildNumber = res.data.id;
 
-        if(lastBuildNumber != undefined) {
-            if(lastBuildNumber != res.data.id) {
-                console.log("Current build: " + lastBuildNumber + ", but server claims to have a new one ready: " +
-                    res.data.id + "... trying to update...");
+            if(lastBuildNumber != undefined) {
+                if(lastBuildNumber != res.data.id) {
+                    console.log("Current build: " + lastBuildNumber + ", but server claims to have a new one ready: " +
+                        res.data.id + "... trying to update...");
 
-                if($scope.useAutoUpdates()) {
-                    $scope.updateGameClient();
+                    if($scope.useAutoUpdates()) {
+                        $scope.updateGameClient();
+                    }
                 }
             }
-        }
+        });
     });
 });
 
