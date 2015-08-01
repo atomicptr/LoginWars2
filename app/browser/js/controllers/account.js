@@ -54,6 +54,14 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         });
     }
 
+    $scope.presentationModeFriendlyAccountName = function(account) {
+        if(account.apikey) {
+            return account.name.split('.')[0]; // Get the "AccountName" from "AccountName.1234"
+        }
+
+        return "Snaff";
+    }
+
     $scope.clear = function() {
         $localStorage.accounts = [];
         $scope.accounts = [];
@@ -151,7 +159,7 @@ app.controller("ActionsController", function($scope, $rootScope, $localStorage, 
                     console.log("Current build: " + lastBuildNumber + ", but server claims to have a new one ready: " +
                         res.data.id + "... trying to update...");
 
-                    if($scope.useAutoUpdates()) {
+                    if($scope.configs().autoUpdates) {
                         $scope.updateGameClient();
                     }
                 }

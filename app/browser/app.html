@@ -12,7 +12,7 @@
         <news class="no-drag" ng-controller="NewsController">
             <tabs>
                 <h1 ng-class="{'active': current == 0}" ng-click="changeTab(0)" class="tab-title">Latest News</h1>
-                <h1 ng-class="{'active': current == 1}" ng-click="changeTab(1)" class="tab-title">Dailies</h1>
+                <h1 ng-class="{'active': current == 1}" ng-click="changeTab(1)" class="tab-title" ng-if="!configs().hideDailies">Dailies</h1>
                 <h1 ng-class="{'active': current == 2}" ng-click="changeTab(2)" class="tab-title" ng-if="canUseTradingPost()">Trading Post</h1>
             </tabs>
             <div class="latest-news" ng-if="current == 0">
@@ -47,9 +47,17 @@
                             <img src="assets/acc.png" />
                         </div>
                         <div class="accname">
-                            <mail>{{account.email}}</mail><br/>
-                            <name ng-if="account.apikey">{{account.name}}</name>
-                            <name ng-if="!account.apikey">No API key specified</name>
+                            <mail ng-if="!configs().presentationMode">{{account.email}}</mail>
+                            <mail ng-if="configs().presentationMode">{{presentationModeFriendlyAccountName(account)}}@presentation.mode</mail>
+                            <br/>
+                            <name-container ng-if="!configs().presentationMode">
+                                <name ng-if="account.apikey">{{account.name}}</name>
+                                <name ng-if="!account.apikey">No API key specified</name>
+                            </name-container>
+                            <name-container ng-if="configs().presentationMode">
+                                <name ng-if="account.apikey">{{presentationModeFriendlyAccountName(account)}}.1337</name>
+                                <name ng-if="!account.apikey">No API key specified</name>
+                            </name-container>
                         </div>
                     </item>
                     <div ng-if="accounts.length == 0" class="accounts-list-empty">
@@ -59,7 +67,7 @@
             </accounts>
 
             <actions class="no-drag" ng-controller="ActionsController">
-                <button ng-if="!useAutoUpdates()" ng-click="updateGameClient()" class="btn"><span>Update Client</span></button>
+                <button ng-if="!configs().autoUpdates" ng-click="updateGameClient()" class="btn"><span>Update Client</span></button>
                 <button ng-click="showAddAccountDialog()" class="btn"><span>Add Account</span></button>
                 <button class="btn"><span>Settings</span></button>
 

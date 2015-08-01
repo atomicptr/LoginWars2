@@ -23,9 +23,12 @@ app.run(function($rootScope, $localStorage, $sessionStorage) {
         return $localStorage.useEncryption;
     }
 
-    $rootScope.useAutoUpdates = function() {
-        // TODO: add option to disable this
-        return true;
+    $rootScope.configs = function() {
+        return {
+            autoUpdates: true,
+            presentationMode: false,
+            hideDailies: false
+        };
     }
 
     $rootScope.decrypt = function(string) {
