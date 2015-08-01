@@ -64,7 +64,7 @@ var getDailies = function(day) {
         "Megades": "Boss: Megadestroyer",
 
         // PvP
-        "Defender": "PvP Defender",
+        "Defender": "Defender",
         "Rank": "PvP Rank Points",
         "Kills": "PvP Player Kills",
         "Capture": "PvP Capture",

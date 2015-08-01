@@ -168,7 +168,7 @@ app.controller("ActionsController", function($scope, $rootScope, $localStorage, 
     });
 });
 
-app.controller("EncryptionController", function($scope, $localStorage) {
+app.controller("EncryptionController", function($scope, $localStorage, $sessionStorage) {
     $scope._askEncryptionDialog = query("#ask-encryption-dialog");
     $scope._enterEncryptionDialog = query("#enter-encryption-dialog");
     $scope._decryptDialog = query("#decrypt-dialog");
@@ -177,8 +177,13 @@ app.controller("EncryptionController", function($scope, $localStorage) {
         // open ask encryption dialog
         $scope._askEncryptionDialog.showModal();
     } else if($scope.useEncryption()) {
-        // ask for password
-        $scope._decryptDialog.showModal();
+        // if master password is still stored in sessionStorage
+        if($sessionStorage.masterPassword != undefined) {
+            $scope.$emit("encryption-ready", $sessionStorage.masterPassword);
+        } else {
+            // ask for password
+            $scope._decryptDialog.showModal();
+        }
     } else {
         // no encryption used, be ready
         $scope.$emit("encryption-ready", null);
