@@ -6,7 +6,7 @@ var ipc = require("ipc");
 
 var ENCRYPTION_TEST_STRING = "Bookah!";
 
-app.run(function($rootScope, $localStorage) {
+app.run(function($rootScope, $localStorage, $sessionStorage) {
     var path = $localStorage.gw2Path;
 
     ipc.send("gw2-find-path", path);
@@ -21,6 +21,19 @@ app.run(function($rootScope, $localStorage) {
 
     $rootScope.useEncryption = function() {
         return $localStorage.useEncryption;
+    }
+
+    $rootScope.useAutoUpdates = function() {
+        // TODO: add option to disable this
+        return true;
+    }
+
+    $rootScope.decrypt = function(string) {
+        if($rootScope.useEncryption()) {
+            return AES.decrypt(string, $sessionStorage.masterPassword);
+        }
+
+        return string;
     }
 
     $rootScope.feedUrl = "https://www.guildwars2.com/en/feed/";

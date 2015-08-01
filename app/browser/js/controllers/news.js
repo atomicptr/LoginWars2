@@ -1,8 +1,20 @@
-app.controller("NewsController", ["$scope", "$localStorage", "FeedService", function($scope, $localStorage, FeedService) {
+app.controller("NewsController", function($scope, $localStorage, FeedService, Gw2Service) {
     $scope.feed = $scope.cachedFeed;
     $scope.current = $localStorage.lastUsedTab != undefined ? $localStorage.lastUsedTab : 0;
 
     $scope.dailies = getDailies();
+
+    $scope.tradingPostEnabled = false;
+    $scope.tradingPostEnabledAccounts = [];
+
+    $scope.changeTab = function(num) {
+        $scope.current = num;
+        $localStorage.lastUsedTab = num;
+    }
+
+    $scope.canUseTradingPost = function() {
+        return $scope.tradingPostEnabled;
+    }
 
     FeedService.parseFeed($scope.feedUrl).then(function(res) {
         $scope.feeds = res.data.responseData.feed.entries;
@@ -13,7 +25,7 @@ app.controller("NewsController", ["$scope", "$localStorage", "FeedService", func
 
         // if old title is different from the new one
         if($localStorage.cachedNewsTitle != $scope.feed.title) {
-            changeTab(0); // change to news tab
+            $scope.changeTab(0); // change to news tab
         }
 
         // cache news
@@ -22,8 +34,15 @@ app.controller("NewsController", ["$scope", "$localStorage", "FeedService", func
         $localStorage.cachedNewsLink = $scope.feed.link;
     });
 
-    $scope.changeTab = function(num) {
-        $scope.current = num;
-        $localStorage.lastUsedTab = num;
-    }
-}]);
+    ($localStorage.accounts ? $localStorage.accounts : []).forEach(function(account) {
+        Gw2Service.getTokenInfo($scope.decrypt(account.apikey)).then(function(res) {
+            var canAccessTradingPost = res.data.permissions.indexOf("tradingpost") > -1;
+
+            if(canAccessTradingPost) {
+                $scope.tradingPostEnabledAccounts.push(account);
+            }
+
+            $scope.tradingPostEnabled = $scope.tradingPostEnabled || canAccessTradingPost;
+        });
+    });
+});

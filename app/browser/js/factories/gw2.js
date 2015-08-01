@@ -8,6 +8,12 @@ app.factory("Gw2Service", function($http) {
 
         getBuildNumber() {
             return $http.get("https://api.guildwars2.com/v2/build");
+        },
+
+        getTokenInfo(apikey) {
+            return $http.get("https://api.guildwars2.com/v2/tokeninfo", {
+                headers: {"Authorization": "Bearer " + apikey}
+            });
         }
     };
 });

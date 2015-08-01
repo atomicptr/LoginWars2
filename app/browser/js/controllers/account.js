@@ -1,4 +1,4 @@
-app.controller("AccountsController", function($scope, $localStorage, Gw2Service) {
+app.controller("AccountsController", function($scope, $localStorage, $sessionStorage, Gw2Service) {
     // TODO: load existing accounts
     $scope.accounts = [];
     $scope.loadingDialog = query("#game-starting-dialog");
@@ -9,10 +9,10 @@ app.controller("AccountsController", function($scope, $localStorage, Gw2Service)
 
     $scope.$on("gw2-new-account-added", function(event, account) {
         if($scope.useEncryption()) {
-            account.password = AES.encrypt(account.password, $scope._masterPassword);
+            account.password = AES.encrypt(account.password, $sessionStorage.masterPassword);
 
             if(account.apikey) {
-                account.apikey = AES.encrypt(account.apikey, $scope._masterPassword);
+                account.apikey = AES.encrypt(account.apikey, $sessionStorage.masterPassword);
             }
         }
 
@@ -52,14 +52,6 @@ app.controller("AccountsController", function($scope, $localStorage, Gw2Service)
         game.on("exit", function(code, signal) {
             $scope.loadingDialog.close();
         });
-    }
-
-    $scope.decrypt = function(string) {
-        if($scope.useEncryption()) {
-            return AES.decrypt(string, $scope._masterPassword);
-        }
-
-        return string;
     }
 
     $scope.clear = function() {
@@ -106,7 +98,7 @@ app.controller("AccountsController", function($scope, $localStorage, Gw2Service)
 
     $scope.$on("encryption-ready", function(event, masterPassword) {
         if($scope.useEncryption()) {
-            $scope._masterPassword = masterPassword;
+            $sessionStorage.masterPassword = masterPassword;
         }
 
         // update known account informations
@@ -116,7 +108,7 @@ app.controller("AccountsController", function($scope, $localStorage, Gw2Service)
     });
 });
 
-app.controller("ActionsController", function($scope) {
+app.controller("ActionsController", function($scope, $localStorage, Gw2Service) {
     $scope._addAccountDialog = query("#add-account-dialog");
 
     $scope.updateGameClient = function() {
@@ -142,6 +134,24 @@ app.controller("ActionsController", function($scope) {
 
         $scope.closeAddAccountDialog();
     }
+
+    // check last known build number with the current one from the server, if they don't match
+    // start update
+    Gw2Service.getBuildNumber().then(function(res) {
+        var lastBuildNumber = $localStorage.buildNumber;
+        $localStorage.buildNumber = res.data.id;
+
+        if(lastBuildNumber != undefined) {
+            if(lastBuildNumber != res.data.id) {
+                console.log("Current build: " + lastBuildNumber + ", but server claims to have a new one ready: " +
+                    res.data.id + "... trying to update...");
+
+                if($scope.useAutoUpdates()) {
+                    $scope.updateGameClient();
+                }
+            }
+        }
+    });
 });
 
 app.controller("EncryptionController", function($scope, $localStorage) {
