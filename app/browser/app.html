@@ -35,7 +35,7 @@
             <accounts class="no-drag no-text-selection">
                 <h1>Accounts</h1>
                 <div class="account-list">
-                    <item ng-click="login(account.email, account.password, account.addparams)" ng-repeat="account in accounts">
+                    <item ng-if="accounts.length > 0" ng-click="login(account.email, account.password, account.addparams)" ng-repeat="account in accounts">
                         <div class="accicon">
                             <img src="assets/acc.png" />
                         </div>
@@ -45,6 +45,9 @@
                             <name ng-if="!account.apikey">No API key specified</name>
                         </div>
                     </item>
+                    <div ng-if="accounts.length == 0" class="accounts-list-empty">
+                        <p>You don't have any accounts added yet, press the "Add Account" button below to add accounts</p>
+                    </div>
                 </div>
             </accounts>
 
