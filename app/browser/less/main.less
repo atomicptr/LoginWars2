@@ -89,13 +89,19 @@ a:hover {
     margin-right: 10px;
     color: #BBB;
 
+    transition: color 0.5s ease;
+
     cursor: pointer;
 }
 
 .tab-title.active {
-    color: black;
+    color: black !important;
 
     cursor: auto;
+}
+
+.tab-title:hover {
+    color: #888;
 }
 
 .background-video {
