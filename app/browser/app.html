@@ -7,10 +7,27 @@
 
     <content>
         <news class="no-drag" ng-controller="NewsController">
-            <h1 class="no-text-selection">Latest News</h1>
-            <div class="latest-news">
+            <tabs>
+                <h1 ng-class="{'active': current == 0}" ng-click="changeTab(0)" class="tab-title">Latest News</h1>
+                <h1 ng-class="{'active': current == 1}" ng-click="changeTab(1)" class="tab-title">Dailies</h1>
+            </tabs>
+            <div class="latest-news" ng-if="current == 0">
                 <h2>{{feed.title}}</h2>
                 {{feed.news}} <a href="{{feed.link}}">Read more...</a>
+            </div>
+            <div class="dailies no-text-selection" ng-if="current == 1">
+                <div class="daily-container daily-pve">
+                    <h2>PvE Dailies</h2>
+                    <span class="daily" ng-repeat="daily in dailies.pve">{{daily}}</span>
+                </div>
+                <div class="daily-container daily-pvp">
+                    <h2>PvP Dailies</h2>
+                    <span class="daily" ng-repeat="daily in dailies.pvp">{{daily}}</span>
+                </div>
+                <div class="daily-container daily-wvw">
+                    <h2>WvW Dailies</h2>
+                    <span class="daily" ng-repeat="daily in dailies.wvw">{{daily}}</span>
+                </div>
             </div>
         </news>
 
@@ -119,6 +136,7 @@
 
 <!-- utils -->
 <script src="js/utils/utils.js"></script>
+<script src="js/utils/gw2dailies.js"></script>
 
 <!-- angular stuff -->
 <script src="js/main.js"></script>

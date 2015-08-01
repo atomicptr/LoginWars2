@@ -17,3 +17,60 @@ news {
 .latest-news h2 {
     .latest-news;
 }
+
+.dailies {
+    font-size: 16px;
+}
+
+.dailies h2 {
+    .dailies;
+
+    margin-bottom: 0px;
+}
+
+.daily-container {
+    display: inline-block;
+}
+
+.daily {
+    display: block;
+    word-break: normal;
+
+    max-width: 200px;
+
+    vertical-align: top;
+
+    margin-right: 20px;
+}
+
+@opacity: 0.5;
+
+.daily-pve {
+    background:
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, @opacity) 0%,
+            rgba(255, 255, 255, @opacity) 100%),
+            url("../assets/daily/pve.png")
+            no-repeat;
+    background-position: center bottom;
+}
+
+.daily-pvp {
+    background:
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, @opacity) 0%,
+            rgba(255, 255, 255, @opacity) 100%),
+            url("../assets/daily/pvp.png")
+            no-repeat;
+    background-position: center bottom;
+}
+
+.daily-wvw {
+    background:
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, @opacity) 0%,
+            rgba(255, 255, 255, @opacity) 100%),
+            url("../assets/daily/wvw.png")
+            no-repeat;
+    background-position: center bottom;
+}
