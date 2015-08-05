@@ -2,6 +2,8 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
     // TODO: load existing accounts
     $scope.accounts = [];
     $scope.loadingDialog = query("#game-starting-dialog");
+    $scope.editAccountDialog = query("#edit-account-dialog");
+    $scope.editModeActive = false;
 
     if($localStorage.accounts && $localStorage.accounts.length > 0) {
         $scope.accounts = $localStorage.accounts;
@@ -16,9 +18,71 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
             }
         }
 
+        $scope.lastUsage = new Date();
+
         $scope.accounts.push(account);
         $scope._updateAccountInformations(account);
     });
+
+    $scope.accountItemClicked = function(account) {
+        if(!$scope.editModeActive) {
+            // log in as usually
+            account.lastUsage = new Date();
+            $scope.login(account.email, account.password, account.parametersString);
+        } else {
+            // open edit dialog for the account
+            $scope.editAcc = angular.copy(account);
+            $scope.editAcc._account = account;
+            $scope.editAcc.password = $scope.decrypt($scope.editAcc.password);
+
+            if($scope.editAcc.apikey) {
+                $scope.editAcc.apikey = $scope.decrypt($scope.editAcc.apikey);
+            }
+
+            $scope.editAccountDialog.showModal();
+        }
+    }
+
+    $scope.closeEditAccountWindow = function() {
+        $scope.editAcc = {};
+        $scope.editAccountDialog.close();
+    }
+
+    $scope.submitEditAccountDialog = function() {
+        var account = $scope.editAcc._account;
+
+        account.email = $scope.editAcc.email;
+        account.password = AES.encrypt($scope.editAcc.password, $sessionStorage.masterPassword);
+
+        if($scope.editAcc.apikey) {
+            account.apikey = AES.encrypt($scope.editAcc.apikey, $sessionStorage.masterPassword);
+        } else {
+            if(account.apikey) {
+                // user removed the apikey so the old account also shouldn't have it anymore
+                delete account.apikey;
+            }
+        }
+
+        account.addparams = $scope.editAcc.addparams;
+
+        $localStorage.accounts = $scope.accounts;
+
+        $scope.closeEditAccountWindow();
+    }
+
+    $scope.deleteAccount = function() {
+        var account = $scope.editAcc._account;
+
+        if(window.confirm("Are you sure that you want to delete this account?")) {
+            var index = $scope.accounts.indexOf(account);
+
+            $scope.accounts.splice(index, 1);
+
+            $localStorage.accounts = $scope.accounts;
+
+            $scope.closeEditAccountWindow();
+        }
+    }
 
     $scope.login = function(email, password, parametersString) {
         if(!parametersString) {

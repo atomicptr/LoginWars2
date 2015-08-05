@@ -40,9 +40,9 @@
 
         <account-controller ng-controller="AccountsController">
             <accounts class="no-drag no-text-selection">
-                <h1>Accounts</h1>
+                <h1 id="accounts-title">Accounts</h1> <i id="edit-accounts-button" ng-click="editModeActive = !editModeActive" ng-class="{'edit-accounts-active': editModeActive}" class="fa fa-cog"></i>
                 <div class="account-list">
-                    <item ng-if="accounts.length > 0" ng-click="login(account.email, account.password, account.addparams)" ng-repeat="account in accounts">
+                    <item ng-if="accounts.length > 0" ng-click="accountItemClicked(account)" ng-repeat="account in accounts">
                         <div class="accicon">
                             <img src="assets/acc.png" />
                         </div>
@@ -142,6 +142,30 @@
 
             <dialog id="game-starting-dialog" class="no-drag dialog-game-starting">
                 <img class=".loading" src="assets/acc.png" />
+            </dialog>
+
+            <dialog id="edit-account-dialog" class="no-drag">
+                <p>Please edit your account details.</p>
+
+                <form ng-submit="submitEditAccountDialog()">
+                    <label for="edit-account-email">E-Mail</label>
+                    <input ng-model="editAcc.email" type="email" id="edit-account-email" class="textfield" placeholder="zojja@ratasum.com" tabindex="1" required />
+
+                    <label for="edit-account-password">Password</label>
+                    <input ng-model="editAcc.password" type="password" id="edit-account-password" class="textfield" placeholder="snaff1234" tabindex="2" required />
+
+                    <label for="edit-account-apikey">API Key <a href="https://account.arena.net/applications/create">(Create one here)</a></label>
+                    <input ng-model="editAcc.apikey" type="text" id="edit-account-apikey" class="textfield" placeholder="(Optional) Enter your API key." tabindex="3" />
+
+                    <label for="edit-account-addparams">Additional command line parameters <a href="https://wiki.guildwars2.com/wiki/Command_line_arguments">(Docs)</a></label>
+                    <input ng-model="editAcc.addparams" type="text" id="edit-account-addparams" class="textfield" placeholder="(Optional) Add additional parameters here." tabindex="4" />
+
+                    <div class="dialog-button-container">
+                        <button type="button" ng-click="closeEditAccountWindow()" class="btn right"><span>Close</span></button>
+                        <button type="button" ng-click="deleteAccount()" class="btn"><span>Delete</span></button>
+                        <button type="submit" id="edit-account-save" class="btn"><span>Save</span></button>
+                    </div>
+                </form>
             </dialog>
         </account-controller>
     </content>
