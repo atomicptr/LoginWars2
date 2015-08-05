@@ -1,4 +1,4 @@
-app.controller("NewsController", function($scope, $rootScope, $localStorage, FeedService, Gw2Service) {
+app.controller("TabController", function($scope, $rootScope, $localStorage, FeedService, Gw2Service) {
     $scope.feed = $scope.cachedFeed;
     $scope.current = $localStorage.lastUsedTab != undefined ? $localStorage.lastUsedTab : 0;
 

@@ -9,7 +9,7 @@
     <div id="background-video" class="background-video"></div>
 
     <content>
-        <news class="no-drag" ng-controller="NewsController">
+        <news class="no-drag" ng-controller="TabController">
             <tabs>
                 <h1 ng-class="{'active': current == 0}" ng-click="changeTab(0)" class="tab-title">Latest News</h1>
                 <h1 ng-class="{'active': current == 1}" ng-click="changeTab(1)" class="tab-title" ng-if="!configs().hideDailies">Dailies</h1>
@@ -164,7 +164,7 @@
 <script src="js/directives/link-hack.js"></script>
 <script src="js/factories/feeds.js"></script>
 <script src="js/factories/gw2.js"></script>
-<script src="js/controllers/news.js"></script>
+<script src="js/controllers/tab.js"></script>
 <script src="js/controllers/account.js"></script>
 
 <!-- other stuff -->
