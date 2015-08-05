@@ -25,6 +25,7 @@ var getDailies = function(day) {
         "Vista Jungle": "Vista: Maguuma",
         "Vista Orr": "Vista: Orr",
         "Vista Shiverpeaks": "Vista: Shiverpeaks Mountain",
+        "Vista Kryta": "Vista: Kryta",
         "Activity": "Daily Activity",
         "Fractal": "Daily Fractal",
         "Fractal 1-10": "Fractal: 1-10",
@@ -54,6 +55,7 @@ var getDailies = function(day) {
         "Kessex": "Events: Kessex Hills",
         "Snowden": "Events: Snowden Drifts",
         "Queensdale": "Events: Queensdale",
+        "Dredgehaunt": "Events: Dredgehaunt Cliffs",
 
         // Boss
         "Wurm": "Boss: Jungle Wurm",
@@ -62,6 +64,7 @@ var getDailies = function(day) {
         "SB": "Boss: Shadow Behemoth",
         "Jormag": "Boss: Claw of Jormag",
         "Megades": "Boss: Megadestroyer",
+        "Maw": "Boss: Frozen Maw",
 
         // PvP
         "Defender": "Defender",
@@ -132,9 +135,9 @@ var getDailies = function(day) {
         	wvw: ["Spender", "Land", "Tower", "Defender"]
         },
         "5": {
-        	pve: ["Forager Orr", "Vista Shiverpeaks", "Ashford", "Fractal 11-20"],
-        	pvp: ["Capture", "Rank", "War Guard", "Ranger Engi"],
-        	wvw: ["Land", "Kills", "Keep", "Tower"]
+        	pve: ["Lumberer Jungle", "Vista Kryta", "Dredgehaunt", "Maw"],
+        	pvp: ["Capture", "Kills", "War Guard", "Ranger Engi"],
+        	wvw: ["Ruins", "Guard", "Camp", "Defender"]
         },
         "6": {
         	pve: ["Lumberer Ascalon", "Activity", "Frostgorge", "Fractal 1-10"],
@@ -278,7 +281,7 @@ var getDailies = function(day) {
     for(var key in result) {
         for(var i = 0; i < result[key].length; i++) {
             var tmp = result[key][i];
-            result[key][i] = this.dailyNames[tmp];
+            result[key][i] = this.dailyNames[tmp] ? this.dailyNames[tmp] : tmp;
         }
     }
 
