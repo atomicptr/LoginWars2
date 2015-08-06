@@ -1,6 +1,7 @@
 var getDailies = function(day) {
-    this.dailyNames = {
-        // PvE
+    this.dailyNames = {}
+
+    this.dailyNames.pve = {
         // Gathering Achievements
         "Forager Ascalon": "Forager: Ascalon",
         "Lumberer Ascalon": "Lumberer: Ascalon",
@@ -64,10 +65,12 @@ var getDailies = function(day) {
         "SB": "Boss: Shadow Behemoth",
         "Jormag": "Boss: Claw of Jormag",
         "Megades": "Boss: Megadestroyer",
-        "Maw": "Boss: Frozen Maw",
+        "Maw": "Boss: Frozen Maw"
+    };
 
+    this.dailyNames.pvp = {
         // PvP
-        "Defender": "Defender",
+        "Defender": "PvP Defender",
         "Rank": "PvP Rank Points",
         "Kills": "PvP Player Kills",
         "Capture": "PvP Capture",
@@ -80,7 +83,7 @@ var getDailies = function(day) {
         "Thief Mes": "Win: Thief/Mesmer",
         "Engi Thief": "Win: Engineer/Thief",
         "War Guard": "Win: Warrior/Guardian",
-        "Ranger Thief": "Win: Ranger/Guardian",
+        "Ranger Thief": "Win: Ranger/Thief",
         "Engi Ele": "Win: Engineer/Elementalist",
         "War Ranger": "Win: Warrior/Ranger",
         "Guard Necro": "Win: Guardian/Necromancer",
@@ -98,8 +101,10 @@ var getDailies = function(day) {
         "Guard Mes": "Win: Guardian/Mesmer",
         "War Mes": "Win: Warrior/Mesmer",
         "Thief Necro": "Win: Thief/Necromancer",
-        "Ele Ranger": "Win: Elementalist/Ranger",
+        "Ele Ranger": "Win: Elementalist/Ranger"
+    };
 
+    this.dailyNames.wvw = {
         // wvw
         "Land": "Capture: Land",
         "Ruins": "Capture: Ruins",
@@ -109,7 +114,8 @@ var getDailies = function(day) {
         "Keep": "Capture: Keep",
         "Creature": "Daily Creature Slayer",
         "Guard": "Daily Guard Killer",
-        "Caravan": "Caravan Disruptor"
+        "Caravan": "Caravan Disruptor",
+        "Defender": "Objective Defender"
     };
 
     // daily data is from gw2timer.com
@@ -140,9 +146,9 @@ var getDailies = function(day) {
         	wvw: ["Ruins", "Guard", "Camp", "Defender"]
         },
         "6": {
-        	pve: ["Lumberer Ascalon", "Activity", "Frostgorge", "Fractal 1-10"],
-        	pvp: ["Reward", "Rank", "Ranger Thief", "Engi Ele"],
-        	wvw: ["Creature", "Guard", "Defender", "Camp"]
+        	pve: ["Forager Ascalon", "Activity", "Snowden", "SB"],
+        	pvp: ["Defender", "Capture", "Ranger Thief", "Engi Ele"],
+        	wvw: ["Ruins", "Creature", "Defender", "Camp"]
         },
         "7": {
         	pve: ["Forager Jungle", "Vista Shiverpeaks", "Fields", "Fractal 1-10"],
@@ -281,7 +287,7 @@ var getDailies = function(day) {
     for(var key in result) {
         for(var i = 0; i < result[key].length; i++) {
             var tmp = result[key][i];
-            result[key][i] = this.dailyNames[tmp] ? this.dailyNames[tmp] : tmp;
+            result[key][i] = this.dailyNames[key][tmp] ? this.dailyNames[key][tmp] : tmp;
         }
     }
 
