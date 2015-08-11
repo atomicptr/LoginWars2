@@ -28,7 +28,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         if(!$scope.editModeActive) {
             // log in as usually
             account.lastUsage = new Date();
-            $scope.login(account.email, account.password, account.parametersString);
+            $scope.login(account.email, account.password, account.addparams);
         } else {
             // open edit dialog for the account
             $scope.editAcc = angular.copy(account);
