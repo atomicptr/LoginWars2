@@ -22,7 +22,7 @@ gulp.task("package", ["build-less"], function() {
         packageJson: dynamics,
         release: "./build",
         cache: "./cache",
-        version: "v0.30.2",
+        version: "v0.30.4",
         packaging: true,
         platforms: ["win32-x64", "darwin-x64"],
         platformResources: {
