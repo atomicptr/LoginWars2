@@ -57,6 +57,7 @@ var getDailies = function(day) {
         "Snowden": "Events: Snowden Drifts",
         "Queensdale": "Events: Queensdale",
         "Dredgehaunt": "Events: Dredgehaunt Cliffs",
+        "Marches": "Events: Iron Marches",
 
         // Boss
         "Wurm": "Boss: Jungle Wurm",
@@ -65,7 +66,8 @@ var getDailies = function(day) {
         "SB": "Boss: Shadow Behemoth",
         "Jormag": "Boss: Claw of Jormag",
         "Megades": "Boss: Megadestroyer",
-        "Maw": "Boss: Frozen Maw"
+        "Maw": "Boss: Frozen Maw",
+        "Shatterer": "Boss: Shatterer"
     };
 
     this.dailyNames.pvp = {
@@ -75,33 +77,33 @@ var getDailies = function(day) {
         "Kills": "PvP Player Kills",
         "Capture": "PvP Capture",
         "Reward": "PvP Reward Earner",
-        "War Necro": "Win: Warrior/Necromancer",
+        "War Necro": "Win: Warrior/Necro",
         "War Engi": "Win: Warrior/Engineer",
         "Ranger Engi": "Win: Ranger/Engineer",
-        "Ele Mes": "Win: Elementalist/Mesmer",
+        "Ele Mes": "Win: Ele/Mesmer",
         "Guard Thief": "Win: Guardian/Thief",
         "Thief Mes": "Win: Thief/Mesmer",
         "Engi Thief": "Win: Engineer/Thief",
         "War Guard": "Win: Warrior/Guardian",
         "Ranger Thief": "Win: Ranger/Thief",
-        "Engi Ele": "Win: Engineer/Elementalist",
+        "Engi Ele": "Win: Engineer/Ele",
         "War Ranger": "Win: Warrior/Ranger",
-        "Guard Necro": "Win: Guardian/Necromancer",
+        "Guard Necro": "Win: Guardian/Necro",
         "Ranger Mes": "Win: Ranger/Mesmer",
         "Guard Engi": "Win: Guardian/Engineer",
-        "Ranger Necro": "Win: Ranger/Necromancer",
-        "Ele Necro": "Win: Elementalist/Necromancer",
+        "Ranger Necro": "Win: Ranger/Necro",
+        "Ele Necro": "Win: Ele/Necro",
         "War Thief": "Win: Warrior/Thief",
         "Guard Ranger": "Win: Guardian/Ranger",
         "Engi Mes": "Win: Engineer/Mesmer",
-        "Guard Ele": "Win: Guardian/Elementalist",
-        "War Ele": "Win: Warrior/Elementalist",
-        "Engi Necro": "Win: Engineer/Necromancer",
-        "Thief Ele": "Win: Thief/Elementalist",
+        "Guard Ele": "Win: Guardian/Ele",
+        "War Ele": "Win: Warrior/Ele",
+        "Engi Necro": "Win: Engineer/Necro",
+        "Thief Ele": "Win: Thief/Ele",
         "Guard Mes": "Win: Guardian/Mesmer",
         "War Mes": "Win: Warrior/Mesmer",
-        "Thief Necro": "Win: Thief/Necromancer",
-        "Ele Ranger": "Win: Elementalist/Ranger"
+        "Thief Necro": "Win: Thief/Necro",
+        "Ele Ranger": "Win: Ele/Ranger"
     };
 
     this.dailyNames.wvw = {
@@ -115,7 +117,8 @@ var getDailies = function(day) {
         "Creature": "Daily Creature Slayer",
         "Guard": "Daily Guard Killer",
         "Caravan": "Caravan Disruptor",
-        "Defender": "Objective Defender"
+        "Defender": "Objective Defender",
+        "Kills": "Player Kills"
     };
 
     // daily data is from gw2timer.com
@@ -151,29 +154,29 @@ var getDailies = function(day) {
         	wvw: ["Ruins", "Creature", "Defender", "Camp"]
         },
         "7": {
-        	pve: ["Forager Jungle", "Vista Shiverpeaks", "Fields", "Fractal 1-10"],
-        	pvp: ["Defender", "Reward", "War Ranger", "Guard Necro"],
-        	wvw: ["Ruins", "Creature", "Camp", "Defender"]
+        	pve: ["Lumberer Ascalon", "Fractal", "Southsun", "Golem"],
+        	pvp: ["Capture", "Reward", "War Ranger", "Guard Necro"],
+        	wvw: ["Creature", "Land", "Defender", "Tower"]
         },
         "8": {
-        	pve: ["Miner Jungle", "Vista Orr", "Sparkfly", "Fractal 1-10"],
-        	pvp: ["Defender", "Capture", "Ranger Mes", "Guard Engi"],
-        	wvw: ["Land", "Guard", "Keep", "Camp"]
+        	pve: ["Miner Jungle", "Vista Orr", "Kessex", "FE"],
+        	pvp: ["Rank", "Kills", "Ranger Mes", "Guard Engi"],
+        	wvw: ["Ruins", "Kills", "Camp", "Defender"]
         },
         "9": {
-        	pve: ["Forager Kryta", "Forger", "Caledon", "Fractal 1-10"],
-        	pvp: ["Kills", "Reward", "War Engi", "Ranger Necro"],
-        	wvw: ["Guard", "Caravan", "Tower", "Defender"]
+        	pve: ["Lumberer Ascalon", "Forger", "Ashford", "Fractal 11-20"],
+        	pvp: ["Defender", "Capture", "War Engi", "Ranger Necro"],
+        	wvw: ["Creature", "Land", "Camp", "Keep"]
         },
         "10": {
-        	pve: ["Lumberer Jungle", "Fractal", "Timberline", "Fractal 11-20"],
-        	pvp: ["Rank", "Kills", "Ele Mes", "Guard Thief"],
-        	wvw: ["Creature", "Land", "Keep", "Tower"]
+        	pve: ["Miner Jungle", "Vista Ascalon", "Brisban", "Wurm"],
+        	pvp: ["Rank", "Reward", "Ele Mes", "Guard Thief"],
+        	wvw: ["Ruins", "Spender", "Defender", "Tower"]
         },
         "11": {
-        	pve: ["Miner Jungle", "Vista Orr", "Metrica", "Fractal 1-10"],
-        	pvp: ["Reward", "Defender", "Engi Thief", "Ele Necro"],
-        	wvw: ["Caravan", "Spender", "Camp", "Defender"]
+        	pve: ["Lumberer Wastes", "Fractal", "Caledon", "Fractal 1-10"],
+        	pvp: ["Capture", "Rank", "Engi Thief", "Ele Necro"],
+        	wvw: ["Kills", "Ruins", "Keep", "Defender"]
         },
         "12": {
         	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Harathi", "Fractal 21-30"],
@@ -276,6 +279,25 @@ var getDailies = function(day) {
         	wvw: ["Guard", "Land", "Keep", "Camp"]
         }
     };
+
+    // check if an entry exists without a name
+    for(var d in this.dailyData) {
+        function check(data, type) {
+            data[type].forEach(function(daily) {
+                var name = this.dailyNames[type][daily];
+
+                if(!name) {
+                    console.warn("Name not found for: " + daily + " in: " + type);
+                }
+            });
+        }
+
+        var data = this.dailyData[d];
+
+        for(var type in data) {
+            check(data, type);
+        }
+    }
 
     // if day is not defined use current day instead
     if(day == undefined) {
