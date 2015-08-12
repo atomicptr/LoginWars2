@@ -37,7 +37,8 @@ app.on("ready", function() {
         width: 1024,
         height: 600,
         frame: false,
-        resizable: false
+        resizable: false,
+        icon: __dirname + "/icons/icon.png"
     });
 
     win.loadUrl("file://" + __dirname + "/browser/app.html");

@@ -24,20 +24,19 @@ gulp.task("package", ["build-less"], function() {
         cache: "./cache",
         version: "v0.30.4",
         packaging: true,
-        platforms: ["win32-x64", "darwin-x64"],
+        platforms: ["win32-x64"], //, "darwin-x64"], TODO: OS X is not supported atm so there is no point in packaging it by default
         platformResources: {
             darwin: {
                 CFBundleDisplayName: dynamics.name,
                 CFBundleIdentifier: dynamics.name,
                 CFBundleName: dynamics.name,
-                CFBundleVersion: dynamics.version,
-                icon: "icons/dynamics.icns"
+                CFBundleVersion: dynamics.version
             },
             win: {
                 "version-string": dynamics.version,
                 "file-version": dynamics.version,
                 "product-version": dynamics.version,
-                "icon": "icons/dynamics.ico"
+                icon: "app/icons/icon.ico"
             }
         }
     });
