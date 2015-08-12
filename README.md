@@ -36,7 +36,7 @@ Reasons this might happen:
 * Your email/password is wrong (Fix: Use the right credentials)
 * You need to authenticate this system (Fix: Log in with the normal launcher once, after that it should work)
 
-Please Arena.Net add error messages :).
+Please ArenaNet add error messages :).
 
 ## Powered by
 
@@ -46,7 +46,15 @@ Please Arena.Net add error messages :).
 
 ## Asset attributions
 
-* All Guild Wars 2 related assets are &copy; by ArenaNet.
+&copy; 2014 ArenaNet, LLC. All rights reserved. NCSOFT, the interlocking NC logo, ArenaNet, Guild Wars, Guild Wars Factions, Guild Wars Nightfall, Guild Wars: Eye of the North, Guild Wars 2, and all associated logos and designs are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners.
+
+List of assets from Guild Wars 2:
+
+* Daily icons (assets/{pve, pvp, wvw}.png)
+* World completition icon (assets/acc.png)
+* GW2 Font (assets/gw2_font.ttf)
+* GW2 Logo in transparent (assets/logo.png)
+* Background Video from the old GW2 login screen (assets/background.webm)
 
 ## License
 
