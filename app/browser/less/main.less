@@ -104,7 +104,23 @@ a:hover {
     color: #888;
 }
 
-.background-video {
+#background-video {
+    z-index: -1;
+    position: absolute;
+
+    top: 0px;
+    left: (1024px - 582px);
+    right: 0px;
+    bottom: 0px;
+
+    background-image: url("../assets/background.png");
+}
+
+#background-video video {
+    width: 100%;
+    height: 100%;
+
+    background-color: transparent;
 }
 
 #beta-label {

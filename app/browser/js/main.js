@@ -46,6 +46,11 @@ app.run(function($rootScope, $localStorage, $sessionStorage) {
         news: $localStorage.cachedNewsContent,
         link: $localStorage.cachedNewsLink
     };
+
+    // load background video a bit delayed to remove an initial lag in the ui
+    setTimeout(function() {
+        document.querySelector("#background-video video").setAttribute("src", "assets/background.webm");
+    }, 200);
 })
 
 app.controller("CloseController", function($scope) {
