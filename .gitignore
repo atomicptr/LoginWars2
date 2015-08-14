@@ -2,6 +2,7 @@ bower_components
 /cache
 /build
 /app/browser/css
+/installer
 
 # Created by https://www.gitignore.io
 

@@ -3,6 +3,8 @@ var BrowserWindow = require("browser-window");
 var Dialog = require("dialog");
 
 var fs = require("fs");
+var spawn = require("child_process").spawn;
+var path = require("path");
 
 var ipc = require("ipc");
 
@@ -25,6 +27,55 @@ var osValues = {
         defaultSearchPath: "C:\\Program Files (x86)\\",
         typeName: "Executable",
         typeExtension: "exe"
+    }
+}
+
+if(process.platform == "win32") {
+    var updateDotExe = path.resolve(process.execPath, "..", "..", "Update.exe");
+    var exeName = path.basename(process.execPath);
+
+    function createShortcut(callback) {
+        var update = spawn(updateDotExe, ["--createShortcut", exeName]);
+
+        update.on("close", callback);
+    }
+
+    function removeShortcut(callback) {
+        var update = spawn(updateDotExe, ["--removeShortcut", exeName]);
+
+        update.on("close", callback);
+    }
+
+    function handleStartUpEvents() {
+        var cmd = process.argv[1];
+
+        switch(cmd) {
+            case "--squirrel-install":
+                createShortcut(function() {
+                    app.quit();
+                });
+
+                return true;
+            case "--squirrel-updated":
+                // TODO: update shortcuts
+                app.quit();
+                return true;
+            case "--squirrel-uninstall":
+                removeShortcut(function() {
+                    app.quit();
+                });
+
+                return true;
+            case "--squirrel-obsolete":
+                // this is called on the old version before updating
+                app.quit();
+
+                return true;
+        }
+    }
+
+    if(handleStartUpEvents()) {
+        return;
     }
 }
 

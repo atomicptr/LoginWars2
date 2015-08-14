@@ -1,5 +1,7 @@
 {
     "name": "dynamics",
-    "version": "v0.1.0",
-    "main": "app.js"
+    "productName": "dynamics",
+    "version": "0.2.0",
+    "main": "app.js",
+    "description": "An experimental alternative launcher for Guild Wars 2 with support for multiple accounts and some extra stuff, named after the College of Dynamics. Because this is Asuran technology."
 }
