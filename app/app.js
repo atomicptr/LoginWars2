@@ -14,8 +14,8 @@ var win = null;
 
 var osValues = {
     darwin: {
-        executableName: "GuildWars2.app",
-        defaultPath: "/Applications/GuildWars2.app",
+        executableName: "Guild Wars 2.app",
+        defaultPath: "/Applications/Guild Wars 2.app",
         defaultSearchPath: "/Applications",
         typeName: "Application",
         typeExtension: "app"

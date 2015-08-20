@@ -3,16 +3,16 @@ var electron = require("gulp-electron");
 var less = require("gulp-less");
 var run = require("gulp-run-electron");
 var windowsInstaller = require("electron-windows-installer");
-var dynamics = require("./app/package.json");
+var packageJson = require("./app/package.json");
 
 var path = require("path");
 
 var configs = {
     ELECTRON_VERSION: "v0.30.4",
-    PRODUCT_NAME: dynamics.productName,
-    APP_NAME: dynamics.name,
-    APP_VERSION: dynamics.version,
-    DESCRIPTION: dynamics.description,
+    PRODUCT_NAME: packageJson.productName,
+    APP_NAME: packageJson.name,
+    APP_VERSION: packageJson.version,
+    DESCRIPTION: packageJson.description,
     ICON_URL_PNG: path.resolve(__dirname, "./app/icons/icon.png"),
     AUTHORS: "kasoki"
 };
@@ -32,7 +32,7 @@ gulp.task("run", ["build-less"], function() {
 gulp.task("package", ["build-less"], function() {
     var electronSettings = electron({
         src: "./app",
-        packageJson: dynamics,
+        packageJson: packageJson,
         release: "./build",
         cache: "./cache",
         version: configs.ELECTRON_VERSION,

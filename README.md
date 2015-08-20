@@ -1,8 +1,6 @@
-# dynamics
+# Login Wars 2
 
-An experimental alternative launcher for Guild Wars 2 with support for multiple accounts and some extra stuff, named after the College of Dynamics. Because this is Asuran technology.
-
-**Note**: I'm still looking for a better name and then need to find/make an icon for it :).
+An experimental alternative launcher for Guild Wars 2 with support for multiple accounts and some extra stuff.
 
 ## Features
 * Manage multiple accounts
@@ -24,9 +22,9 @@ No magic, no botting or any form of "automation". It's just a nicer, more secure
 
 ## FAQ
 
-### Can I get banned for using dynamics?
+### Can I get banned for using Login Wars 2?
 
-dynamics is just calling the Gw2 executable with the [command line interface we're using for years](https://wiki.guildwars2.com/wiki/Command_line_arguments). So I highly doubt that you can get banned for this. I'll contact Arena.Net at some point to confirm this.
+LoginWars2 is just calling the Gw2 executable with the [command line interface we're using for years](https://wiki.guildwars2.com/wiki/Command_line_arguments). So I highly doubt that you can get banned for this. I'll contact Arena.Net at some point to confirm this.
 
 ### Why is my screen black and nothing happens?
 
@@ -37,6 +35,10 @@ Reasons this might happen:
 * You need to authenticate this system (Fix: Log in with the normal launcher once, after that it should work)
 
 Please ArenaNet add error messages :).
+
+### Why Login Wars >>"2"<<, is there also a "1"?
+
+I wanted to call the app "Login Wars" but it somewhat would sound like it's for GW1 instead of GW2.
 
 ## Powered by
 

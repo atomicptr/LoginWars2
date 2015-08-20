@@ -1,4 +1,4 @@
-var app = angular.module("DynamicsApp", ["ngStorage"]);
+var app = angular.module("LoginWars2", ["ngStorage"]);
 var spawn = require("child_process").spawn;
 var exec = require("child_process").exec;
 
