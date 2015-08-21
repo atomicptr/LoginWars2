@@ -5,6 +5,11 @@
   color: white !important;
   background-color: #AA0703 !important;
   border: none !important;
+
+  transition: background-color 0.3s ease-in-out;}
+
+.button:hover {
+    background-color: red !important;
 }
 
 .button-download {
