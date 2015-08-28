@@ -2,6 +2,8 @@ var app = require("app");
 var BrowserWindow = require("browser-window");
 var Dialog = require("dialog");
 
+var quirl = require("./quirl.js").init();
+
 var fs = require("fs");
 var spawn = require("child_process").spawn;
 var path = require("path");
@@ -30,53 +32,37 @@ var osValues = {
     }
 }
 
-if(process.platform == "win32") {
+function createShortcut(callback) {
     var updateDotExe = path.resolve(process.execPath, "..", "..", "Update.exe");
     var exeName = path.basename(process.execPath);
+    var update = spawn(updateDotExe, ["--createShortcut", exeName]);
 
-    function createShortcut(callback) {
-        var update = spawn(updateDotExe, ["--createShortcut", exeName]);
+    update.on("close", callback);
+}
 
-        update.on("close", callback);
-    }
+function removeShortcut(callback) {
+    var updateDotExe = path.resolve(process.execPath, "..", "..", "Update.exe");
+    var exeName = path.basename(process.execPath);
+    var update = spawn(updateDotExe, ["--removeShortcut", exeName]);
 
-    function removeShortcut(callback) {
-        var update = spawn(updateDotExe, ["--removeShortcut", exeName]);
+    update.on("close", callback);
+}
 
-        update.on("close", callback);
-    }
+quirl.on("install", function() {
+    createShortcut(function() {
+        app.quit();
+    });
+});
 
-    function handleStartUpEvents() {
-        var cmd = process.argv[1];
+quirl.on("uninstall", function() {
+    removeShortcut(function() {
+        app.quit();
+    });
+});
 
-        switch(cmd) {
-            case "--squirrel-install":
-                createShortcut(function() {
-                    app.quit();
-                });
-
-                return true;
-            case "--squirrel-updated":
-                // TODO: update shortcuts
-                app.quit();
-                return true;
-            case "--squirrel-uninstall":
-                removeShortcut(function() {
-                    app.quit();
-                });
-
-                return true;
-            case "--squirrel-obsolete":
-                // this is called on the old version before updating
-                app.quit();
-
-                return true;
-        }
-    }
-
-    if(handleStartUpEvents()) {
-        return;
-    }
+if(quirl.handleEvents(process.argv)) {
+    app.quit();
+    return;
 }
 
 app.on("window-all-closed", function() {

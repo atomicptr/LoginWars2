@@ -1,7 +1,7 @@
 {
     "name": "LoginWars2",
     "productName": "LoginWars2",
-    "version": "0.2.1",
+    "version": "0.2.6",
     "main": "app.js",
-    "description": "An alternative launcher for Guild Wars 2 with support for multiple accounts and some extra stuff."
+    "description": "Login Wars 2"
 }
