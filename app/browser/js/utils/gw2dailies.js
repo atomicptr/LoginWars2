@@ -27,6 +27,7 @@ var getDailies = function(day) {
         "Vista Orr": "Vista: Orr",
         "Vista Shiverpeaks": "Vista: Shiverpeaks Mountain",
         "Vista Kryta": "Vista: Kryta",
+        "Vista Wastes": "Vista: Maguuma Wastes",
         "Activity": "Daily Activity",
         "Fractal": "Daily Fractal",
         "Fractal 1-10": "Fractal: 1-10",
@@ -58,11 +59,13 @@ var getDailies = function(day) {
         "Queensdale": "Events: Queensdale",
         "Dredgehaunt": "Events: Dredgehaunt Cliffs",
         "Marches": "Events: Iron Marches",
+        "Silverwastes": "Events: Silverwastes",
+        "Dry": "Events: Dry Top",
 
         // Boss
         "Wurm": "Boss: Jungle Wurm",
         "FE": "Boss: Fire Elemental",
-        "Golem": "Boss: Inquest Golem Mark II",
+        "Golem": "Boss: Inquest Golem Mk II",
         "SB": "Boss: Shadow Behemoth",
         "Jormag": "Boss: Claw of Jormag",
         "Megades": "Boss: Megadestroyer",
@@ -124,12 +127,12 @@ var getDailies = function(day) {
     // daily data is from gw2timer.com
     this.dailyData = {
         "1": {
-        	pve: ["Forager Ascalon", "Activity", "Southsun", "Wurm"],
+        	pve: ["Forager Ascalon", "Activity", "Southsun", "Fractal 1-10"],
         	pvp: ["Defender", "Rank", "War Necro", "Thief Mes"],
         	wvw: ["Land", "Ruins", "Camp", "Tower"]
         },
         "2": {
-        	pve: ["Forager Jungle", "Forger", "Frostgorge", "Jormag"],
+        	pve: ["Forager Jungle", "Forger", "Frostgorge", "Fractal 1-10"],
         	pvp: ["Rank", "Reward", "War Engi", "Ranger Engi"],
         	wvw: ["Creature", "Land", "Defender", "Camp"]
         },
@@ -139,27 +142,27 @@ var getDailies = function(day) {
         	wvw: ["Creature", "Caravan", "Keep", "Tower"]
         },
         "4": {
-        	pve: ["Miner Shiverpeaks", "Vista Ascalon", "Wayfarer", "Shatterer"],
+        	pve: ["Miner Shiverpeaks", "Vista Ascalon", "Wayfarer", "Fractal 1-10"],
         	pvp: ["Reward", "Defender", "Engi Thief", "Ranger Engi"],
         	wvw: ["Spender", "Land", "Tower", "Defender"]
         },
         "5": {
-        	pve: ["Lumberer Jungle", "Vista Kryta", "Dredgehaunt", "Maw"],
+        	pve: ["Lumberer Jungle", "Vista Kryta", "Dredgehaunt", "Fractal 1-10"],
         	pvp: ["Capture", "Kills", "War Guard", "Ranger Engi"],
         	wvw: ["Ruins", "Guard", "Camp", "Defender"]
         },
         "6": {
-        	pve: ["Forager Ascalon", "Activity", "Snowden", "SB"],
+        	pve: ["Forager Ascalon", "Activity", "Snowden", "Fractal 1-10"],
         	pvp: ["Defender", "Capture", "Ranger Thief", "Engi Ele"],
         	wvw: ["Ruins", "Creature", "Defender", "Camp"]
         },
         "7": {
-        	pve: ["Lumberer Ascalon", "Fractal", "Southsun", "Golem"],
+        	pve: ["Lumberer Ascalon", "Fractal", "Southsun", "Fractal 1-10"],
         	pvp: ["Capture", "Reward", "War Ranger", "Guard Necro"],
         	wvw: ["Creature", "Land", "Defender", "Tower"]
         },
         "8": {
-        	pve: ["Miner Jungle", "Vista Orr", "Kessex", "FE"],
+        	pve: ["Miner Jungle", "Vista Orr", "Kessex", "Fractal 1-10"],
         	pvp: ["Rank", "Kills", "Ranger Mes", "Guard Engi"],
         	wvw: ["Ruins", "Kills", "Camp", "Defender"]
         },
@@ -169,7 +172,7 @@ var getDailies = function(day) {
         	wvw: ["Creature", "Land", "Camp", "Keep"]
         },
         "10": {
-        	pve: ["Miner Jungle", "Vista Ascalon", "Brisban", "Wurm"],
+        	pve: ["Miner Jungle", "Vista Ascalon", "Brisban", "Fractal 1-10"],
         	pvp: ["Rank", "Reward", "Ele Mes", "Guard Thief"],
         	wvw: ["Ruins", "Spender", "Defender", "Tower"]
         },
@@ -179,104 +182,104 @@ var getDailies = function(day) {
         	wvw: ["Kills", "Ruins", "Keep", "Defender"]
         },
         "12": {
-        	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Harathi", "Fractal 21-30"],
-        	pvp: ["Reward", "Kills", "War Thief", "Guard Ranger"],
-        	wvw: ["Ruins", "Kills", "Defender", "Camp"]
+        	pve: ["Forager Ascalon", "Vista Kryta", "Cursed", "Fractal 1-10"],
+        	pvp: ["Kills", "Capture", "War Thief", "Guard Ranger"],
+        	wvw: ["Caravan", "Guard", "Defender", "Camp"]
         },
         "13": {
-        	pve: ["Miner Shiverpeaks", "Forger", "Wayfarer", "Fractal 1-10"],
-        	pvp: ["Rank", "Capture", "Engi Mes", "Guard Ele"],
-        	wvw: ["Creature", "Caravan", "Keep", "Camp"]
+        	pve: ["Forager Jungle", "Activity", "Snowden", "Fractal 1-10"],
+        	pvp: ["Reward", "Capture", "Engi Mes", "Guard Ele"],
+        	wvw: ["Guard", "Land", "Defender", "Keep"]
         },
         "14": {
-        	pve: ["Forager Kryta", "Vista Ascalon", "Brisban", "Fractal 1-10"],
-        	pvp: ["Defender", "Rank", "War Ele", "Engi Necro"],
-        	wvw: ["Ruins", "Guard", "Tower", "Keep"]
+        	pve: ["Miner Kryta", "Vista Jungle", "Kessex", "Fractal 1-10"],
+        	pvp: ["Reward", "Rank", "War Ele", "Engi Necro"],
+        	wvw: ["Spender", "Caravan", "Camp", "Defender"]
         },
         "15": {
-        	pve: ["Forager Ascalon", "Activity", "Malchor", "Fractal 1-10"],
-        	pvp: ["Kills", "Defender", "Thief Ele", "Guard Mes"],
-        	wvw: ["Creature", "Caravan", "Defender", "Camp"]
+        	pve: ["Lumberer Kryta", "Vista Ascalon", "Sparkfly", "Fractal 1-10"],
+        	pvp: ["Rank", "Defender", "Thief Ele", "Guard Mes"],
+        	wvw: ["Caravan", "Kills", "Camp", "Tower"]
         },
         "16": {
-        	pve: ["Miner Kryta", "Vista Shiverpeaks", "Maelstrom", "Fractal 1-10"],
-        	pvp: ["Kills", "Capture", "War Mes", "Ranger Necro"],
-        	wvw: ["Land", "Guard", "Tower", "Defender"]
+        	pve: ["Miner Shiverpeaks", "Fractal", "Fields", "Fractal 1-10"],
+        	pvp: ["Reward", "Capture", "War Mes", "Ranger Necro"],
+        	wvw: ["Ruins", "Land", "Keep", "Defender"]
         },
         "17": {
-        	pve: ["Lumberer Shiverpeaks", "Vista Kryta", "Cursed", "Fractal 1-10"],
-        	pvp: ["Reward", "Defender", "Thief Necro", "Ele Ranger"],
-        	wvw: ["Ruins", "Kills", "Keep", "Camp"]
+        	pve: ["Lumberer Jungle", "Vista Kryta", "Harathi", "Fractal 1-10"],
+        	pvp: ["Defender", "Kills", "Thief Necro", "Ele Ranger"],
+        	wvw: ["Land", "Guard", "Defender", "Keep"]
         },
         "18": {
-        	pve: ["Forager Ascalon", "Forger", "Southsun", "Fractal 1-10"],
-        	pvp: ["Defender", "Capture", "War Necro", "Thief Mes"],
-        	wvw: ["Spender", "Ruins", "Defender", "Camp"]
+        	pve: ["Miner Kryta", "Forger", "Bloodtide", "Fractal 1-10"],
+        	pvp: ["Defender", "Rank", "War Necro", "Thief Mes"],
+        	wvw: ["Ruins", "Spender", "Tower", "Defender"]
         },
         "19": {
-        	pve: ["Miner Shiverpeaks", "Fractal", "Harathi", "Fractal 1-10"],
-        	pvp: ["Reward", "Kills", "War Guard", "Ranger Engi"],
-        	wvw: ["Ruins", "Guard", "Keep", "Tower"]
-        },
-        "20": {
-        	pve: ["Miner Shiverpeaks", "Vista Kryta", "Sparkfly", "Wurm"],
-        	pvp: ["Capture", "Rank", "Ranger Thief", "Engi Ele"],
-        	wvw: ["Creature", "Guard", "Camp", "Defender"]
-        },
-        "21": {
-        	pve: ["Forager Orr", "Vista Orr", "Gendarran", "Fractal 31-40"],
-        	pvp: ["Reward", "Capture", "War Ranger", "Guard Necro"],
-        	wvw: ["Land", "Spender", "Tower", "Camp"]
-        },
-        "22": {
-        	pve: ["Lumberer Jungle", "Fractal", "Straits", "FE"],
-        	pvp: ["Defender", "Rank", "Ranger Mes", "Guard Engi"],
-        	wvw: ["Ruins", "Kills", "Camp", "Defender"]
-        },
-        "23": {
-        	pve: ["Miner Ascalon", "Forger", "Kessex", "Fractal 11-20"],
-        	pvp: ["Reward", "Capture", "War Engi", "Ranger Necro"],
-        	wvw: ["Land", "Creature", "Keep", "Tower"]
-        },
-        "24": {
-        	pve: ["Lumberer Ascalon", "Activity", "Wayfarer", "Megades"],
-        	pvp: ["Defender", "Capture", "Ele Mes", "Guard Thief"],
-        	wvw: ["Land", "Guard", "Tower", "Camp"]
-        },
-        "25": {
-        	pve: ["Forager Kryta", "Forger", "Snowden", "Golem"],
-        	pvp: ["Kills", "Defender", "Engi Thief", "Ele Necro"],
-        	wvw: ["Spender", "Kills", "Defender", "Camp"]
-        },
-        "26": {
-        	pve: ["Lumberer Jungle", "Vista Shiverpeaks", "Fields", "Jormag"],
-        	pvp: ["Defender", "Capture", "War Thief", "Guard Ranger"],
-        	wvw: ["Land", "Caravan", "Defender", "Tower"]
-        },
-        "27": {
-        	pve: ["Miner Orr", "Activity", "Queensdale", "Fractal 21-30"],
-        	pvp: ["Reward", "Kills", "Engi Mes", "Guard Ele"],
-        	wvw: ["Ruins", "Kills", "Keep", "Camp"]
-        },
-        "28": {
-        	pve: ["Forager Jungle", "Fractal", "Bloodtide", "SB"],
-        	pvp: ["Defender", "Rank", "War Ele", "Engi Necro"],
-        	wvw: ["Ruins", "Creature", "Tower", "Camp"]
-        },
-        "29": {
-        	pve: ["Miner Shiverpeaks", "Forger", "Harathi", "Golem"],
-        	pvp: ["Capture", "Reward", "Thief Ele", "Guard Mes"],
-        	wvw: ["Kills", "Land", "Defender", "Tower"]
-        },
-        "30": {
-        	pve: ["Lumberer Ascalon", "Vista Shiverpeaks", "Metrica", "FE"],
-        	pvp: ["Capture", "Rank", "War Mes", "Guard Necro"],
+        	pve: ["Lumberer Kryta", "Activity", "Frostgorge", "Fractal 1-10"],
+        	pvp: ["Capture", "Reward", "War Guard", "Ranger Engi"],
         	wvw: ["Guard", "Ruins", "Defender", "Camp"]
         },
+        "20": {
+        	pve: ["Miner Shiverpeaks", "Vista Orr", "Fields", "Wurm"],
+        	pvp: ["Capture", "Rank", "Ranger Thief", "Engi Ele"],
+        	wvw: ["Land", "Caravan", "Defender", "Keep"]
+        },
+        "21": {
+        	pve: ["Lumberer Kryta", "Vista Shiverpeaks", "Silverwastes", "Maw"],
+        	pvp: ["Rank", "Kills", "War Ranger", "Guard Necro"],
+        	wvw: ["Spender", "Guard", "Camp", "Tower"]
+        },
+        "22": {
+        	pve: ["Miner Ascalon", "Activity", "Dry", "Golem"],
+        	pvp: ["Defender", "Reward", "Ranger Mes", "Guard Engi"],
+        	wvw: ["Guard", "Kills", "Defender", "Camp"]
+        },
+        "23": {
+        	pve: ["Forager Kryta", "Fractal", "Gendarran", "FE"],
+        	pvp: ["Capture", "Kills", "War Engi", "Ranger Necro"],
+        	wvw: ["Land", "Guard", "Camp", "Keep"]
+        },
+        "24": {
+        	pve: ["Forager Jungle", "Vista Ascalon", "Queensdale", "Fractal 1-10"],
+        	pvp: ["Defender", "Reward", "Ele Mes", "Guard Thief"],
+        	wvw: ["Caravan", "Spender", "Camp", "Defender"]
+        },
+        "25": {
+        	pve: ["Lumberer Wastes", "Forger", "Bloodtide", "Maw"],
+        	pvp: ["Reward", "Defender", "Engi Thief", "Ele Necro"],
+        	wvw: ["Land", "Kills", "Defender", "Tower"]
+        },
+        "26": {
+        	pve: ["Miner Shiverpeaks", "Vista Kryta", "Wayfarer", "FE"],
+        	pvp: ["Capture", "Rank", "War Thief", "Guard Ranger"],
+        	wvw: ["Spender", "Guard", "Camp", "Defender"]
+        },
+        "27": {
+        	pve: ["Lumberer Jungle", "Vista Orr", "Harathi", "Wurm"],
+        	pvp: ["Kills", "Reward", "Engi Mes", "Guard Ele"],
+        	wvw: ["Creature", "Kills", "Defender", "Tower"]
+        },
+        "28": {
+        	pve: ["Forager Ascalon", "Forger", "Kessex", "SB"],
+        	pvp: ["Kills", "Rank", "War Ele", "Engi Necro"],
+        	wvw: ["Land", "Kills", "Keep", "Camp"]
+        },
+        "29": {
+        	pve: ["Lumberer Kryta", "Fractal", "Maelstrom", "Maw"],
+        	pvp: ["Defender", "Reward", "Thief Ele", "Guard Mes"],
+        	wvw: ["Land", "Caravan", "Defender", "Tower"]
+        },
+        "30": {
+        	pve: ["Forager Orr", "Vista Wastes", "Ashford", "Fractal 11-20"],
+        	pvp: ["Capture", "Kills", "War Mes", "Guard Necro"],
+        	wvw: ["Spender", "Land", "Defender", "Camp"]
+        },
         "31": {
-        	pve: ["Miner Shiverpeaks", "Vista Jungle", "Sparkfly", "Fractal 1-10"],
-        	pvp: ["Capture", "Defender", "Thief Necro", "Ele Ranger"],
-        	wvw: ["Guard", "Land", "Keep", "Camp"]
+        	pve: ["Forager Ascalon", "Vista Shiverpeaks", "Sparkfly", "Fractal 1-10"],
+        	pvp: ["Defender", "Kills", "Thief Necro", "Ele Ranger"],
+        	wvw: ["Creature", "Land", "Keep", "Camp"]
         }
     };
 
