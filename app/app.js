@@ -2,7 +2,7 @@ var app = require("app");
 var BrowserWindow = require("browser-window");
 var Dialog = require("dialog");
 
-var quirl = require("./quirl.js").init();
+var quirl = require("./vendor/quirl.js").init();
 
 var fs = require("fs");
 var spawn = require("child_process").spawn;
