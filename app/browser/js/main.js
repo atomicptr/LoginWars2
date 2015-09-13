@@ -8,6 +8,8 @@ var ENCRYPTION_TEST_STRING = "Bookah!";
 
 var USED_PERMISSIONS = ["tradingpost", "wallet"];
 
+var packageJson = require("../package.json");
+
 app.run(function($rootScope, $localStorage, $sessionStorage) {
     var path = $localStorage.gw2Path;
 
@@ -16,6 +18,8 @@ app.run(function($rootScope, $localStorage, $sessionStorage) {
     ipc.on("gw2-find-path-reply", function(path) {
         $localStorage.gw2Path = path;
     });
+
+    $rootScope.appVersion = "v" + packageJson.version;
 
     $rootScope._updateFunctions = [];
 
