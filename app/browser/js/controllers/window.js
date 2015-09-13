@@ -1,14 +1,25 @@
-app.controller("TabController", function($scope, $rootScope, $localStorage, FeedService, Gw2Service) {
-    $scope.feed = $scope.cachedFeed;
-    $scope.current = $localStorage.lastUsedTab != undefined ? $localStorage.lastUsedTab : 0;
+app.controller("WindowController", function($scope, $rootScope, $localStorage, FeedService, Gw2Service) {
+    $scope.feedUrl = "https://www.guildwars2.com/en/feed/";
+
+    $scope.feed = {
+        title: $localStorage.cachedNewsTitle,
+        news: $localStorage.cachedNewsContent,
+        link: $localStorage.cachedNewsLink
+    };
+
+    $scope.currentTab = $localStorage.lastUsedTab != undefined ? $localStorage.lastUsedTab : 0;
 
     $scope.dailies = getDailies();
 
     $scope.tradingPostEnabled = false;
     $scope.tradingPostEnabledAccounts = [];
 
+    $scope.closeWindow = function() {
+        window.close();
+    }
+
     $scope.changeTab = function(num) {
-        $scope.current = num;
+        $scope.currentTab = num;
         $localStorage.lastUsedTab = num;
     }
 
