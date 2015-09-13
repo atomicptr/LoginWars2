@@ -13,7 +13,7 @@
         <close-button class="no-drag"><i id="close-button-text" class="fa fa-times" ng-click="closeWindow()"></i></close-button>
 
         <content>
-            <tab-area class="no-drag">
+            <tab-area class="no-drag" ng-controller="TabController">
                 <tabs>
                     <h1 ng-class="{'active': currentTab == 0}" ng-click="changeTab(0)" class="tab-title">Latest News</h1>
                     <h1 ng-class="{'active': currentTab == 1}" ng-click="changeTab(1)" class="tab-title" ng-if="!configs().hideDailies">Dailies</h1>
@@ -48,7 +48,8 @@
                     <div class="account-list">
                         <item ng-if="accounts.length > 0" ng-click="accountItemClicked(account)" ng-repeat="account in accounts">
                             <div class="accicon">
-                                <img src="assets/acc.png" />
+                                <img src="assets/acc.png" ng-hide="gameRunning" />
+                                <img src="assets/acclocked.png" ng-show="gameRunning" />
                             </div>
                             <div class="accname">
                                 <mail ng-if="!configs().presentationMode">{{account.email}}</mail>
@@ -72,8 +73,9 @@
 
                 <actions class="no-drag" ng-controller="ActionsController">
                     <button ng-if="!configs().autoUpdates" ng-click="updateGameClient()" class="btn"><span>Update Client</span></button>
-                    <button ng-click="showAddAccountDialog()" class="btn"><span>Add Account</span></button>
-                    <button class="btn"><span>Settings</span></button>
+                    <button ng-click="showAddAccountDialog(true)" class="btn"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Account</span></button>
+                    <button ng-click="showSettingsDialog(true)" class="btn"><span><i class="fa fa-wrench"></i>&nbsp;&nbsp;Settings</span></button>
+                    <button ng-click="showAboutDialog(true)" class="btn"><span><i class="fa fa-info"></i>&nbsp;&nbsp;About</span></button>
 
                     <dialog id="add-account-dialog" class="no-drag">
                         <p>Please enter your account details below.</p>
@@ -92,8 +94,35 @@
                             <input ng-model="account.addparams" type="text" id="add-account-addparams" class="textfield" placeholder="(Optional) Add additional parameters here." tabindex="4" />
 
                             <div class="dialog-button-container">
-                                <button type="button" ng-click="closeAddAccountDialog()" class="btn right"><span>Close</span></button>
+                                <button type="button" ng-click="showAddAccountDialog(false)" class="btn right"><span>Close</span></button>
                                 <button type="submit" id="add-account-save" class="btn"><span>Save</span></button>
+                            </div>
+                        </form>
+                    </dialog>
+
+                    <dialog id="settings-dialog" class="no-drag">
+                        <p>Settings coming soon...</p>
+
+                        <form ng-submit="submitSettingsDialog()">
+                            <input style="display: none;" autofocus tabindex="1" />
+
+                            <div class="dialog-button-container">
+                                <button type="button" ng-click="startClassicLauncher()" class="btn left"><span>Classic Launcher</span></button>
+                                <button type="button" ng-click="showSettingsDialog(false)" class="btn right"><span>Close</span></button>
+                                <button type="submit" id="settings-save" class="btn"><span>Save</span></button>
+                            </div>
+                        </form>
+                    </dialog>
+
+                    <dialog id="about-dialog" class="no-drag">
+                        <p>About text coming soon...</p>
+
+                        <form ng-submit="submitSettingsDialog()">
+                            <input style="display: none;" autofocus tabindex="1" />
+
+                            <div class="dialog-button-container">
+                                <button type="button" ng-click="showGithubPage()" class="btn left"><span><i class="fa fa-github"></i> GitHub</span></button>
+                                <button type="button" ng-click="showAboutDialog(false)" class="btn right"><span>Close</span></button>
                             </div>
                         </form>
                     </dialog>
@@ -137,7 +166,7 @@
                             <input ng-model="decryptPassword" type="password" id="decrypt-password" class="textfield" required />
 
                             <div class="dialog-button-container">
-                                <button type="button" ng-click="decryptCancel()" class="btn right"><span>Cancel</span></button>
+                                <button type="button" ng-click="closeWindow()" class="btn right"><span>Cancel</span></button>
                                 <button type="submit" class="btn"><span>Ok</span></button>
                             </div>
                         </form>
@@ -172,6 +201,8 @@
                     </form>
                 </dialog>
             </account-controller>
+
+            <div class="content-overlay" ng-hide="!showContentOverlay"></div>
         </content>
 
         <span id="beta-label">BETA</span>
@@ -194,6 +225,7 @@
 <script src="js/factories/feeds.js"></script>
 <script src="js/factories/gw2.js"></script>
 <script src="js/controllers/window.js"></script>
+<script src="js/controllers/tab.js"></script>
 <script src="js/controllers/account.js"></script>
 
 <!-- other stuff -->

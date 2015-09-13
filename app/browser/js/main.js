@@ -15,6 +15,8 @@ app.run(function($rootScope, $localStorage, $sessionStorage) {
         $localStorage.gw2Path = path;
     });
 
+    $rootScope._updateFunctions = [];
+
     $rootScope.executable = function() {
         return $localStorage.gw2Path;
     }
@@ -38,6 +40,24 @@ app.run(function($rootScope, $localStorage, $sessionStorage) {
 
         return string;
     }
+
+    $rootScope.registerUpdateCallback = function(func) {
+        $rootScope._updateFunctions.push(func);
+    }
+
+    $rootScope._fireUpdateCallbacks = function() {
+        $rootScope._updateFunctions.forEach(function(func) {
+            func();
+        });
+    }
+
+    setTimeout(function() {
+        $rootScope._fireUpdateCallbacks();
+
+        setInterval(function() {
+            $rootScope._fireUpdateCallbacks();
+        }, 1000 * 60 * 5);
+    }, 500);
 
     // load background video a bit delayed to remove an initial lag in the ui
     setTimeout(function() {

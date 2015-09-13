@@ -53,6 +53,25 @@ content {
     background-color: white;
 }
 
+.content-overlay {
+    position: absolute;
+
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    width: 630px;
+
+    background-color: white;
+
+    transition: all linear 2s;
+
+    z-index: 999;
+}
+
+.content-overlay .ng-hide {
+    opacity: 0;
+}
+
 actions {
     position: absolute;
 

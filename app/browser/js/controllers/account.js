@@ -1,15 +1,7 @@
 app.controller("AccountsController", function($scope, $rootScope, $localStorage, $sessionStorage, Gw2Service) {
-    // TODO: load existing accounts
-    $scope.accounts = [];
-    $scope.loadingDialog = query("#game-starting-dialog");
-    $scope.editAccountDialog = query("#edit-account-dialog");
     $scope.editModeActive = false;
 
-    if($localStorage.accounts && $localStorage.accounts.length > 0) {
-        $scope.accounts = $localStorage.accounts;
-    }
-
-    $scope.$on("gw2-new-account-added", function(event, account) {
+    $scope.addAccount = function(account) {
         if($scope.useEncryption()) {
             account.password = AES.encrypt(account.password, $sessionStorage.masterPassword);
 
@@ -18,17 +10,22 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
             }
         }
 
-        $scope.lastUsage = new Date();
+        account.lastUsage = new Date();
 
         $scope.accounts.push(account);
-        $scope._updateAccountInformations(account);
-    });
+        $scope.updateAccountInformations(account);
+    };
 
     $scope.accountItemClicked = function(account) {
+
         if(!$scope.editModeActive) {
-            // log in as usually
-            account.lastUsage = new Date();
-            $scope.login(account.email, account.password, account.addparams);
+
+            // if game is running don't start another instance
+            if(!$scope.gameRunning) {
+                // log in as usually
+                account.lastUsage = new Date();
+                $scope.login(account.email, account.password, account.addparams);
+            }
         } else {
             // open edit dialog for the account
             $scope.editAcc = angular.copy(account);
@@ -41,12 +38,12 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
 
             $scope.editAccountDialog.showModal();
         }
-    }
+    };
 
     $scope.closeEditAccountWindow = function() {
         $scope.editAcc = {};
         $scope.editAccountDialog.close();
-    }
+    };
 
     $scope.submitEditAccountDialog = function() {
         var account = $scope.editAcc._account;
@@ -65,10 +62,13 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
 
         account.addparams = $scope.editAcc.addparams;
 
+        // apikey might have changed so update account informations
+        $scope.updateAccountInformations(account);
+
         $localStorage.accounts = $scope.accounts;
 
-        $scope.closeEditAccountWindow();
-    }
+        $scope.editAccountDialog.close();
+    };
 
     $scope.deleteAccount = function() {
         var account = $scope.editAcc._account;
@@ -82,41 +82,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
 
             $scope.closeEditAccountWindow();
         }
-    }
-
-    $scope.login = function(email, password, parametersString) {
-        if(!parametersString) {
-            parametersString = "";
-        }
-
-        var parameters = parametersString.split(" ");
-
-        var launchParams = [
-            "-email", "\"" + email + "\"",
-            "-password", "\"" + $scope.decrypt(password) + "\"",
-            "-nopatchui"
-        ];
-
-        launchParams = launchParams.concat(parameters);
-
-        var launch = "\"" + $scope.executable() + "\" " + launchParams.join(" ");
-
-        $scope.loadingDialog.showModal();
-
-        var game = exec(launch);
-
-        game.stdout.on("data", function(data) {
-            console.log(data.toString());
-        });
-
-        game.stderr.on("data", function(data) {
-            console.error(data.toString());
-        });
-
-        game.on("exit", function(code, signal) {
-            $scope.loadingDialog.close();
-        });
-    }
+    };
 
     $scope.presentationModeFriendlyAccountName = function(account) {
         if(account.apikey) {
@@ -124,31 +90,9 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         }
 
         return "Snaff";
-    }
-
-    $scope.clear = function() {
-        $localStorage.accounts = [];
-        $scope.accounts = [];
-    }
-
-    $scope._updateAccountInformations = function(account) {
-        if(account.apikey) {
-            var apikey = $scope.decrypt(account.apikey);
-            Gw2Service.getAccountInformations(apikey).then(function(res) {
-                var data = res.data;
-
-                account.name = data.name;
-
-                // update accounts in localStorage
-                $localStorage.accounts = $scope.accounts;
-            });
-        } else {
-            // update accounts in localStorage
-            $localStorage.accounts = $scope.accounts;
-        }
     };
 
-    $scope.$on("encrypt-data", function(event, masterPassword) {
+    $scope.encryptData = function(masterPassword) {
         $localStorage.useEncryption = true;
 
         $localStorage.encryptionTest = AES.encrypt(ENCRYPTION_TEST_STRING, masterPassword);
@@ -165,10 +109,10 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         // update accounts in localStorage
         $localStorage.accounts = $scope.accounts;
 
-        $scope.$emit("encryption-ready", masterPassword);
-    });
+        $scope.onMasterPasswordSet(masterPassword);
+    };
 
-    $scope.$on("encryption-ready", function(event, masterPassword) {
+    $scope.onMasterPasswordSet = function(masterPassword) {
         if($scope.useEncryption()) {
             $sessionStorage.masterPassword = masterPassword;
         }
@@ -177,110 +121,113 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         // so we need to broadcast that it's now ready
         $rootScope.$broadcast("master-password-set");
 
-        // update known account informations
-        $scope.accounts.forEach(function(account) {
-            $scope._updateAccountInformations(account);
-        });
-    });
-});
-
-app.controller("ActionsController", function($scope, $rootScope, $localStorage, Gw2Service) {
-    $scope._addAccountDialog = query("#add-account-dialog");
-
-    $scope.updateGameClient = function() {
-        $scope.loadingDialog.showModal();
-        var game = spawn($scope.executable(), ["-image"]);
-
-        game.on("exit", function(code, signal) {
-            $scope.loadingDialog.close();
+        $scope.registerUpdateCallback(function() {
+            // update known account informations
+            $scope.accounts.forEach(function(account) {
+                console.log("update account: " + account.email);
+                $scope.updateAccountInformations(account);
+            });
         });
     };
 
-    $scope.showAddAccountDialog = function() {
-        $scope._addAccountDialog.showModal();
-    }
+    $scope.updateAccountInformations = function(account) {
+        if(account.apikey) {
+            var apikey = $scope.decrypt(account.apikey);
+            Gw2Service.getAccountInformations(apikey).then(function(res) {
+                var data = res.data;
 
-    $scope.closeAddAccountDialog = function() {
-        $scope._addAccountDialog.close();
-    }
+                account.name = data.name;
 
+                Gw2Service.getTokenInfo(apikey).then(function(res) {
+                    var data = res.data;
+
+                    account.permissions = data.permissions;
+
+                    // update accounts in localStorage
+                    $localStorage.accounts = $scope.accounts;
+                })
+            }, function(res) {
+                console.error(res.status + " (" + res.statusText + "): " + JSON.stringify(res.data));
+
+                // 400 means invalid key, 403 usually means the key is just some random crap
+                if(res.status == 400 || res.status == 403) {
+                    delete account.apikey;
+                    $localStorage.accounts = $scope.accounts;
+                }
+            });
+        } else {
+            // update accounts in localStorage
+            $localStorage.accounts = $scope.accounts;
+        }
+    };
+});
+
+app.controller("ActionsController", function($scope, $rootScope, $localStorage, Gw2Service) {
     $scope.submitAddAccountDialog = function() {
-        $scope.$emit("gw2-new-account-added", angular.copy($scope.account));
+        $scope.addAccount(angular.copy($scope.account));
         $scope.account = {};
 
-        $scope.closeAddAccountDialog();
+        $scope.addAccountDialog.close()
+    };
+
+    $scope.showAddAccountDialog = function(show) {
+        $scope.showDialog($scope.addAccountDialog, show);
+    };
+
+    $scope.showSettingsDialog = function(show) {
+        $scope.showDialog($scope.settingsDialog, show);
+    };
+
+    $scope.showAboutDialog = function(show) {
+        $scope.showDialog($scope.aboutDialog, show);
+    };
+
+    $scope.showGithubPage = function() {
+        openUrl("https://github.com/kasoki/LoginWars2");
     }
-
-    $rootScope.$on("master-password-set", function() {
-        // check last known build number with the current one from the server, if they don't match
-        // start update
-        Gw2Service.getBuildNumber().then(function(res) {
-            var lastBuildNumber = $localStorage.buildNumber;
-            $localStorage.buildNumber = res.data.id;
-
-            if(lastBuildNumber != undefined) {
-                if(lastBuildNumber != res.data.id) {
-                    console.log("Current build: " + lastBuildNumber + ", but server claims to have a new one ready: " +
-                        res.data.id + "... trying to update...");
-
-                    if($scope.configs().autoUpdates) {
-                        $scope.updateGameClient();
-                    }
-                }
-            }
-        });
-    });
 });
 
 app.controller("EncryptionController", function($scope, $localStorage, $sessionStorage) {
-    $scope._askEncryptionDialog = query("#ask-encryption-dialog");
-    $scope._enterEncryptionDialog = query("#enter-encryption-dialog");
-    $scope._decryptDialog = query("#decrypt-dialog");
-
     if($scope.useEncryption() == undefined) {
         // open ask encryption dialog
-        $scope._askEncryptionDialog.showModal();
+        $scope.askEncryptionDialog.showModal();
     } else if($scope.useEncryption()) {
         // if master password is still stored in sessionStorage
         if($sessionStorage.masterPassword != undefined) {
-            $scope.$emit("encryption-ready", $sessionStorage.masterPassword);
+            $scope.onMasterPasswordSet($sessionStorage.masterPassword);
         } else {
             // ask for password
-            $scope._decryptDialog.showModal();
+            $scope.decryptDialog.showModal();
         }
     } else {
         // no encryption used, be ready
-        $scope.$emit("encryption-ready", null);
+        $scope.onMasterPasswordSet(null);
     }
 
     $scope.askDialogYes = function() {
         // show encryption enter dialog
-        $scope._askEncryptionDialog.close();
-        $scope._enterEncryptionDialog.showModal();
+        $scope.askEncryptionDialog.close();
+        $scope.enterEncryptionDialog.showModal();
     };
 
     $scope.askDialogNo = function() {
         $localStorage.useEncryption = false;
-        $scope._askEncryptionDialog.close();
+        $scope.askEncryptionDialog.close();
     };
 
     $scope.enterDialogCancel = function() {
-        $scope._enterEncryptionDialog.close();
-        $scope._askEncryptionDialog.showModal();
+        $scope.enterEncryptionDialog.close();
+        $scope.askEncryptionDialog.showModal();
     };
 
     $scope.submitEncryptionDialog = function() {
         if($scope.encryption.password == $scope.encryption.passwordConfirm) {
-            $scope.$emit("encrypt-data", $scope.encryption.password);
-            $scope._enterEncryptionDialog.close();
+            $scope.encryptData($scope.encryption.password);
+            $scope.enterEncryptionDialog.close();
         } else {
             // TODO: do error stuff
             console.log("Passwords don't match");
         }
-    };
-
-    $scope.decryptCancel = function() {
-        window.close();
     };
 
     $scope.submitDecryptDialog = function() {
@@ -290,8 +237,8 @@ app.controller("EncryptionController", function($scope, $localStorage, $sessionS
 
         if(encryptionTest == ENCRYPTION_TEST_STRING) {
             // master password is right
-            $scope.$emit("encryption-ready", password);
-            $scope._decryptDialog.close();
+            $scope.onMasterPasswordSet(password);
+            $scope.decryptDialog.close();
         } else {
             // TODO: password wrong add error message
             console.log("Wrong password " + $localStorage.encryptionTest);

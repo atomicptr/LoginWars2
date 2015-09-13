@@ -17,3 +17,12 @@ function decodeHtml(html) {
     textArea.innerHTML = html;
     return textArea.value;
 }
+
+function openUrl(url) {
+    // is OS X
+    if(process.platform == "darwin") {
+        spawn("open", [url]);
+    } else { // is Windows
+        spawn("explorer.exe", [url]);
+    }
+}

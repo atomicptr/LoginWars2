@@ -9,12 +9,7 @@ app.directive("a", function() {
 
                 var url = attrs.href;
 
-                // is OS X
-                if(process.platform == "darwin") {
-                    spawn("open", [url]);
-                } else { // is Windows
-                    spawn("explorer.exe", [url]);
-                }
+                openUrl(url);
             });
         }
    };
