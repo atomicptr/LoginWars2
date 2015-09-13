@@ -88,7 +88,16 @@
                             <input ng-model="account.password" type="password" id="add-account-password" class="textfield" placeholder="snaff1234" tabindex="2" required />
 
                             <label for="add-account-apikey">API Key <a href="https://account.arena.net/applications/create">(Create one here)</a></label>
-                            <input ng-model="account.apikey" type="text" id="add-account-apikey" class="textfield" placeholder="(Optional) Enter your API key." tabindex="3" />
+                            <input ng-model="account.apikey" ng-change="checkApiKey()" type="text" id="add-account-apikey" class="textfield" placeholder="(Optional) Enter your API key." tabindex="3" />
+
+                            <label>Used Permissions</label>
+                            <ul>
+                                <li ng-repeat="p in permissions">
+                                    {{p.name}}
+                                    <i ng-if="p.granted" class="fa fa-check granted"></i>
+                                    <i ng-if="!p.granted" class="fa fa-times not-granted"></i>
+                                </li>
+                            </ul>
 
                             <label for="add-account-addparams">Additional command line parameters <a href="https://wiki.guildwars2.com/wiki/Command_line_arguments">(Docs)</a></label>
                             <input ng-model="account.addparams" type="text" id="add-account-addparams" class="textfield" placeholder="(Optional) Add additional parameters here." tabindex="4" />
@@ -188,7 +197,16 @@
                         <input ng-model="editAcc.password" type="password" id="edit-account-password" class="textfield" placeholder="snaff1234" tabindex="2" required />
 
                         <label for="edit-account-apikey">API Key <a href="https://account.arena.net/applications/create">(Create one here)</a></label>
-                        <input ng-model="editAcc.apikey" type="text" id="edit-account-apikey" class="textfield" placeholder="(Optional) Enter your API key." tabindex="3" />
+                        <input ng-model="editAcc.apikey" ng-change="checkApiKey()" type="text" id="edit-account-apikey" class="textfield" placeholder="(Optional) Enter your API key." tabindex="3" />
+
+                        <label>Used Permissions</label>
+                        <ul>
+                            <li ng-repeat="p in editAcc._permissions">
+                                {{p.name}}
+                                <i ng-if="p.granted" class="fa fa-check granted"></i>
+                                <i ng-if="!p.granted" class="fa fa-times not-granted"></i>
+                            </li>
+                        </ul>
 
                         <label for="edit-account-addparams">Additional command line parameters <a href="https://wiki.guildwars2.com/wiki/Command_line_arguments">(Docs)</a></label>
                         <input ng-model="editAcc.addparams" type="text" id="edit-account-addparams" class="textfield" placeholder="(Optional) Add additional parameters here." tabindex="4" />

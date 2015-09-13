@@ -36,6 +36,8 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
                 $scope.editAcc.apikey = $scope.decrypt($scope.editAcc.apikey);
             }
 
+            $scope.checkApiKey();
+
             $scope.editAccountDialog.showModal();
         }
     };
@@ -90,6 +92,31 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         }
 
         return "Snaff";
+    };
+
+    $scope.parsePermissions = function(permissions) {
+        var usedPermissions = [];
+
+        USED_PERMISSIONS.forEach(function(p) {
+            usedPermissions.push({
+                name: p,
+                granted: (permissions.indexOf(p) > -1)
+            });
+        });
+
+        return usedPermissions;
+    };
+
+    $scope.checkApiKey = function() {
+        var apikey = $scope.editAcc.apikey;
+
+        $scope.editAcc._permissions = $scope.parsePermissions([]);
+
+        Gw2Service.getTokenInfo(apikey).then(function(res) {
+            var data = res.data;
+
+            $scope.editAcc._permissions = $scope.parsePermissions(data.permissions);
+        });
     };
 
     $scope.encryptData = function(masterPassword) {
@@ -163,14 +190,19 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
 });
 
 app.controller("ActionsController", function($scope, $rootScope, $localStorage, Gw2Service) {
+    $scope.permissions = [];
+
     $scope.submitAddAccountDialog = function() {
         $scope.addAccount(angular.copy($scope.account));
         $scope.account = {};
 
-        $scope.addAccountDialog.close()
+        $scope.permissions = [];
+
+        $scope.addAccountDialog.close();
     };
 
     $scope.showAddAccountDialog = function(show) {
+        $scope.permissions = $scope.parsePermissions([]);
         $scope.showDialog($scope.addAccountDialog, show);
     };
 
@@ -184,7 +216,17 @@ app.controller("ActionsController", function($scope, $rootScope, $localStorage, 
 
     $scope.showGithubPage = function() {
         openUrl("https://github.com/kasoki/LoginWars2");
-    }
+    };
+
+    $scope.checkApiKey = function() {
+        var apikey = $scope.account.apikey;
+
+        Gw2Service.getTokenInfo(apikey).then(function(res) {
+            var data = res.data;
+
+            $scope.permissions = $scope.parsePermissions(data.permissions);
+        });
+    };
 });
 
 app.controller("EncryptionController", function($scope, $localStorage, $sessionStorage) {

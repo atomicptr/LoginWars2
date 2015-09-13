@@ -6,6 +6,8 @@ var ipc = require("ipc");
 
 var ENCRYPTION_TEST_STRING = "Bookah!";
 
+var USED_PERMISSIONS = ["tradingpost", "wallet"];
+
 app.run(function($rootScope, $localStorage, $sessionStorage) {
     var path = $localStorage.gw2Path;
 
