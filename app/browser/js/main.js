@@ -6,7 +6,7 @@ var ipc = require("ipc");
 
 var ENCRYPTION_TEST_STRING = "Bookah!";
 
-var USED_PERMISSIONS = ["tradingpost", "wallet"];
+var USED_PERMISSIONS = ["account", "tradingpost", "wallet"];
 
 var packageJson = require("../package.json");
 
