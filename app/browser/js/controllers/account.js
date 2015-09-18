@@ -242,7 +242,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
 
 app.controller("ActionsController", function($scope, $rootScope, $localStorage, Gw2Service) {
     $scope.permissions = [];
-    $scope.settings = $localStorage.configs;
+    $scope.settings = angular.copy($localStorage.configs);
 
     $scope.submitAddAccountDialog = function() {
         $scope.addAccount(angular.copy($scope.account));
@@ -259,7 +259,7 @@ app.controller("ActionsController", function($scope, $rootScope, $localStorage, 
     };
 
     $scope.showSettingsDialog = function(show) {
-        $scope.settings = $localStorage.configs;
+        $scope.settings = angular.copy($localStorage.configs);
         $scope.showDialog($scope.settingsDialog, show);
     };
 
