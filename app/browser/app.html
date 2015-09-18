@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="trading-post" ng-if="currentTab == 2">
-                    <div class="tp-item" ng-repeat="transaction in tpTransactions | orderBy:sortTransactions | limitTo: 20">
+                    <div class="tp-item" ng-click="tradingPostItemClicked(transaction)" ng-repeat="transaction in tpTransactions | orderBy:sortTransactions | limitTo: 20">
                         <div class="tp-buysell-indicator">
                             <img ng-src="assets/{{transaction.type}}.png" />
                         </div>

@@ -77,6 +77,10 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
         return "" + years + " year" + (years > 1 ? "s" : "");
     };
 
+    $scope.tradingPostItemClicked = function(transaction) {
+        openUrl("http://www.gw2spidy.com/item/" + transaction.item_id);
+    };
+
     $scope.registerUpdateCallback(function() {
         FeedService.parseFeed($scope.feedUrl).then(function(res) {
             $scope.feeds = res.data.responseData.feed.entries;
