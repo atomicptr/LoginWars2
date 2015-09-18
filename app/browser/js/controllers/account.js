@@ -44,7 +44,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
     };
 
     $scope.canUseWallet = function(account) {
-        return account.permissions.indexOf("wallet") > -1 && account.wallet != undefined;
+        return account.permissions != undefined && account.permissions.indexOf("wallet") > -1;
     };
 
     $scope.sortAccounts = function(account) {
@@ -313,6 +313,7 @@ app.controller("EncryptionController", function($scope, $localStorage, $sessionS
     $scope.askDialogNo = function() {
         $localStorage.useEncryption = false;
         $scope.askEncryptionDialog.close();
+        $scope.onMasterPasswordSet(null);
     };
 
     $scope.enterDialogCancel = function() {
