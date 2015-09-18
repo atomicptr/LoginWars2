@@ -42,6 +42,10 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         }
     };
 
+    $scope.canUseWallet = function(account) {
+        return account.permissions.indexOf("wallet") > -1 && account.wallet != undefined;
+    }
+
     $scope.closeEditAccountWindow = function() {
         $scope.editAcc = {};
         $scope.editAccountDialog.close();
@@ -170,6 +174,46 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
 
                     account.permissions = data.permissions;
 
+                    // can use wallet? add stuff
+                    if($scope.canUseWallet(account)) {
+
+                        var ID_COINS = 1;
+                        var ID_LAURELS = 3;
+
+                        Gw2Service.getWallet(apikey).then(function(res) {
+                            var data = res.data;
+
+                            // didn't have wallet before, add one
+                            if(!account.wallet) {
+                                account.wallet = {};
+                                account.wallet.coins = {};
+                            }
+
+                            // get laurels and coins
+                            var currency = data.filter(function(item) {
+                                return item.id == ID_COINS || item.id == ID_LAURELS;
+                            });
+
+                            currency.forEach(function(item) {
+                                if(item.id == ID_COINS) {
+                                    var coins = item.value;
+
+                                    account.wallet.coins.gold = Math.floor(coins / 100 / 100);
+
+                                    coins -= account.wallet.coins.gold * 100 * 100;
+
+                                    account.wallet.coins.silver = Math.floor(coins / 100);
+
+                                    coins -= account.wallet.coins.silver * 100;
+
+                                    account.wallet.coins.copper = coins;
+                                } else if(item.id == ID_LAURELS) {
+                                    account.wallet.laurels = item.value;
+                                }
+                            });
+                        });
+                    }
+
                     // update accounts in localStorage
                     $localStorage.accounts = $scope.accounts;
                 })
@@ -179,6 +223,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
                 // 400 means invalid key, 403 usually means the key is just some random crap
                 if(res.status == 400 || res.status == 403) {
                     delete account.apikey;
+                    account.permissions = [];
                     $localStorage.accounts = $scope.accounts;
                 }
             });

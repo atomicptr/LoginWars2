@@ -64,6 +64,16 @@
                                     <name ng-if="!account.apikey">No API key specified</name>
                                 </name-container>
                             </div>
+                            <div class="accwallet" ng-if="canUseWallet(account)">
+                                <span class="laurels">
+                                    <img class="laurel" src="assets/laurel.png" /> {{account.wallet.laurels}}
+                                </span>
+                                <span class="coins">
+                                    {{account.wallet.coins.gold}}<span><img class="coin" src="assets/gold_coin.png" /></span>&nbsp;
+                                    {{account.wallet.coins.silver}}<span><img class="coin" src="assets/silver_coin.png" /></span>&nbsp;
+                                    {{account.wallet.coins.copper}}<span><img class="coin" src="assets/copper_coin.png" /></span>
+                                </span>
+                            </div>
                         </item>
                         <div ng-if="accounts.length == 0" class="accounts-list-empty">
                             <p>You don't have any accounts added yet, press the "Add Account" button below to add accounts</p>

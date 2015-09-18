@@ -20,7 +20,8 @@ accounts {
 }
 
 .account-list item {
-    display: block;
+    display: flex;
+    align-items: center;
 
     cursor: pointer;
 
@@ -47,21 +48,52 @@ accounts {
 .accicon img {
     width: 32px;
     height: 32px;
-    margin-left: 10px;
+    padding-left: 10px;
 }
 
 .accname {
     margin-left: 20px;
     display: inline-block;
+
+    flex-grow: 2;
+
+    width: 320px;
+    max-width: 320px;
 }
 
 .accname mail {
     font-size: 24px;
 }
 
-.accextras {
-    display: inline-block;
-    font-size: 24px;
+.accwallet {
+    padding-right: 5px;
+    text-align: right;
+
+    flex-grow: 1;
+}
+
+.laurels {
+    display: block;
+    margin-bottom: 3px;
+}
+
+.coins {
+}
+
+.laurel {
+    margin-left: 2px;
+    width: 15px;
+    height: 15px;
+    position: relative;
+    bottom: -2px;
+}
+
+.coin {
+    margin-left: 2px;
+    width: 15px;
+    height: 15px;
+    position: relative;
+    bottom: -2px;
 }
 
 .accounts-list-empty {
