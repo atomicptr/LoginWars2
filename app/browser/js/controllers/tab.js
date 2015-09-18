@@ -81,6 +81,53 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
         openUrl("http://www.gw2spidy.com/item/" + transaction.item_id);
     };
 
+    $scope.updateTradingPost = function() {
+        if($scope.canUseTradingPost()) {
+            $scope.tpTransactions = [];
+
+            $scope.accounts.forEach(function(account) {
+                if(account.apikey && account.permissions.indexOf("tradingpost") > -1) {
+                    var apikey = $scope.decrypt(account.apikey);
+
+                    if(!$localStorage.tpTransactions) {
+                        $localStorage.tpTransactions = [];
+                    }
+
+                    if(!$localStorage.itemCache) {
+                        $localStorage.itemCache = {};
+                    }
+
+                    function processTransactionData(account, type) {
+                        return function(res) {
+                            var data = res.data;
+
+                            data.forEach(function(transaction) {
+                                transaction.type = type;
+                                transaction.cacheDate = new Date();
+                                transaction.account = account.email;
+                                transaction.coinPrice = convertToGw2Money(transaction.price);
+
+                                $scope.tpTransactions.push(transaction);
+
+                                $localStorage.tpTransactions = $scope.tpTransactions;
+
+                                if($localStorage.itemCache[transaction.item_id] == undefined) {
+                                    Gw2Service.getItem(transaction.item_id).then(function(res) {
+                                        $localStorage.itemCache[transaction.item_id] = res.data;
+                                        console.log("Added " + res.data.name + " to item cache.");
+                                    });
+                                }
+                            });
+                        };
+                    }
+
+                    Gw2Service.getTransactionHistoryForBuys(apikey).then(processTransactionData(account, "buy"));
+                    Gw2Service.getTransactionHistoryForSells(apikey).then(processTransactionData(account, "sell"));
+                }
+            });
+        }
+    };
+
     $scope.registerUpdateCallback(function() {
         FeedService.parseFeed($scope.feedUrl).then(function(res) {
             $scope.feeds = res.data.responseData.feed.entries;
@@ -102,51 +149,12 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
     });
 
     $rootScope.$on("master-password-set", function() {
-        if($scope.canUseTradingPost()) {
-            $scope.registerUpdateCallback(function() {
-                $scope.tpTransactions = [];
+        $scope.registerUpdateCallback(function() {
+            $scope.updateTradingPost();
+        });
+    });
 
-                $scope.accounts.forEach(function(account) {
-                    if(account.apikey && account.permissions.indexOf("tradingpost") > -1) {
-                        var apikey = $scope.decrypt(account.apikey);
-
-                        if(!$localStorage.tpTransactions) {
-                            $localStorage.tpTransactions = [];
-                        }
-
-                        if(!$localStorage.itemCache) {
-                            $localStorage.itemCache = {};
-                        }
-
-                        function processTransactionData(account, type) {
-                            return function(res) {
-                                var data = res.data;
-
-                                data.forEach(function(transaction) {
-                                    transaction.type = type;
-                                    transaction.cacheDate = new Date();
-                                    transaction.account = account.email;
-                                    transaction.coinPrice = convertToGw2Money(transaction.price);
-
-                                    $scope.tpTransactions.push(transaction);
-
-                                    $localStorage.tpTransactions = $scope.tpTransactions;
-
-                                    if($localStorage.itemCache[transaction.item_id] == undefined) {
-                                        Gw2Service.getItem(transaction.item_id).then(function(res) {
-                                            $localStorage.itemCache[transaction.item_id] = res.data;
-                                            console.log("Added " + res.data.name + " to item cache.");
-                                        });
-                                    }
-                                });
-                            };
-                        }
-
-                        Gw2Service.getTransactionHistoryForBuys(apikey).then(processTransactionData(account, "buy"));
-                        Gw2Service.getTransactionHistoryForSells(apikey).then(processTransactionData(account, "sell"));
-                    }
-                });
-            });
-        }
+    $rootScope.$on("account-permissions-changed", function() {
+        $scope.updateTradingPost();
     });
 });

@@ -188,6 +188,8 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
 
                     account.permissions = data.permissions;
 
+                    $rootScope.$broadcast("account-permissions-changed");
+
                     // can use wallet? add stuff
                     if($scope.canUseWallet(account)) {
 
