@@ -104,7 +104,7 @@
                 </accounts>
 
                 <actions class="no-drag" ng-controller="ActionsController">
-                    <button ng-if="!configs().autoUpdates" ng-click="updateGameClient()" class="btn"><span>Update Client</span></button>
+                    <button ng-if="!configs().autoUpdates" ng-click="updateGameClient()" class="btn"><span><i class="fa fa-refresh"></i>&nbsp;&nbsp;Update Client</span></button>
                     <button ng-click="showAddAccountDialog(true)" class="btn"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Account</span></button>
                     <button ng-click="showSettingsDialog(true)" class="btn"><span><i class="fa fa-wrench"></i>&nbsp;&nbsp;Settings</span></button>
                     <button ng-click="showAboutDialog(true)" class="btn"><span><i class="fa fa-info"></i>&nbsp;&nbsp;About</span></button>

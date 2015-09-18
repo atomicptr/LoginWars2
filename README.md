@@ -1,20 +1,17 @@
 # Login Wars 2
 
-An experimental alternative launcher for Guild Wars 2 with support for multiple accounts and some extra stuff.
+An alternative launcher for Guild Wars 2 with support for multiple accounts and some extra cheese.
 
 ## Features
-* Manage multiple accounts
+* Manage multiple accounts!
 * Account data can (and should) be encrypted (No more plain text password shortcuts!)
 * Check your dailies, in the launcher!
-* (SOON) Check your latest Trading Post transactions (Only if you grant the permissions)
-* (SOON) More cool API integrations!
+* Check your latest Trading Post transactions!
+* Check how much money and laurels you have on your alternative accounts without the need to log into them!
 
 ## Work in progress
-* Name/Icon is not final
-* UI needs lots of improvements (in usability and design)
-* Some code needs to be rewritten
-* Still no update functionality (As in you can't update the launcher atm, I'm looking into integrating Squirrel for this)
-* Not working OS X version, while there is an OS X version in theory it doesn't work since I'm still not sure how to apply the command line options via cider
+* Still no update functionality, the launcher should be able to update itself.
+* No working OS X version. I've added some code for compatibility, but [command line options aren't working on OS X.](https://forum-en.guildwars2.com/forum/support/support/Mac-Command-line-args-not-working/first)
 
 ## What it actually does
 
@@ -42,9 +39,9 @@ I wanted to call the app "Login Wars" but it somewhat would sound like it's for 
 
 ## Powered by
 
-* The eternal alchemy
 * electron
 * angular.js
+* Guild Wars 2 API
 
 ## Asset attributions
 
@@ -52,4 +49,4 @@ I wanted to call the app "Login Wars" but it somewhat would sound like it's for 
 
 ## License
 
-It's copyrighted, closed source software at the moment so sharing it without my permission is not allowed. I'll make it open source at some point in the future.
+MIT License, for more informations check out the LICENSE file.
