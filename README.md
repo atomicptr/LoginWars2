@@ -50,14 +50,6 @@ I wanted to call the app "Login Wars" but it somewhat would sound like it's for 
 
 &copy; 2014 ArenaNet, LLC. All rights reserved. NCSOFT, the interlocking NC logo, ArenaNet, Guild Wars, Guild Wars Factions, Guild Wars Nightfall, Guild Wars: Eye of the North, Guild Wars 2, and all associated logos and designs are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners.
 
-List of assets from Guild Wars 2:
-
-* Daily icons (assets/{pve, pvp, wvw}.png)
-* World completition icon (assets/acc.png)
-* GW2 Font (assets/gw2_font.ttf)
-* GW2 Logo in transparent (assets/logo.png)
-* Background Video from the old GW2 login screen (assets/background.webm)
-
 ## License
 
 It's copyrighted, closed source software at the moment so sharing it without my permission is not allowed. I'll make it open source at some point in the future.

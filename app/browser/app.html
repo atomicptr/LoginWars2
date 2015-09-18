@@ -46,7 +46,7 @@
                 <accounts class="no-drag no-text-selection">
                     <h1 id="accounts-title">Accounts</h1> <i id="edit-accounts-button" ng-click="editModeActive = !editModeActive" ng-class="{'edit-accounts-active': editModeActive}" class="fa fa-cog"></i>
                     <div class="account-list">
-                        <item ng-if="accounts.length > 0" ng-click="accountItemClicked(account)" ng-repeat="account in accounts">
+                        <item ng-if="accounts.length > 0" ng-click="accountItemClicked(account)" ng-repeat="account in accounts | orderBy: sortAccounts">
                             <div class="accicon">
                                 <img src="assets/acc.png" ng-hide="gameRunning" />
                                 <img src="assets/acclocked.png" ng-show="gameRunning" />
@@ -70,8 +70,8 @@
                                 </span>
                                 <span class="coins">
                                     {{account.wallet.coins.gold}}<span><img class="coin" src="assets/gold_coin.png" /></span>&nbsp;
-                                    {{account.wallet.coins.silver}}<span><img class="coin" src="assets/silver_coin.png" /></span>&nbsp;
-                                    {{account.wallet.coins.copper}}<span><img class="coin" src="assets/copper_coin.png" /></span>
+                                    {{pad(account.wallet.coins.silver)}}<span><img class="coin" src="assets/silver_coin.png" /></span>&nbsp;
+                                    {{pad(account.wallet.coins.copper)}}<span><img class="coin" src="assets/copper_coin.png" /></span>
                                 </span>
                             </div>
                         </item>
@@ -120,10 +120,14 @@
                     </dialog>
 
                     <dialog id="settings-dialog" class="no-drag">
-                        <p>Settings coming soon...</p>
+                        <p>Settings</p>
 
                         <form ng-submit="submitSettingsDialog()">
                             <input style="display: none;" autofocus tabindex="1" />
+                            <input type="checkbox" ng-model="settings.autoUpdates"/> <b>Auto Updates</b> - Check for GW2 client updates automatically<br/>
+                            <input type="checkbox" ng-model="settings.presentationMode"/> <b>Presentation Mode</b> - Hide account name and email<br/>
+                            <input type="checkbox" ng-model="settings.hideDailies"/> <b>Hide dailies</b> - Hide the "Daily" tab<br/>
+                            <input type="checkbox" ng-model="settings.sortAccountsByLastUsage" /> <b>Sort accounts by last usage</b> - instead of the order they were added
 
                             <div class="dialog-button-container">
                                 <button type="button" ng-click="startClassicLauncher()" class="btn left"><span>Classic Launcher</span></button>
@@ -134,8 +138,19 @@
                     </dialog>
 
                     <dialog id="about-dialog" class="no-drag">
-                        <p>About text coming soon...</p>
-                        <p>App Version: {{appVersion}}</p>
+                        <h2 class="about-app">About Login Wars 2</h2>
+                        <p>
+                            Login Wars 2 is open source software developed and maintained primary by <a href="https://github.com/kasoki">Christopher Kaster</a>.
+                        </p>
+                        <h3 class="about-assets">Asset attributions</h3>
+                        <p class="about-assets-copyright">
+                            &copy; 2014 ArenaNet, LLC. All rights reserved. NCSOFT, the interlocking
+                            NC logo, ArenaNet, Guild Wars, Guild Wars Factions, Guild Wars Nightfall,
+                            Guild Wars: Eye of the North, Guild Wars 2, and all associated logos and
+                            designs are trademarks or registered trademarks of NCSOFT Corporation.
+                            All other trademarks are the property of their respective owners.
+                        </p>
+                        <p><b>App Version</b>: {{appVersion}}</p>
 
                         <form ng-submit="submitSettingsDialog()">
                             <input style="display: none;" autofocus tabindex="1" />

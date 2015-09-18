@@ -10,6 +10,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
             }
         }
 
+        account.added = new Date();
         account.lastUsage = new Date();
 
         $scope.accounts.push(account);
@@ -44,6 +45,22 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
 
     $scope.canUseWallet = function(account) {
         return account.permissions.indexOf("wallet") > -1 && account.wallet != undefined;
+    };
+
+    $scope.pad = function(number) {
+        if(number < 10) {
+            return "0" + number;
+        }
+
+        return "" + number;
+    }
+
+    $scope.sortAccounts = function(account) {
+        if($scope.configs().sortAccountsByLastUsage) {
+            return -(new Date(account.lastUsage).getTime());
+        }
+
+        return new Date(account.created).getTime();
     }
 
     $scope.closeEditAccountWindow = function() {
@@ -162,6 +179,11 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
     };
 
     $scope.updateAccountInformations = function(account) {
+        // HACK: add attribute if some old account doesn't have it
+        if(!account.created) {
+            account.created = new Date();
+        }
+
         if(account.apikey) {
             var apikey = $scope.decrypt(account.apikey);
             Gw2Service.getAccountInformations(apikey).then(function(res) {
@@ -236,6 +258,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
 
 app.controller("ActionsController", function($scope, $rootScope, $localStorage, Gw2Service) {
     $scope.permissions = [];
+    $scope.settings = $localStorage.configs;
 
     $scope.submitAddAccountDialog = function() {
         $scope.addAccount(angular.copy($scope.account));
@@ -252,6 +275,7 @@ app.controller("ActionsController", function($scope, $rootScope, $localStorage, 
     };
 
     $scope.showSettingsDialog = function(show) {
+        $scope.settings = $localStorage.configs;
         $scope.showDialog($scope.settingsDialog, show);
     };
 
@@ -271,6 +295,11 @@ app.controller("ActionsController", function($scope, $rootScope, $localStorage, 
 
             $scope.permissions = $scope.parsePermissions(data.permissions);
         });
+    };
+
+    $scope.submitSettingsDialog = function() {
+        $localStorage.configs = $scope.settings;
+        $scope.showSettingsDialog(false);
     };
 });
 

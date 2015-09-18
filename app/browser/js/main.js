@@ -32,11 +32,16 @@ app.run(function($rootScope, $localStorage, $sessionStorage) {
     }
 
     $rootScope.configs = function() {
-        return {
-            autoUpdates: true,
-            presentationMode: false,
-            hideDailies: true
-        };
+        if(!$localStorage.configs) {
+            $localStorage.configs = {
+                autoUpdates: true,
+                presentationMode: false,
+                hideDailies: true,
+                sortAccountsByLastUsage: false
+            };
+        }
+
+        return $localStorage.configs;
     }
 
     $rootScope.decrypt = function(string) {
