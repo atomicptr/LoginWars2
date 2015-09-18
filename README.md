@@ -5,7 +5,7 @@ An alternative launcher for Guild Wars 2 with support for multiple accounts and 
 ## Features
 * Manage multiple accounts!
 * Account data can (and should) be encrypted (No more plain text password shortcuts!)
-* Check your dailies, in the launcher!
+* ~~Check your dailies, in the launcher!~~ (Disabled for the time being since there is no reliable way to retrieve dailies atm)
 * Check your latest Trading Post transactions!
 * Check how much money and laurels you have on your alternative accounts without the need to log into them!
 
