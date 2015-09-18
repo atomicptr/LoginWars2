@@ -120,4 +120,12 @@ app.controller("WindowController", function($scope, $rootScope, $localStorage, F
             $scope.checkForNewBuild();
         });
     };
+
+    $scope.pad = function(number) {
+        if(number < 10) {
+            return "0" + number;
+        }
+
+        return "" + number;
+    };
 });

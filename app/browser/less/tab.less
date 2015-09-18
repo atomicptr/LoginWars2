@@ -74,3 +74,90 @@ tab-area {
             no-repeat;
     background-position: center bottom;
 }
+
+.trading-post {
+    overflow: auto;
+
+    height: 150px;
+    max-height: 130px;
+}
+
+.tp-item {
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
+
+    padding-top: 10px;
+    padding-bottom: 5px;
+
+    border-bottom: 1px solid #DDD;
+
+    transition: background-color 0.25s ease-in-out;
+}
+
+.tp-item:hover {
+    background-color: #DDD;
+}
+
+.tp-item:active {
+    background-color: #CCC;
+}
+
+.tp-buysell-indicator img {
+    width: 24px;
+    height: 24px;
+}
+
+.tp-icon img {
+    width: 32px;
+    height: 32px;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.tp-info {
+    width: 340px;
+    max-width: 340px;
+
+    flex-grow: 2;
+}
+
+.tp-info .info {
+    font-size: 12px;
+}
+
+.tp-info .itemname {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.tp-info .itemname .Fine {
+    color: #0099FF;
+}
+
+.tp-info .itemname .Masterwork {
+    color: green;
+}
+
+.tp-info .itemname .Rare {
+    color: yellow;
+}
+
+.tp-info .itemname .Exotic {
+    color: orange;
+}
+
+.tp-info .itemname .Ascended {
+    color: magenta;
+}
+
+.tp-info .itemname .Legendary {
+    color: purple;
+}
+
+.tp-price {
+    flex-grow: 1;
+
+    text-align: right;
+}

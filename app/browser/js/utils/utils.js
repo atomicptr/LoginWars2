@@ -26,3 +26,19 @@ function openUrl(url) {
         spawn("explorer.exe", [url]);
     }
 }
+
+function convertToGw2Money(coins) {
+    result = {};
+
+    result.gold = Math.floor(coins / 100 / 100);
+
+    coins -= result.gold * 100 * 100;
+
+    result.silver = Math.floor(coins / 100);
+
+    coins -= result.silver * 100;
+
+    result.copper = coins;
+
+    return result;
+}

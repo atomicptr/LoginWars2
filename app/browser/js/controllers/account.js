@@ -47,14 +47,6 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         return account.permissions.indexOf("wallet") > -1 && account.wallet != undefined;
     };
 
-    $scope.pad = function(number) {
-        if(number < 10) {
-            return "0" + number;
-        }
-
-        return "" + number;
-    }
-
     $scope.sortAccounts = function(account) {
         if($scope.configs().sortAccountsByLastUsage) {
             return -(new Date(account.lastUsage).getTime());
@@ -220,15 +212,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
                                 if(item.id == ID_COINS) {
                                     var coins = item.value;
 
-                                    account.wallet.coins.gold = Math.floor(coins / 100 / 100);
-
-                                    coins -= account.wallet.coins.gold * 100 * 100;
-
-                                    account.wallet.coins.silver = Math.floor(coins / 100);
-
-                                    coins -= account.wallet.coins.silver * 100;
-
-                                    account.wallet.coins.copper = coins;
+                                    account.wallet.coins = convertToGw2Money(coins);
                                 } else if(item.id == ID_LAURELS) {
                                     account.wallet.laurels = item.value;
                                 }

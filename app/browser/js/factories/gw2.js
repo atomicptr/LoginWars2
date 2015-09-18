@@ -22,8 +22,16 @@ app.factory("Gw2Service", function($http) {
             });
         },
 
-        getCurrency(id) {
-            return $http.get("https://api.guildwars2.com/v2/currencies/" + id);
+        getTransactionHistoryForBuys(apikey) {
+            return $http.get("https://api.guildwars2.com/v2/commerce/transactions/history/buys?access_token=" + apikey);
+        },
+
+        getTransactionHistoryForSells(apikey) {
+            return $http.get("https://api.guildwars2.com/v2/commerce/transactions/history/sells?access_token=" + apikey);
+        },
+
+        getItem(id) {
+            return $http.get("https://api.guildwars2.com/v2/items/" + id);
         }
     };
 });

@@ -38,7 +38,29 @@
                     </div>
                 </div>
                 <div class="trading-post" ng-if="currentTab == 2">
-                    coming soon...
+                    <div class="tp-item" ng-repeat="transaction in tpTransactions | orderBy:sortTransactions | limitTo: 20">
+                        <div class="tp-buysell-indicator">
+                            <img ng-src="assets/{{transaction.type}}.png" />
+                        </div>
+                        <div class="tp-icon">
+                            <img ng-src="{{itemInfo(transaction.item_id).icon}}" />
+                        </div>
+                        <div class="tp-info">
+                            <div class="itemname">
+                                <span class="quantity" ng-if="transaction.quantity > 1">{{transaction.quantity}}x </span><span ng-class="itemInfo(transaction.item_id).rarity">{{itemInfo(transaction.item_id).name}}</span>
+                            </div>
+                            <div class="info">
+                                {{transactionTypeAction(transaction)}} by {{transaction.account}}, {{timePassed(transaction.purchased)}} ago.
+                            </div>
+                        </div>
+                        <div class="tp-price">
+                            <span class="coins">
+                                <span ng-if="transaction.coinPrice.gold > 0">{{transaction.coinPrice.gold}}<span><img class="coin" src="assets/gold_coin.png" /></span>&nbsp;</span>
+                                <span ng-if="transaction.coinPrice.silver > 0">{{pad(transaction.coinPrice.silver)}}<span><img class="coin" src="assets/silver_coin.png" /></span>&nbsp;</span>
+                                <span>{{pad(transaction.coinPrice.copper)}}<span><img class="coin" src="assets/copper_coin.png" /></span></span>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </tab-area>
 
@@ -69,9 +91,9 @@
                                     <img class="laurel" src="assets/laurel.png" /> {{account.wallet.laurels}}
                                 </span>
                                 <span class="coins">
-                                    {{account.wallet.coins.gold}}<span><img class="coin" src="assets/gold_coin.png" /></span>&nbsp;
-                                    {{pad(account.wallet.coins.silver)}}<span><img class="coin" src="assets/silver_coin.png" /></span>&nbsp;
-                                    {{pad(account.wallet.coins.copper)}}<span><img class="coin" src="assets/copper_coin.png" /></span>
+                                    <span ng-if="account.wallet.coins.gold > 0">{{account.wallet.coins.gold}}<span><img class="coin" src="assets/gold_coin.png" /></span>&nbsp;</span>
+                                    <span ng-if="account.wallet.coins.gold > 0">{{pad(account.wallet.coins.silver)}}<span><img class="coin" src="assets/silver_coin.png" /></span>&nbsp;</span>
+                                    <span>{{pad(account.wallet.coins.copper)}}<span><img class="coin" src="assets/copper_coin.png" /></span></span>
                                 </span>
                             </div>
                         </item>

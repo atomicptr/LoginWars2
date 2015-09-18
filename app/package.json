@@ -1,7 +1,7 @@
 {
     "name": "LoginWars2",
     "productName": "LoginWars2",
-    "version": "0.2.9",
+    "version": "0.2.10",
     "main": "app.js",
     "description": "Login Wars 2"
 }
