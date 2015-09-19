@@ -61,7 +61,6 @@ quirl.on("uninstall", function() {
 });
 
 if(quirl.handleEvents(process.argv)) {
-    app.quit();
     return;
 }
 
