@@ -74,6 +74,7 @@ gulp.task("build-installer", [], function(done) {
         description: configs.DESCRIPTION,
         version: configs.APP_VERSION,
         iconUrl: configs.ICON_URL_PNG,
-        setupIcon: path.resolve(__dirname, "app", "icons", "icon.ico")
+        setupIcon: path.resolve(__dirname, "app", "icons", "icon.ico"),
+        //remoteReleases: packageJson.updateUrl // TODO: delta updates
     });
 });

@@ -32,20 +32,33 @@ var osValues = {
     }
 }
 
-function createShortcut(callback) {
+function runSquirrel(arguments, callback) {
     var updateDotExe = path.resolve(process.execPath, "..", "..", "Update.exe");
-    var exeName = path.basename(process.execPath);
-    var update = spawn(updateDotExe, ["--createShortcut", exeName]);
+    var update = spawn(updateDotExe, arguments);
+
+    update.stdout.on("data", function(data) {
+        console.log("Squirrel [" + arguments.join(",") + "]: " + data.toString());
+    });
+
+    update.stderr.on("data", function(data) {
+        console.error("Squirrel Error [" + arguments.join(",") + "]: " + data.toString());
+    });
 
     update.on("close", callback);
 }
 
-function removeShortcut(callback) {
-    var updateDotExe = path.resolve(process.execPath, "..", "..", "Update.exe");
+function createShortcut(callback) {
     var exeName = path.basename(process.execPath);
-    var update = spawn(updateDotExe, ["--removeShortcut", exeName]);
+    runSquirrel(["--createShortcut", exeName], callback);
+}
 
-    update.on("close", callback);
+function removeShortcut(callback) {
+    var exeName = path.basename(process.execPath);
+    runSquirrel(["--removeShortcut", exeName], callback);
+}
+
+function checkForUpdate(callback) {
+    runSquirrel(["--update", packageJson.updateUrl], callback);
 }
 
 quirl.on("install", function() {
@@ -58,6 +71,14 @@ quirl.on("uninstall", function() {
     removeShortcut(function() {
         app.quit();
     });
+});
+
+quirl.on("update", function() {
+    app.quit();
+});
+
+quirl.on("obsolete", function() {
+    app.quit();
 });
 
 if(quirl.handleEvents(process.argv)) {
