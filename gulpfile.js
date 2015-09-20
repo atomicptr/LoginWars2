@@ -29,7 +29,7 @@ gulp.task("run", ["build-less"], function() {
     gulp.watch("app/browser/less/*.less", ["build-less"]);
 });
 
-gulp.task("package", ["build-less"], function() {
+gulp.task("build", ["build-less"], function() {
     var packagerOptions = {
         dir: path.resolve(__dirname, "app"),
         out: path.resolve(__dirname, "build"),
