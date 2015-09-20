@@ -50,7 +50,7 @@
                                 <span class="quantity" ng-if="transaction.quantity > 1">{{transaction.quantity}}x </span><span ng-class="itemInfo(transaction.item_id).rarity">{{itemInfo(transaction.item_id).name}}</span>
                             </div>
                             <div class="info">
-                                {{transactionTypeAction(transaction)}} by {{transaction.account}}, {{timePassed(transaction.purchased)}} ago.
+                                {{transactionTypeAction(transaction)}} by {{transaction.account}}, {{timePassed(transaction.purchased)}}.
                             </div>
                         </div>
                         <div class="tp-price">

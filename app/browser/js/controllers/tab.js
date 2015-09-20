@@ -63,18 +63,22 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
 
         var days = Math.round(diff / (1000 * 60 * 60 * 24));
 
-        if(days < 7) {
-            return "" + days + " days";
+        if(days == 0) {
+            return "Today at " + oldDate.getHours() + ":" + oldDate.getMinutes();
+        } else if(days == 1) {
+            return "Yesterday at " + oldDate.getHours() + ":" + oldDate.getMinutes();
+        } else if(days < 7) {
+            return "" + days + " days ago";
         } else if(days < 30) {
             var weeks = Math.round(days / 7);
-            return "" + weeks  + " week" + (weeks > 1 ? "s" : "");
+            return "" + weeks  + " week" + (weeks > 1 ? "s" : "") + " ago";
         } else if(days < 365) {
             var months = Math.round(days / 30);
-            return "" + months + " month"  + (months > 1 ? "s" : "");
+            return "" + months + " month"  + (months > 1 ? "s" : "") + " ago";
         }
 
         var years = Math.round(days / 365);
-        return "" + years + " year" + (years > 1 ? "s" : "");
+        return "" + years + " year" + (years > 1 ? "s" : "") + " ago";
     };
 
     $scope.tradingPostItemClicked = function(transaction) {
@@ -83,7 +87,7 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
 
     $scope.updateTradingPost = function() {
         if($scope.canUseTradingPost()) {
-            $scope.tpTransactions = [];
+            var firstTransactionUpdate = true;
 
             $scope.accounts.forEach(function(account) {
                 if(account.apikey && account.permissions.indexOf("tradingpost") > -1) {
@@ -106,6 +110,11 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
                                 transaction.cacheDate = new Date();
                                 transaction.account = account.email;
                                 transaction.coinPrice = convertToGw2Money(transaction.price);
+
+                                if(firstTransactionUpdate) {
+                                    firstTransactionUpdate = false;
+                                    $scope.tpTransactions = [];
+                                }
 
                                 $scope.tpTransactions.push(transaction);
 
