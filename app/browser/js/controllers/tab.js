@@ -63,10 +63,18 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
 
         var days = Math.round(diff / (1000 * 60 * 60 * 24));
 
+        function padTime(num) {
+            if(num <= 9) {
+                return "0" + num;
+            }
+
+            return "" + num;
+        }
+
         if(days == 0) {
-            return "Today at " + oldDate.getHours() + ":" + oldDate.getMinutes();
+            return "Today at " + padTime(oldDate.getHours()) + ":" + padTime(oldDate.getMinutes());
         } else if(days == 1) {
-            return "Yesterday at " + oldDate.getHours() + ":" + oldDate.getMinutes();
+            return "Yesterday at " + padTime(oldDate.getHours()) + ":" + padTime(oldDate.getMinutes());
         } else if(days < 7) {
             return "" + days + " days ago";
         } else if(days < 30) {

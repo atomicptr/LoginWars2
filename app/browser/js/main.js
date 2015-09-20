@@ -44,6 +44,14 @@ app.run(function($rootScope, $localStorage, $sessionStorage) {
         return $localStorage.configs;
     }
 
+    $rootScope.os = function() {
+        return {
+            current: process.platform,
+            osx: process.platform == "darwin",
+            windows: process.platform == "win32"
+        };
+    };
+
     $rootScope.decrypt = function(string) {
         if($rootScope.useEncryption()) {
             return AES.decrypt(string, $sessionStorage.masterPassword);

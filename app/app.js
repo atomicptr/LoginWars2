@@ -32,6 +32,12 @@ var osValues = {
     }
 }
 
+var os = {
+    current: process.platform,
+    osx: process.platform == "darwin",
+    windows: process.platform == "win32"
+};
+
 function runSquirrel(arguments, callback) {
     var updateDotExe = path.resolve(process.execPath, "..", "..", "Update.exe");
     var update = spawn(updateDotExe, arguments);
@@ -90,10 +96,14 @@ app.on("window-all-closed", function() {
 });
 
 app.on("ready", function() {
+    // FIXME: Since frameless, non-resizable windows make problems with OSX atm
+    // don't use frameless mode on OSX
+    var hasFrame = os.windows ? false : true;
+
     win = new BrowserWindow({
         width: 1024,
         height: 600,
-        frame: false,
+        frame: hasFrame,
         resizable: false,
         icon: __dirname + "/icons/icon.png"
     });
@@ -123,7 +133,7 @@ ipc.on("gw2-find-path", function(event, knownPath) {
             return;
         }
 
-        var values = osValues[process.platform];
+        var values = osValues[os.current];
 
         // We don't know where the Gw2.exe is atm...
         // Maybe at the default location?
