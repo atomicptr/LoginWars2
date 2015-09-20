@@ -210,6 +210,19 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
                                 return item.id == ID_COINS || item.id == ID_LAURELS;
                             });
 
+                            var hasLaurels = currency.filter(function(item) {
+                                return item.id == ID_LAURELS;
+                            }).length > 0;
+
+                            // the api doesn't add currencies with a value of 0, so I need to add it
+                            // manually so that the launcher can update it to 0 properly
+                            if(!hasLaurels) {
+                                currency.push({
+                                    id: ID_LAURELS,
+                                    value: 0
+                                });
+                            }
+
                             currency.forEach(function(item) {
                                 if(item.id == ID_COINS) {
                                     var coins = item.value;
