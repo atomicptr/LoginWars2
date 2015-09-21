@@ -117,7 +117,8 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
                                 transaction.type = type;
                                 transaction.cacheDate = new Date();
                                 transaction.account = account.email;
-                                transaction.coinPrice = convertToGw2Money(transaction.price);
+                                transaction.totalPrice = transaction.price * transaction.quantity;
+                                transaction.coinPrice = convertToGw2Money(transaction.totalPrice);
 
                                 if(firstTransactionUpdate) {
                                     firstTransactionUpdate = false;
