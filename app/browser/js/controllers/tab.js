@@ -125,9 +125,16 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
                                     $scope.tpTransactions = [];
                                 }
 
-                                $scope.tpTransactions.push(transaction);
+                                var transactionAlreadyAdded = $scope.tpTransactions.filter(function(item) {
+                                    return item.id == transaction.id;
+                                }).length > 0;
 
-                                $localStorage.tpTransactions = $scope.tpTransactions;
+                                // only add transactions we've not added already
+                                if(!transactionAlreadyAdded) {
+                                    $scope.tpTransactions.push(transaction);
+
+                                    $localStorage.tpTransactions = $scope.tpTransactions;
+                                }
 
                                 if($localStorage.itemCache[transaction.item_id] == undefined) {
                                     Gw2Service.getItem(transaction.item_id).then(function(res) {
