@@ -10,7 +10,7 @@ var USED_PERMISSIONS = ["account", "tradingpost", "wallet"];
 
 var packageJson = require("../package.json");
 
-app.run(function($rootScope, $localStorage, $sessionStorage) {
+app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
     var path = $localStorage.gw2Path;
 
     ipc.send("gw2-find-path", path);
@@ -37,11 +37,16 @@ app.run(function($rootScope, $localStorage, $sessionStorage) {
                 autoUpdates: true,
                 presentationMode: false,
                 hideDailies: true,
-                sortAccountsByLastUsage: false
+                sortAccountsByLastUsage: false,
+                language: "en"
             };
         }
 
         return $localStorage.configs;
+    }
+
+    $rootScope.translate = function(key) {
+        return TranslateService.get(key, $rootScope.configs().language);
     }
 
     $rootScope.os = function() {

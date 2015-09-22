@@ -297,7 +297,17 @@ app.controller("ActionsController", function($scope, $rootScope, $localStorage, 
     };
 
     $scope.submitSettingsDialog = function() {
+        var oldLanguage = angular.copy($localStorage.configs.language);
+
+        // update settings
         $localStorage.configs = $scope.settings;
+
+        // language changed invalidate the item cache
+        if(oldLanguage != $scope.settings.language) {
+            console.log("invalidating item cache...");
+            $rootScope.$broadcast("language-changed");
+        }
+
         $scope.showSettingsDialog(false);
     };
 });

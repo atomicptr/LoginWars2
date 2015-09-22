@@ -1,8 +1,6 @@
 app.controller("TabController", function($scope, $rootScope, $localStorage, FeedService, Gw2Service) {
     $scope.currentTab = $localStorage.lastUsedTab != undefined ? $localStorage.lastUsedTab : 0;
 
-    $scope.feedUrl = "https://www.guildwars2.com/en/feed/";
-
     $scope.feed = {
         title: $localStorage.cachedNewsTitle,
         news: $localStorage.cachedNewsContent,
@@ -21,6 +19,26 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
         $scope.currentTab = num;
         $localStorage.lastUsedTab = num;
     }
+
+    $scope.updateNews = function() {
+        FeedService.parseFeed($scope.translate("FEED_URL")).then(function(res) {
+            $scope.feeds = res.data.responseData.feed.entries;
+
+            // get the latest feed
+            $scope.feed = $scope.feeds[0];
+            $scope.feed.news = decodeHtml($scope.feed.contentSnippet.replace($scope.translate("READ_MORE_REMOVE_TEXT"), ""));
+
+            // if old title is different from the new one
+            if($localStorage.cachedNewsTitle != $scope.feed.title) {
+                $scope.changeTab(0); // change to news tab
+            }
+
+            // cache news
+            $localStorage.cachedNewsTitle = $scope.feed.title;
+            $localStorage.cachedNewsContent = $scope.feed.news;
+            $localStorage.cachedNewsLink = $scope.feed.link;
+        });
+    };
 
     $scope.canUseTradingPost = function() {
         var tpUsable = false;
@@ -52,7 +70,7 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
     }
 
     $scope.transactionTypeAction = function(transaction) {
-        return transaction.type == "buy" ? "Bought" : "Sold";
+        return $scope.translate(transaction.type == "buy" ? "BOUGHT" : "SOLD");
     };
 
     $scope.timePassed = function(date) {
@@ -72,26 +90,33 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
         }
 
         if(days == 0) {
-            return "Today at " + padTime(oldDate.getHours()) + ":" + padTime(oldDate.getMinutes());
+            return $scope.translate("TODAY").format(padTime(oldDate.getHours()) + ":" + padTime(oldDate.getMinutes()));
         } else if(days == 1) {
-            return "Yesterday at " + padTime(oldDate.getHours()) + ":" + padTime(oldDate.getMinutes());
+            return $scope.translate("YESTERDAY").format(padTime(oldDate.getHours()) + ":" + padTime(oldDate.getMinutes()));
         } else if(days < 7) {
-            return "" + days + " days ago";
+            return $scope.translate("DAYS_AGO").format(days);
         } else if(days < 30) {
             var weeks = Math.round(days / 7);
-            return "" + weeks  + " week" + (weeks > 1 ? "s" : "") + " ago";
+            return weeks > 1 ? $scope.translate("WEEKS_AGO_PLURAL").format(weeks) : $scope.translate("WEEKS_AGO_SINGULAR");
         } else if(days < 365) {
             var months = Math.round(days / 30);
-            return "" + months + " month"  + (months > 1 ? "s" : "") + " ago";
+            return months > 1 ? $scope.translate("MONTHS_AGO_PLURAL").format(months) : $scope.translate("MONTHS_AGO_SINGULAR");
         }
 
         var years = Math.round(days / 365);
-        return "" + years + " year" + (years > 1 ? "s" : "") + " ago";
+        return years > 1 ? $scope.translate("YEARS_AGO_PLURAL").format(years) : $scope.translate("YEARS_AGO_SINGULAR");
     };
 
     $scope.tradingPostItemClicked = function(transaction) {
         openUrl("http://www.gw2spidy.com/item/" + transaction.item_id);
     };
+
+    $scope.cacheItem = function(itemId) {
+        Gw2Service.getItem(itemId, $scope.configs().language).then(function(res) {
+            $localStorage.itemCache[itemId] = res.data;
+            console.log("Added " + res.data.name + " to item cache.");
+        });
+    }
 
     $scope.updateTradingPost = function() {
         if($scope.canUseTradingPost()) {
@@ -137,10 +162,7 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
                                 }
 
                                 if($localStorage.itemCache[transaction.item_id] == undefined) {
-                                    Gw2Service.getItem(transaction.item_id).then(function(res) {
-                                        $localStorage.itemCache[transaction.item_id] = res.data;
-                                        console.log("Added " + res.data.name + " to item cache.");
-                                    });
+                                    $scope.cacheItem(transaction.item_id);
                                 }
                             });
                         };
@@ -154,23 +176,7 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
     };
 
     $scope.registerUpdateCallback(function() {
-        FeedService.parseFeed($scope.feedUrl).then(function(res) {
-            $scope.feeds = res.data.responseData.feed.entries;
-
-            // get the latest feed
-            $scope.feed = $scope.feeds[0];
-            $scope.feed.news = decodeHtml($scope.feed.contentSnippet.replace("Read More", ""));
-
-            // if old title is different from the new one
-            if($localStorage.cachedNewsTitle != $scope.feed.title) {
-                $scope.changeTab(0); // change to news tab
-            }
-
-            // cache news
-            $localStorage.cachedNewsTitle = $scope.feed.title;
-            $localStorage.cachedNewsContent = $scope.feed.news;
-            $localStorage.cachedNewsLink = $scope.feed.link;
-        });
+        $scope.updateNews();
     });
 
     $rootScope.$on("master-password-set", function() {
@@ -182,4 +188,14 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
     $rootScope.$on("account-permissions-changed", function() {
         $scope.updateTradingPost();
     });
+
+    $rootScope.$on("language-changed", function() {
+        // update news
+        $scope.updateNews();
+
+        // invalidate item cache
+        $scope.tpTransactions.forEach(function(transaction) {
+            $scope.cacheItem(transaction.item_id);
+        });
+    })
 });

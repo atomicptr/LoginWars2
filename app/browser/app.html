@@ -1,4 +1,5 @@
 <!doctype html>
+<meta charset="UTF-8">
 <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 
@@ -15,13 +16,13 @@
         <content>
             <tab-area class="no-drag" ng-controller="TabController">
                 <tabs>
-                    <h1 ng-class="{'active': currentTab == 0}" ng-click="changeTab(0)" class="tab-title">Latest News</h1>
-                    <h1 ng-class="{'active': currentTab == 1}" ng-click="changeTab(1)" class="tab-title" ng-if="!configs().hideDailies">Dailies</h1>
-                    <h1 ng-class="{'active': currentTab == 2}" ng-click="changeTab(2)" class="tab-title" ng-if="currentTab == 2 || canUseTradingPost()">Trading Post</h1>
+                    <h1 ng-class="{'active': currentTab == 0}" ng-click="changeTab(0)" class="tab-title">{{translate("LATEST_NEWS")}}</h1>
+                    <h1 ng-class="{'active': currentTab == 1}" ng-click="changeTab(1)" class="tab-title" ng-if="!configs().hideDailies">{{translate("DAILIES")}}</h1>
+                    <h1 ng-class="{'active': currentTab == 2}" ng-click="changeTab(2)" class="tab-title" ng-if="currentTab == 2 || canUseTradingPost()">{{translate("TRADING_POST")}}</h1>
                 </tabs>
                 <div class="latest-news" ng-if="currentTab == 0">
                     <h2>{{feed.title}}</h2>
-                    {{feed.news}} <a href="{{feed.link}}">Read more...</a>
+                    {{feed.news}} <a href="{{feed.link}}">{{translate("READ_MORE")}}...</a>
                 </div>
                 <div class="dailies no-text-selection" ng-if="currentTab == 1">
                     <div class="daily-container daily-pve">
@@ -50,7 +51,7 @@
                                 <span class="quantity" ng-if="transaction.quantity > 1">{{transaction.quantity}}x </span><span ng-class="itemInfo(transaction.item_id).rarity">{{itemInfo(transaction.item_id).name}}</span>
                             </div>
                             <div class="info">
-                                {{transactionTypeAction(transaction)}} by {{transaction.account}}, {{timePassed(transaction.purchased)}}.
+                                {{transactionTypeAction(transaction)}} {{transaction.account}}, {{timePassed(transaction.purchased)}}.
                             </div>
                         </div>
                         <div class="tp-price">
@@ -66,7 +67,7 @@
 
             <account-controller ng-controller="AccountsController">
                 <accounts class="no-drag no-text-selection">
-                    <h1 id="accounts-title">Accounts</h1> <i id="edit-accounts-button" ng-click="editModeActive = !editModeActive" ng-class="{'edit-accounts-active': editModeActive}" class="fa fa-cog"></i>
+                    <h1 id="accounts-title">{{translate("ACCOUNTS")}}</h1> <i id="edit-accounts-button" ng-click="editModeActive = !editModeActive" ng-class="{'edit-accounts-active': editModeActive}" class="fa fa-cog"></i>
                     <div class="account-list">
                         <item ng-if="accounts.length > 0" ng-click="accountItemClicked(account)" ng-repeat="account in accounts | orderBy: sortAccounts">
                             <div class="accicon">
@@ -98,31 +99,31 @@
                             </div>
                         </item>
                         <div ng-if="accounts.length == 0" class="accounts-list-empty">
-                            <p>You don't have any accounts added yet, press the "Add Account" button below to add accounts</p>
+                            <p>{{translate("NO_ACCOUNTS_ADDED_TEXT")}}</p>
                         </div>
                     </div>
                 </accounts>
 
                 <actions class="no-drag" ng-controller="ActionsController">
-                    <button ng-if="!configs().autoUpdates" ng-click="updateGameClient()" class="btn"><span><i class="fa fa-refresh"></i>&nbsp;&nbsp;Update Client</span></button>
-                    <button ng-click="showAddAccountDialog(true)" class="btn"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;Add Account</span></button>
-                    <button ng-click="showSettingsDialog(true)" class="btn"><span><i class="fa fa-wrench"></i>&nbsp;&nbsp;Settings</span></button>
-                    <button ng-click="showAboutDialog(true)" class="btn"><span><i class="fa fa-info"></i>&nbsp;&nbsp;About</span></button>
+                    <button ng-if="!configs().autoUpdates" ng-click="updateGameClient()" class="btn"><span><i class="fa fa-refresh"></i>&nbsp;&nbsp;{{translate("UPDATE_CLIENT_BUTTON")}}</span></button>
+                    <button ng-click="showAddAccountDialog(true)" class="btn"><span><i class="fa fa-plus"></i>&nbsp;&nbsp;{{translate("ADD_ACCOUNT_BUTTON")}}</span></button>
+                    <button ng-click="showSettingsDialog(true)" class="btn"><span><i class="fa fa-wrench"></i>&nbsp;&nbsp;{{translate("SETTINGS")}}</span></button>
+                    <button ng-click="showAboutDialog(true)" class="btn"><span><i class="fa fa-info"></i>&nbsp;&nbsp;{{translate("ABOUT")}}</span></button>
 
                     <dialog id="add-account-dialog" class="no-drag">
-                        <p>Please enter your account details below.</p>
+                        <p>{{translate("ADD_ACCOUNT_DIALOG_INFO_TEXT")}}</p>
 
                         <form ng-submit="submitAddAccountDialog()">
-                            <label for="add-account-email">E-Mail</label>
+                            <label for="add-account-email">{{translate("EMAIL")}}</label>
                             <input ng-model="account.email" type="email" id="add-account-email" class="textfield" placeholder="zojja@ratasum.com" tabindex="1" required />
 
-                            <label for="add-account-password">Password</label>
+                            <label for="add-account-password">{{translate("PASSWORD")}}</label>
                             <input ng-model="account.password" type="password" id="add-account-password" class="textfield" placeholder="snaff1234" tabindex="2" required />
 
-                            <label for="add-account-apikey">API Key <a href="https://account.arena.net/applications/create">(Create one here)</a></label>
-                            <input ng-model="account.apikey" ng-change="checkApiKey()" type="text" id="add-account-apikey" class="textfield" placeholder="(Optional) Enter your API key." tabindex="3" />
+                            <label for="add-account-apikey">{{translate("API_KEY")}} <a href="https://account.arena.net/applications/create">({{translate("API_KEY_CREATE_TEXT")}})</a></label>
+                            <input ng-model="account.apikey" ng-change="checkApiKey()" type="text" id="add-account-apikey" class="textfield" placeholder="{{translate('API_KEY_PLACEHOLDER_TEXT')}}" tabindex="3" />
 
-                            <label>Used Permissions</label>
+                            <label>{{translate("USED_PERMISSIONS")}}</label>
                             <ul>
                                 <li ng-repeat="p in permissions">
                                     {{p.name}}
@@ -131,38 +132,44 @@
                                 </li>
                             </ul>
 
-                            <label for="add-account-addparams">Additional command line parameters <a href="https://wiki.guildwars2.com/wiki/Command_line_arguments">(Docs)</a></label>
-                            <input ng-model="account.addparams" type="text" id="add-account-addparams" class="textfield" placeholder="(Optional) Add additional parameters here." tabindex="4" />
+                            <label for="add-account-addparams">{{translate("COMMAND_LINE_PARAMS_LABEL")}} <a href="https://wiki.guildwars2.com/wiki/Command_line_arguments">({{translate("COMMAND_LINE_DOCS")}})</a></label>
+                            <input ng-model="account.addparams" type="text" id="add-account-addparams" class="textfield" placeholder="{{translate('COMMAND_LINE_PARAMS_PLACEHOLDER')}}" tabindex="4" />
 
                             <div class="dialog-button-container">
-                                <button type="button" ng-click="showAddAccountDialog(false)" class="btn right"><span>Close</span></button>
-                                <button type="submit" id="add-account-save" class="btn"><span>Save</span></button>
+                                <button type="button" ng-click="showAddAccountDialog(false)" class="btn right"><span>{{translate("CLOSE")}}</span></button>
+                                <button type="submit" id="add-account-save" class="btn"><span>{{translate("SAVE")}}</span></button>
                             </div>
                         </form>
                     </dialog>
 
                     <dialog id="settings-dialog" class="no-drag">
-                        <p>Settings</p>
+                        <p>{{translate("SETTINGS")}}</p>
 
                         <form ng-submit="submitSettingsDialog()">
                             <input style="display: none;" autofocus tabindex="1" />
-                            <input type="checkbox" ng-model="settings.autoUpdates"/> <b>Auto Updates</b> - Check for GW2 client updates automatically<br/>
-                            <input type="checkbox" ng-model="settings.presentationMode"/> <b>Presentation Mode</b> - Hide account name and email<br/>
-                            <!-- TODO: readd this <input type="checkbox" ng-model="settings.hideDailies"/> <b>Hide dailies</b> - Hide the "Daily" tab<br/>-->
-                            <input type="checkbox" ng-model="settings.sortAccountsByLastUsage" /> <b>Sort accounts by last usage</b> - instead of the order they were added
+                            <input type="checkbox" ng-model="settings.autoUpdates"/> <b>{{translate("AUTO_UPDATES_TITLE")}}</b> - {{translate("AUTO_UPDATES_TEXT")}}<br/>
+                            <input type="checkbox" ng-model="settings.presentationMode"/> <b>{{translate("PRESENTATION_MODE_TITLE")}}</b> - {{translate("PRESENTATION_MODE_TEXT")}}<br/>
+                            <!-- TODO: readd this <input type="checkbox" ng-model="settings.hideDailies"/> <b>{{translate("HIDE_DAILIES_TITLE")}}</b> - {{translate("HIDE_DAILIES_TEXT")}}<br/>-->
+                            <input type="checkbox" ng-model="settings.sortAccountsByLastUsage" /> <b>{{translate("SORT_ACCOUNTS_BY_LAST_USAGE_TITLE")}}</b> - {{translate("SORT_ACCOUNTS_BY_LAST_USAGE_TEXT")}}<br/>
+                            <select name="language" id="language-select" ng-model="settings.language">
+                                <option value="en" ng-selected="settings.language == 'en'">English</option>
+                                <option value="de" ng-selected="settings.language == 'de'">Deutsch</option>
+                                <option value="fr" ng-selected="settings.language == 'fr'">Français</option>
+                                <option value="es" ng-selected="settings.language == 'es'">Español</option>
+                            </select> <b>{{translate("LANGUAGE_TITLE")}}</b> - {{translate("LANGUAGE_TEXT")}}
 
                             <div class="dialog-button-container">
-                                <button type="button" ng-click="startClassicLauncher()" class="btn left"><span>Classic Launcher</span></button>
-                                <button type="button" ng-click="showSettingsDialog(false)" class="btn right"><span>Close</span></button>
-                                <button type="submit" id="settings-save" class="btn"><span>Save</span></button>
+                                <button type="button" ng-click="startClassicLauncher()" class="btn left"><span>{{translate("CLASSIC_LAUNCHER")}}</span></button>
+                                <button type="button" ng-click="showSettingsDialog(false)" class="btn right"><span>{{translate("CLOSE")}}</span></button>
+                                <button type="submit" id="settings-save" class="btn"><span>{{translate("SAVE")}}</span></button>
                             </div>
                         </form>
                     </dialog>
 
                     <dialog id="about-dialog" class="no-drag">
-                        <h2 class="about-app">About Login Wars 2</h2>
+                        <h2 class="about-app">{{translate("ABOUT")}} Login Wars 2</h2>
                         <p>
-                            Login Wars 2 is open source software developed and maintained primary by <a href="https://github.com/kasoki">Christopher Kaster</a>.
+                            {{translate("ABOUT_LOGIN_WARS_2")}} <a href="https://github.com/kasoki">Kasoki.7013</a>.
                         </p>
                         <h3 class="about-assets">Asset attributions</h3>
                         <p class="about-assets-copyright">
@@ -187,44 +194,44 @@
 
                 <encryption-controller ng-controller="EncryptionController">
                     <dialog id="ask-encryption-dialog" class="no-drag">
-                        <p>Do you want to encrypt your accounts?</p>
+                        <p>{{translate("DO_YOU_WANT_TO_ENCRYPT_TEXT")}}</p>
                         <p>
-                            <b>Note</b>: It's recommended to encrypt your account data, or else your password will be stored in plain text.
+                            <b>{{translate("NOTE")}}</b>: {{translate("ENCRYPTION_RECOMMENDATION")}}
                         </p>
 
                         <div class="dialog-button-container">
-                            <button ng-click="askDialogYes()"class="btn right"><span>Yes</span></button>
-                            <button ng-click="askDialogNo()"class="btn"><span>No</span></button>
+                            <button ng-click="askDialogYes()"class="btn right"><span>{{translate("YES")}}</span></button>
+                            <button ng-click="askDialogNo()"class="btn"><span>{{translate("NO")}}</span></button>
                         </div>
                     </dialog>
 
                     <dialog id="enter-encryption-dialog" class="no-drag">
-                        <p>Please specify a master password which will be used to encrypt your account data.</p>
+                        <p>{{translate("SPECIFY_MASTER_PASSWORD")}}</p>
 
                         <form ng-submit="submitEncryptionDialog()">
-                            <label for="enter-encryption-master-password">Master password</label>
+                            <label for="enter-encryption-master-password">{{translate("MASTER_PASSWORD")}}</label>
                             <input ng-model="encryption.password" type="password" id="enter-encryption-master-password" class="textfield" required />
 
-                            <label for="enter-encryption-master-password-retype">Confirm your master password</label>
+                            <label for="enter-encryption-master-password-retype">{{translate("MASTER_PASSWORD_CONFIRM")}}</label>
                             <input ng-model="encryption.passwordConfirm" type="password" id="enter-encryption-master-password-retype" class="textfield" required />
 
                             <div class="dialog-button-container">
-                                <button type="button" ng-click="enterDialogCancel()"class="btn right"><span>Cancel</span></button>
-                                <button type="submit" class="btn"><span>Save</span></button>
+                                <button type="button" ng-click="enterDialogCancel()"class="btn right"><span>{{translate("CANCEL")}}</span></button>
+                                <button type="submit" class="btn"><span>{{translate("SAVE")}}</span></button>
                             </div>
                         </form>
                     </dialog>
 
                     <dialog id="decrypt-dialog" class="no-drag">
-                        <p>Please enter your master password to decrypt your account data.</p>
+                        <p>{{translate("MASTER_PASSWORD_ENTER_TO_DECRYPT")}}</p>
 
                         <form ng-submit="submitDecryptDialog()">
-                            <label for="decrypt-password">Enter your master password</label>
+                            <label for="decrypt-password">{{translate("MASTER_PASSWORD_ENTER")}}</label>
                             <input ng-model="decryptPassword" type="password" id="decrypt-password" class="textfield" required />
 
                             <div class="dialog-button-container">
-                                <button type="button" ng-click="closeWindow()" class="btn right"><span>Cancel</span></button>
-                                <button type="submit" class="btn"><span>Ok</span></button>
+                                <button type="button" ng-click="closeWindow()" class="btn right"><span>{{translate("CANCEL")}}</span></button>
+                                <button type="submit" class="btn"><span>{{translate("OK")}}</span></button>
                             </div>
                         </form>
                     </dialog>
@@ -235,19 +242,19 @@
                 </dialog>
 
                 <dialog id="edit-account-dialog" class="no-drag">
-                    <p>Please edit your account details.</p>
+                    <p>{{translate("EDIT_ACCOUNT_DETAILS_TEXT")}}</p>
 
                     <form ng-submit="submitEditAccountDialog()">
-                        <label for="edit-account-email">E-Mail</label>
+                        <label for="edit-account-email">{{translate("EMAIL")}}</label>
                         <input ng-model="editAcc.email" type="email" id="edit-account-email" class="textfield" placeholder="zojja@ratasum.com" tabindex="1" required />
 
-                        <label for="edit-account-password">Password</label>
+                        <label for="edit-account-password">{{translate("PASSWORD")}}</label>
                         <input ng-model="editAcc.password" type="password" id="edit-account-password" class="textfield" placeholder="snaff1234" tabindex="2" required />
 
-                        <label for="edit-account-apikey">API Key <a href="https://account.arena.net/applications/create">(Create one here)</a></label>
-                        <input ng-model="editAcc.apikey" ng-change="checkApiKey()" type="text" id="edit-account-apikey" class="textfield" placeholder="(Optional) Enter your API key." tabindex="3" />
+                        <label for="edit-account-apikey">{{translate("API_KEY")}} <a href="https://account.arena.net/applications/create">({{translate("API_KEY_CREATE_TEXT")}})</a></label>
+                        <input ng-model="editAcc.apikey" ng-change="checkApiKey()" type="text" id="edit-account-apikey" class="textfield" placeholder="{{translate('API_KEY_PLACEHOLDER_TEXT')}}" tabindex="3" />
 
-                        <label>Used Permissions</label>
+                        <label>{{translate("USED_PERMISSIONS")}}</label>
                         <ul>
                             <li ng-repeat="p in editAcc._permissions">
                                 {{p.name}}
@@ -256,13 +263,13 @@
                             </li>
                         </ul>
 
-                        <label for="edit-account-addparams">Additional command line parameters <a href="https://wiki.guildwars2.com/wiki/Command_line_arguments">(Docs)</a></label>
-                        <input ng-model="editAcc.addparams" type="text" id="edit-account-addparams" class="textfield" placeholder="(Optional) Add additional parameters here." tabindex="4" />
+                        <label for="edit-account-addparams">{{translate("COMMAND_LINE_PARAMS_LABEL")}} <a href="https://wiki.guildwars2.com/wiki/Command_line_arguments">({{translate("COMMAND_LINE_DOCS")}})</a></label>
+                        <input ng-model="editAcc.addparams" type="text" id="edit-account-addparams" class="textfield" placeholder="{{translate('COMMAND_LINE_PARAMS_PLACEHOLDER')}}" tabindex="4" />
 
                         <div class="dialog-button-container">
-                            <button type="button" ng-click="closeEditAccountWindow()" class="btn right"><span>Close</span></button>
-                            <button type="button" ng-click="deleteAccount()" class="btn"><span>Delete</span></button>
-                            <button type="submit" id="edit-account-save" class="btn"><span>Save</span></button>
+                            <button type="button" ng-click="closeEditAccountWindow()" class="btn right"><span>{{translate("CLOSE")}}</span></button>
+                            <button type="button" ng-click="deleteAccount()" class="btn"><span>{{translate("DELETE")}}</span></button>
+                            <button type="submit" id="edit-account-save" class="btn"><span>{{translate("SAVE")}}</span></button>
                         </div>
                     </form>
                 </dialog>
@@ -281,6 +288,9 @@
 <script src="bower_components/cryptojslib/rollups/aes.js"></script>
 <script src="bower_components/konami.js/konami.min.js"></script>
 
+<!-- data -->
+<script src="js/data/translations.js"></script>
+
 <!-- utils -->
 <script src="js/utils/utils.js"></script>
 <script src="js/utils/gw2dailies.js"></script>
@@ -290,6 +300,7 @@
 <script src="js/directives/link-hack.js"></script>
 <script src="js/factories/feeds.js"></script>
 <script src="js/factories/gw2.js"></script>
+<script src="js/factories/translate.js"></script>
 <script src="js/controllers/window.js"></script>
 <script src="js/controllers/tab.js"></script>
 <script src="js/controllers/account.js"></script>
