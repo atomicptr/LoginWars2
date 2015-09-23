@@ -1,7 +1,7 @@
 {
     "name": "LoginWars2",
     "productName": "LoginWars2",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "main": "app.js",
     "description": "Login Wars 2",
     "updateUrl": "http://updates.kasoki.de/app/loginwars2"
