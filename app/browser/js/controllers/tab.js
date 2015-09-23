@@ -114,6 +114,7 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
     $scope.cacheItem = function(itemId) {
         Gw2Service.getItem(itemId, $scope.configs().language).then(function(res) {
             $localStorage.itemCache[itemId] = res.data;
+            $localStorage.itemCache[itemId].cacheDate = new Date();
             console.log("Added " + res.data.name + " to item cache.");
         });
     }
@@ -182,6 +183,27 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
     $rootScope.$on("master-password-set", function() {
         $scope.registerUpdateCallback(function() {
             $scope.updateTradingPost();
+        });
+
+        // invalidate item after a week
+        $scope.registerUpdateCallback(function() {
+            for(var i in $localStorage.itemCache) {
+                var item = $localStorage.itemCache[i];
+
+                if(!item.cacheDate) {
+                    $scope.cacheItem(item.id);
+                    return;
+                }
+
+                var itemCacheExpireDate = new Date();
+                itemCacheExpireDate.setDate(new Date(item.cacheDate).getDate() + 7);
+
+                var now = new Date();
+
+                if(now > itemCacheExpireDate) {
+                    $scope.cacheItem(item.id);
+                }
+            }
         });
     });
 
