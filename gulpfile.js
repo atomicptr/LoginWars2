@@ -8,7 +8,7 @@ var packageJson = require("./app/package.json");
 var path = require("path");
 
 var configs = {
-    ELECTRON_VERSION: "0.33.0",
+    ELECTRON_VERSION: packageJson.electronVersion,
     PRODUCT_NAME: packageJson.productName,
     APP_NAME: packageJson.name,
     APP_VERSION: packageJson.version,

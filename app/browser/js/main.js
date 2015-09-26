@@ -20,6 +20,7 @@ app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
     });
 
     $rootScope.appVersion = "v" + packageJson.version;
+    $rootScope.electronVersion = "v" + packageJson.electronVersion;
 
     $rootScope._updateFunctions = [];
 
