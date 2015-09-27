@@ -286,6 +286,19 @@ app.controller("ActionsController", function($scope, $rootScope, $localStorage, 
         openUrl("https://github.com/kasoki/LoginWars2");
     };
 
+    $scope.showDonatePage = function() {
+        var lang = $scope.configs().language;
+
+        var donateUrl = "http://donate.kasoki.de/";
+
+        if(lang == "de" || lang == "fr") {
+            openUrl(donateUrl + lang);
+            return;
+        }
+
+        openUrl(donateUrl);
+    }
+
     $scope.checkApiKey = function() {
         var apikey = $scope.account.apikey;
 
