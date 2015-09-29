@@ -113,6 +113,10 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
 
     $scope.cacheItem = function(itemId) {
         Gw2Service.getItem(itemId, $scope.configs().language).then(function(res) {
+            if(!res.data) {
+                return;
+            }
+
             $localStorage.itemCache[itemId] = res.data;
             $localStorage.itemCache[itemId].cacheDate = new Date();
             console.log("Added " + res.data.name + " to item cache.");
@@ -189,6 +193,11 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
         $scope.registerUpdateCallback(function() {
             for(var i in $localStorage.itemCache) {
                 var item = $localStorage.itemCache[i];
+
+                if(!item) {
+                    console.warn("Invalid item found. Item cache size: " + $localStorage.itemCache.length);
+                    return;
+                }
 
                 if(!item.cacheDate) {
                     $scope.cacheItem(item.id);
