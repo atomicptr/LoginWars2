@@ -119,6 +119,12 @@ app.on("ready", function() {
     });
 });
 
+ipc.on("open-devtools", function(event) {
+    if(win) {
+        win.openDevTools();
+    }
+})
+
 ipc.on("gw2-find-path", function(event, knownPath) {
     if(knownPath == undefined) {
         // need some path which is def. invalid (SHA-256 of Bookah!)

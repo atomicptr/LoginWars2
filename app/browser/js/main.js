@@ -26,29 +26,33 @@ app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
 
     $rootScope.executable = function() {
         return $localStorage.gw2Path;
-    }
+    };
 
     $rootScope.useEncryption = function() {
         return $localStorage.useEncryption;
-    }
+    };
+
+    $rootScope.openDevTools = function() {
+        ipc.send("open-devtools");
+    };
 
     $rootScope.configs = function() {
         if(!$localStorage.configs) {
             $localStorage.configs = {
                 autoUpdates: true,
                 presentationMode: false,
-                hideDailies: true,
+                hideDailies: false,
                 sortAccountsByLastUsage: false,
                 language: "en"
             };
         }
 
         return $localStorage.configs;
-    }
+    };
 
     $rootScope.translate = function(key) {
         return TranslateService.get(key, $rootScope.configs().language);
-    }
+    };
 
     $rootScope.os = function() {
         return {
@@ -64,17 +68,17 @@ app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
         }
 
         return string;
-    }
+    };
 
     $rootScope.registerUpdateCallback = function(func) {
         $rootScope._updateFunctions.push(func);
-    }
+    };
 
     $rootScope._fireUpdateCallbacks = function() {
         $rootScope._updateFunctions.forEach(function(func) {
             func();
         });
-    }
+    };
 
     setTimeout(function() {
         $rootScope._fireUpdateCallbacks();

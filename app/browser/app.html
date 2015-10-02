@@ -67,7 +67,7 @@
 
             <account-controller ng-controller="AccountsController">
                 <accounts class="no-drag no-text-selection">
-                    <h1 id="accounts-title">{{translate("ACCOUNTS")}}</h1> <i id="edit-accounts-button" ng-click="editModeActive = !editModeActive" ng-class="{'edit-accounts-active': editModeActive}" class="fa fa-cog"></i>
+                    <h1 id="accounts-title" ng-dblclick="openDevTools()">{{translate("ACCOUNTS")}}</h1> <i id="edit-accounts-button" ng-click="editModeActive = !editModeActive" ng-class="{'edit-accounts-active': editModeActive}" class="fa fa-cog"></i>
                     <div class="account-list">
                         <item ng-if="accounts.length > 0" ng-click="accountItemClicked(account)" ng-repeat="account in accounts | orderBy: sortAccounts">
                             <div class="accicon">
@@ -149,7 +149,7 @@
                             <input style="display: none;" autofocus tabindex="1" />
                             <input type="checkbox" ng-model="settings.autoUpdates"/> <b>{{translate("AUTO_UPDATES_TITLE")}}</b> - {{translate("AUTO_UPDATES_TEXT")}}<br/>
                             <input type="checkbox" ng-model="settings.presentationMode"/> <b>{{translate("PRESENTATION_MODE_TITLE")}}</b> - {{translate("PRESENTATION_MODE_TEXT")}}<br/>
-                            <!-- TODO: readd this <input type="checkbox" ng-model="settings.hideDailies"/> <b>{{translate("HIDE_DAILIES_TITLE")}}</b> - {{translate("HIDE_DAILIES_TEXT")}}<br/>-->
+                            <input type="checkbox" ng-model="settings.hideDailies"/> <b>{{translate("HIDE_DAILIES_TITLE")}}</b> - {{translate("HIDE_DAILIES_TEXT")}}<br/>
                             <input type="checkbox" ng-model="settings.sortAccountsByLastUsage" /> <b>{{translate("SORT_ACCOUNTS_BY_LAST_USAGE_TITLE")}}</b> - {{translate("SORT_ACCOUNTS_BY_LAST_USAGE_TEXT")}}<br/>
                             <select name="language" id="language-select" ng-model="settings.language">
                                 <option value="en" ng-selected="settings.language == 'en'">English</option>
