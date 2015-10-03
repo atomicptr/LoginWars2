@@ -237,12 +237,15 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
 
                     // update accounts in localStorage
                     $localStorage.accounts = $scope.accounts;
-                })
+                });
             }, function(res) {
                 console.error(res.status + " (" + res.statusText + "): " + JSON.stringify(res.data));
 
                 // 400 means invalid key, 403 usually means the key is just some random crap
                 if(res.status == 400 || res.status == 403) {
+                    console.warn("Status was: " + res.status + " remove API key: " + apikey);
+                    console.warn(res.data);
+
                     delete account.apikey;
                     account.permissions = [];
                     $localStorage.accounts = $scope.accounts;
