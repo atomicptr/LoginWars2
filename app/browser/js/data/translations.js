@@ -63,6 +63,31 @@ translations.en.MASTER_PASSWORD_CONFIRM = "Confirm your master password";
 translations.en.MASTER_PASSWORD_ENTER_TO_DECRYPT = "Please enter your master password to decrypt your account data.";
 translations.en.MASTER_PASSWORD_ENTER = "Enter your master password";
 translations.en.ABOUT_LOGIN_WARS_2 = "Login Wars 2 is open source software developed and maintained primary by";
+translations.en.PVE_DAILIES = "PvE Dailies";
+translations.en.PVP_DAILIES = "PvP Dailies";
+translations.en.WVW_DAILIES = "WvW Dailies";
+translations.en.DAILY_SHORTCUTS = [
+    {
+        word: "Daily",
+        short: ""
+    },
+    {
+        word: "PvP",
+        short: ""
+    },
+    {
+        word: "WvW",
+        short: ""
+    },
+    {
+        word: "Event Completer",
+        short: "Events"
+    },
+    {
+        word: "Necromancer",
+        short: "Necro"
+    }
+];
 
 // german translations
 translations.de = {};
@@ -70,7 +95,7 @@ translations.de.FEED_URL = "https://www.guildwars2.com/de/feed/";
 translations.de.READ_MORE = "Weiterlesen";
 translations.de.READ_MORE_REMOVE_TEXT = "Weiterlesen";
 translations.de.LATEST_NEWS = "Nachrichten";
-translations.de.DAILIES = "Tägliche Erfolge";
+translations.de.DAILIES = "Heutige Erfolge";
 translations.de.TRADING_POST = "Handelsposten";
 translations.de.BOUGHT = "Gekauft von";
 translations.de.SOLD = "Verkauft von";
@@ -127,12 +152,59 @@ translations.de.MASTER_PASSWORD_CONFIRM = "Bestätige deinen Schlüssel";
 translations.de.MASTER_PASSWORD_ENTER_TO_DECRYPT = "Bitte gebe deinen Schlüssel ein um deine Daten zu entschlüsseln";
 translations.de.MASTER_PASSWORD_ENTER = "Gebe deinen Schlüssel ein";
 translations.de.ABOUT_LOGIN_WARS_2 = "Login Wars 2 ist offene Software primär entwickelt durch";
+translations.de.PVE_DAILIES = "Tägliche PvE Erfolge";
+translations.de.PVP_DAILIES = "Tägliche PvP Erfolge";
+translations.de.WVW_DAILIES = "Tägliche WvW Erfolge";
+translations.de.DAILY_SHORTCUTS = [
+    {
+        word: "Täglicher ",
+        short: ""
+    },
+    {
+        word: "Tägliche ",
+        short: ""
+    },
+    {
+        word: "Tägliche-",
+        short: ""
+    },
+    {
+        word: "PvP-",
+        short: ""
+    },
+    {
+        word: "WvW-",
+        short: ""
+    },
+    {
+        word: "Event-Koryphäe der",
+        short: "Events"
+    },
+    {
+        word: "Event-Koryphäe des",
+        short: "Events"
+    },
+    {
+        word: "Event-Koryphäe von",
+        short: "Events"
+    },
+    {
+        word: "Nekromant",
+        short: "Nekro"
+    },
+    {
+        word: "Waldläufer",
+        short: "Waldi"
+    }
+];
 
 // french translations
 translations.fr = {};
 translations.fr.FEED_URL = "https://www.guildwars2.com/fr/feed/";
 translations.fr.READ_MORE = "Lire la suite";
 translations.fr.READ_MORE_REMOVE_TEXT = "Lire la suite";
+
+//translations.fr.DAILY_SHORTCUTS: It's long but I can't see a system here to remove some words :(
 
 // spanish translations
 translations.es = {};

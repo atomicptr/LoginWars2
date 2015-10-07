@@ -7,7 +7,11 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
         link: $localStorage.cachedNewsLink
     };
 
-    $scope.dailies = getDailies();
+    $scope.dailies = {};
+
+    if($localStorage.dailies) {
+        $scope.dailies = $localStorage.dailies;
+    }
 
     $scope.tpTransactions = [];
 
@@ -38,6 +42,53 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
             $localStorage.cachedNewsContent = $scope.feed.news;
             $localStorage.cachedNewsLink = $scope.feed.link;
         });
+    };
+
+    $scope.updateDailies = function() {
+        Gw2Service.getDailies().then(function(res) {
+            var data = res.data;
+
+            var dailies = {};
+
+            // only get the for 80 achievements for now.
+            dailies.pve = res.data.pve.filter(function(item) {
+                return item.level.max == 80;
+            });
+
+            dailies.pvp = res.data.pvp;
+            dailies.wvw = res.data.wvw;
+
+            var getDailyData = function(daily) {
+                Gw2Service.getAchievement(daily.id, $scope.configs().language).then(function(res) {
+                    res.data.shortname = $scope.shortenDailyName(res.data.name);
+
+                    daily.data = res.data;
+                });
+            }
+
+            dailies.pve.forEach(getDailyData);
+            dailies.pvp.forEach(getDailyData);
+            dailies.wvw.forEach(getDailyData);
+
+            setTimeout(function() {
+                $scope.dailies = dailies;
+                $localStorage.dailies = $scope.dailies;
+            }, 300);
+        });
+    };
+
+    $scope.shortenDailyName = function(name) {
+        var shortcuts = $scope.translate("DAILY_SHORTCUTS");
+
+        var newname = name;
+
+        for(var i = 0; i < shortcuts.length; i++) {
+            var shortcut = shortcuts[i];
+
+            newname = newname.replace(shortcut.word, shortcut.short);
+        }
+
+        return newname;
     };
 
     $scope.canUseTradingPost = function() {
@@ -184,6 +235,10 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
         $scope.updateNews();
     });
 
+    $scope.registerUpdateCallback(function() {
+        $scope.updateDailies();
+    });
+
     $rootScope.$on("master-password-set", function() {
         $scope.registerUpdateCallback(function() {
             $scope.updateTradingPost();
@@ -223,6 +278,9 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
     $rootScope.$on("language-changed", function() {
         // update news
         $scope.updateNews();
+
+        // update dailies
+        $scope.updateDailies();
 
         // invalidate item cache
         $scope.tpTransactions.forEach(function(transaction) {

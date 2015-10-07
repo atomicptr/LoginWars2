@@ -56,6 +56,18 @@ app.factory("Gw2Service", function($http) {
             }
 
             return $http.get("https://api.guildwars2.com/v2/items/" + id + "?lang=" + lang);
+        },
+
+        getDailies() {
+            return $http.get("https://api.guildwars2.com/v2/achievements/daily");
+        },
+
+        getAchievement(id, lang) {
+            if(lang == "undefined") {
+                lang = "en";
+            }
+
+            return $http.get("https://api.guildwars2.com/v2/achievements/" + id + "?lang=" + lang);
         }
     };
 });

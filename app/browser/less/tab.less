@@ -19,6 +19,7 @@ tab-area {
 }
 
 .dailies {
+    display: flex;
     font-size: 16px;
 }
 
@@ -30,20 +31,18 @@ tab-area {
 
 .daily-container {
     display: inline-block;
+
+    flex-grow: 1;
 }
 
 .daily {
     display: block;
     word-break: normal;
 
-    max-width: 200px;
-
     vertical-align: top;
-
-    margin-right: 20px;
 }
 
-@opacity: 0.5;
+@opacity: 0.6;
 
 .daily-pve {
     background:
