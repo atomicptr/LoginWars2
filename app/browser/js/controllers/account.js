@@ -71,6 +71,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         } else {
             if(account.apikey) {
                 // user removed the apikey so the old account also shouldn't have it anymore
+                console.log("user removed apikey from old account, removing it");
                 delete account.apikey;
             }
         }
