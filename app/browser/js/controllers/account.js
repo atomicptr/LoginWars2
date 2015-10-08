@@ -53,7 +53,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         }
 
         return new Date(account.created).getTime();
-    }
+    };
 
     $scope.closeEditAccountWindow = function() {
         $scope.editAcc = {};
@@ -302,7 +302,7 @@ app.controller("ActionsController", function($scope, $rootScope, $localStorage, 
         }
 
         openUrl(donateUrl);
-    }
+    };
 
     $scope.checkApiKey = function() {
         var apikey = $scope.account.apikey;
