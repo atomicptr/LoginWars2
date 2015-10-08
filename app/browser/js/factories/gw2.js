@@ -1,9 +1,13 @@
+function checkAPIKey(apikey) {
+    if(!apikey) {
+        console.error("Tried to run Gw2Service without specifying an API key (or it's undefined?).");
+    }
+}
+
 app.factory("Gw2Service", function($http) {
     return {
         getAccountInformations(apikey) {
-            if(!apikey) {
-                console.error("Invalid API key found");
-            }
+            checkAPIKey(apikey);
 
             return $http.get("https://api.guildwars2.com/v2/account", {
                 headers: {"Authorization": "Bearer " + apikey}
@@ -15,9 +19,7 @@ app.factory("Gw2Service", function($http) {
         },
 
         getTokenInfo(apikey) {
-            if(!apikey) {
-                console.error("Invalid API key found");
-            }
+            checkAPIKey(apikey);
 
             return $http.get("https://api.guildwars2.com/v2/tokeninfo", {
                 headers: {"Authorization": "Bearer " + apikey}
@@ -25,9 +27,7 @@ app.factory("Gw2Service", function($http) {
         },
 
         getWallet(apikey) {
-            if(!apikey) {
-                console.error("Invalid API key found");
-            }
+            checkAPIKey(apikey);
 
             return $http.get("https://api.guildwars2.com/v2/account/wallet", {
                 headers: {"Authorization": "Bearer " + apikey}
@@ -35,17 +35,13 @@ app.factory("Gw2Service", function($http) {
         },
 
         getTransactionHistoryForBuys(apikey) {
-            if(!apikey) {
-                console.error("Invalid API key found");
-            }
+            checkAPIKey(apikey);
 
             return $http.get("https://api.guildwars2.com/v2/commerce/transactions/history/buys?access_token=" + apikey);
         },
 
         getTransactionHistoryForSells(apikey) {
-            if(!apikey) {
-                console.error("Invalid API key found");
-            }
+            checkAPIKey(apikey);
 
             return $http.get("https://api.guildwars2.com/v2/commerce/transactions/history/sells?access_token=" + apikey);
         },
