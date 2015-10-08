@@ -165,7 +165,8 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         $scope.registerUpdateCallback(function() {
             // update known account informations
             $scope.accounts.forEach(function(account) {
-                console.log("update account: " + account.email);
+                var now = new Date();
+                console.log(now.getHours() + ":" + now.getMinutes() + " update account: " + account.email);
                 $scope.updateAccountInformations(account);
             });
         });

@@ -24,8 +24,7 @@ app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
 
     $rootScope._updateFunctions = [];
 
-    console.log("Login Wars 2: " + $rootScope.appVersion);
-    console.log("Electron: " + $rootScope.electronVersion);
+    console.log("Login Wars 2: " + $rootScope.appVersion + ", Electron: " + $rootScope.electronVersion);
 
     $rootScope.executable = function() {
         return $localStorage.gw2Path;
