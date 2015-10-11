@@ -6,6 +6,7 @@ var pathlib = require("path");
 
 var ipc = require("ipc");
 
+// WARNING: Never change this variable!
 var ENCRYPTION_TEST_STRING = "Bookah!";
 
 var USED_PERMISSIONS = ["account", "tradingpost", "wallet"];
