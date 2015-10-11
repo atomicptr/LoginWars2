@@ -45,6 +45,27 @@ a:hover {
     padding-bottom: 5rem;
 }
 
+.footer {
+    background-color: black;
+    color: white;
+
+    padding: 20px 0 20px !important;
+}
+
+.paypal-button {
+    font-size: 18px;
+
+    background-color: #FF4500 !important;
+}
+
+.paypal-button:hover {
+    background-color: darkorange !important;
+}
+
+form {
+    margin: 0 !important;
+}
+
 /* Values
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .values {
