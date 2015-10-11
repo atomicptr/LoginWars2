@@ -31,7 +31,7 @@ app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
 
     $rootScope.executable = function() {
         if($rootScope.os().osx) {
-            return pathlib.resolve($localStorage.gw2Path, "Contents", "MacOS", "cider") + " -use-dos-cwd C:Gw2 -- C:\\GW2\\GW2.exe";
+            return pathlib.resolve($localStorage.gw2Path, "Contents", "MacOS", "cider");
         }
 
         return $localStorage.gw2Path;

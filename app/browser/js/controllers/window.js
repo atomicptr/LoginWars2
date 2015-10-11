@@ -93,6 +93,14 @@ app.controller("WindowController", function($scope, $rootScope, $localStorage, F
             "-nopatchui"
         ];
 
+        if($scope.os().osx) {
+            var ciderParams = ["-use-dos-cwd", "C:Gw2", "--", "C:\\GW2\\GW2.exe"];
+
+            launchParams = ciderParams.concat(launchParams);
+
+            console.log(launchParams);
+        }
+
         launchParams = launchParams.concat(parameters);
 
         var launch = "\"" + $scope.executable() + "\" " + launchParams.join(" ");
