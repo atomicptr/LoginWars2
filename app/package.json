@@ -1,8 +1,8 @@
 {
     "name": "LoginWars2",
     "productName": "LoginWars2",
-    "version": "0.4.1",
-    "electronVersion": "0.33.6",
+    "version": "0.4.2",
+    "electronVersion": "0.33.7",
     "main": "app.js",
     "description": "Login Wars 2",
     "updateUrl": "http://updates.kasoki.de/app/loginwars2"

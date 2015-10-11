@@ -8,9 +8,18 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
     };
 
     $scope.dailies = {};
+    $scope.dailyDone = {};
 
     if($localStorage.dailies) {
         $scope.dailies = $localStorage.dailies;
+    }
+
+    if($localStorage.dailyDone) {
+        $scope.dailyDone = $localStorage.dailyDone;
+    }
+
+    if(!$localStorage.dailyChecksum) {
+        $localStorage.dailyChecksum = "coming soon...";
     }
 
     $scope.tpTransactions = [];
@@ -50,6 +59,8 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
 
             var dailies = {};
 
+            var ids = [];
+
             // only get the for 80 achievements for now.
             dailies.pve = res.data.pve.filter(function(item) {
                 return item.level.max == 80;
@@ -59,6 +70,8 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
             dailies.wvw = res.data.wvw;
 
             var getDailyData = function(daily) {
+                ids.push(daily.id);
+
                 Gw2Service.getAchievement(daily.id, $scope.configs().language).then(function(res) {
                     res.data.shortname = $scope.shortenDailyName(res.data.name);
 
@@ -73,8 +86,38 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
             setTimeout(function() {
                 $scope.dailies = dailies;
                 $localStorage.dailies = $scope.dailies;
+
+                ids.sort(function(a, b) {
+                    return a - b;
+                });
+
+                var dailyChecksum = CryptoJS.MD5(ids.join("-")).toString(CryptoJS.enc.Hex);
+
+                if(dailyChecksum != $localStorage.dailyChecksum) {
+                    console.log("new daily data found, reset the 'done' values");
+
+                    // found different dailies, reset the "done" values
+                    $scope.dailyDone = {};
+                    $localStorage.dailyDone = {};
+
+                    $localStorage.dailyChecksum = dailyChecksum;
+                }
             }, 300);
         });
+    };
+
+    $scope.toggleDaily = function(id) {
+        if(!$scope.dailyDone[id]) {
+            $scope.dailyDone[id] = true;
+        } else {
+            $scope.dailyDone[id] = !$scope.dailyDone[id];
+        }
+
+        $localStorage.dailyDone = $scope.dailyDone;
+    };
+
+    $scope.isDailyDone = function(id) {
+        return $scope.dailyDone[id] ? $scope.dailyDone[id] : false;
     };
 
     $scope.shortenDailyName = function(name) {

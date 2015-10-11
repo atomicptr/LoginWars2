@@ -27,15 +27,15 @@
                 <div class="dailies no-text-selection" ng-if="currentTab == 1">
                     <div class="daily-container daily-pve">
                         <h2>{{translate("PVE_DAILIES")}}</h2>
-                        <span class="daily" ng-repeat="daily in dailies.pve">- {{daily.data.shortname}}</span>
+                        <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pve">- {{daily.data.shortname}}</span>
                     </div>
                     <div class="daily-container daily-pvp">
                         <h2>{{translate("PVP_DAILIES")}}</h2>
-                        <span class="daily" ng-repeat="daily in dailies.pvp">- {{daily.data.shortname}}</span>
+                        <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pvp">- {{daily.data.shortname}}</span>
                     </div>
                     <div class="daily-container daily-wvw">
                         <h2>{{translate("WVW_DAILIES")}}</h2>
-                        <span class="daily" ng-repeat="daily in dailies.wvw">- {{daily.data.shortname}}</span>
+                        <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.wvw">- {{daily.data.shortname}}</span>
                     </div>
                 </div>
                 <div class="trading-post" ng-if="currentTab == 2">
