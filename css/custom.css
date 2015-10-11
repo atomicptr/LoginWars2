@@ -1,30 +1,41 @@
 /* Shared
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .button {
-  border-radius: 100px;
-  color: white !important;
-  background-color: #AA0703 !important;
-  border: none !important;
+    color: white !important;
+    background-color: #AA0703 !important;
+    border: none !important;
 
-  transition: background-color 0.3s ease-in-out;}
+    transition: background-color 0.3s ease-in-out;
+}
 
 .button:hover {
     background-color: red !important;
+    color: white !important;
 }
 
 .button-download {
     font-size: 18px;
 }
 
+a {
+    color: #AA0703 !important;
+    transition: background-color 0.3s ease-in-out;
+    text-decoration: none;
+}
+
+a:hover {
+    color: red !important;
+}
+
 /* Sections
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .section {
-  padding: 8rem 0 7rem;
-  text-align: center;
+    padding: 8rem 0 7rem;
+    text-align: center;
 }
 .section-heading,
 .section-description {
-  margin-bottom: 1.2rem;
+    margin-bottom: 1.2rem;
 }
 
 .section-top {
@@ -37,65 +48,73 @@
 /* Values
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .values {
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../images/bg-evon.jpg');
-  background-size: cover;
-  color: #fff;
-  padding-bottom: 5rem;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../images/bg-evon.jpg');
+    background-size: cover;
+    color: #fff;
+    padding-bottom: 5rem;
 }
 .value-multiplier {
-  margin-bottom: .5rem;
-  color: white;
+    margin-bottom: .5rem;
+    color: white;
 }
 .value-heading {
-  margin-bottom: .3rem;
+    margin-bottom: .3rem;
 }
 .value-description {
-  opacity: .8;
-  font-weight: 300;
+    opacity: .8;
+    font-weight: 300;
 }
 
 /* Help
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .get-help {
-  border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 /* Categories
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .categories {
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../images/bg-ellen.jpg');
-  background-size: cover;
-  color: #fff;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../images/bg-ellen.jpg');
+    background-size: cover;
+    color: #fff;
 }
 .categories .section-description {
-  margin-bottom: 4rem;
+    margin-bottom: 4rem;
 }
 
 /* Bigger than 550 */
 @media (min-width: 550px) {
-  .section {
-    padding: 12rem 0 11rem;
-  }
+    .section {
+        padding: 12rem 0 11rem;
+    }
 }
 
 /* Bigger than 750 */
 @media (min-width: 750px) {
-  .section {
-    padding: 14rem 0 15rem;
-  }
-  .section-description {
-    max-width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .categories {
-    padding: 15rem 0 8rem;
-  }
+    .section {
+        padding: 14rem 0 15rem;
+    }
+    .section-description {
+        max-width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .categories {
+        padding: 15rem 0 8rem;
+    }
 }
 
 /* Bigger than 1000 */
 @media (min-width: 1000px) {
-  .section {
-    padding: 20rem 0 19rem;
-  }
+    .section {
+        padding: 20rem 0 19rem;
+    }
+}
+
+.faq-heading {
+    margin-bottom: 100px;
+}
+
+.faq-questions {
+    text-align: left;
 }
