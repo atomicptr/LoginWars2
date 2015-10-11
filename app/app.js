@@ -96,14 +96,10 @@ app.on("window-all-closed", function() {
 });
 
 app.on("ready", function() {
-    // FIXME: Since frameless, non-resizable windows make problems with OSX atm
-    // don't use frameless mode on OSX
-    var hasFrame = os.windows ? false : true;
-
     win = new BrowserWindow({
         width: 1024,
         height: 600,
-        frame: hasFrame,
+        frame: false,
         resizable: false,
         icon: __dirname + "/icons/icon.png"
     });

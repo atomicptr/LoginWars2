@@ -43,7 +43,16 @@ app.controller("WindowController", function($scope, $rootScope, $localStorage, F
 
     $scope.updateGameClient = function() {
         $scope.loadingDialog.showModal();
-        var game = spawn($scope.executable(), ["-image"]);
+
+        var params = ["-image"];
+
+        if($scope.os().osx) {
+            var ciderParams = ["-use-dos-cwd", "\"C:\\Gw2\"", "--", "\"C:\\GW2\\GW2.exe\""];
+
+            params = ciderParams.concat(params);
+        }
+
+        var game = spawn($scope.executable(), params);
 
         game.on("exit", function(code, signal) {
             $scope.loadingDialog.close();
@@ -94,11 +103,9 @@ app.controller("WindowController", function($scope, $rootScope, $localStorage, F
         ];
 
         if($scope.os().osx) {
-            var ciderParams = ["-use-dos-cwd", "C:Gw2", "--", "C:\\GW2\\GW2.exe"];
+            var ciderParams = ["-use-dos-cwd", "\"C:\\Gw2\"", "--", "\"C:\\GW2\\GW2.exe\""];
 
             launchParams = ciderParams.concat(launchParams);
-
-            console.log(launchParams);
         }
 
         launchParams = launchParams.concat(parameters);
