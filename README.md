@@ -5,7 +5,7 @@ An alternative launcher for Guild Wars 2 with support for multiple accounts and 
 ## Features
 * Manage multiple accounts!
 * Account data can (and should) be encrypted (No more plain text password shortcuts!)
-* ~~Check your dailies, in the launcher!~~ (Disabled for the time being since there is no reliable way to retrieve dailies atm)
+* ~~Check your dailies, in the launcher!~~ (It retrieves the data from the GW2 daily API which is still a non-functional placeholder)
 * Check your latest Trading Post transactions!
 * Check how much money and laurels you have on your alternative accounts without the need to log into them!
 
@@ -21,7 +21,7 @@ No magic, no botting or any form of "automation". It's just a nicer, more secure
 
 ### Can I get banned for using Login Wars 2?
 
-LoginWars2 is just calling the Gw2 executable with the [command line interface we're using for years](https://wiki.guildwars2.com/wiki/Command_line_arguments). So I highly doubt that you can get banned for this. I'll contact Arena.Net at some point to confirm this.
+LoginWars2 is just calling the Gw2 executable with the [command line interface we're using for years](https://wiki.guildwars2.com/wiki/Command_line_arguments). It doesn't violate the "Guild Wars 2 Terms of Service" in any known way. Getting banned for using LW2 is HIGHLY unlikely.
 
 ### Why is my screen black and nothing happens?
 
