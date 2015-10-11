@@ -1,6 +1,8 @@
 var app = angular.module("LoginWars2", ["ngStorage"]);
+
 var spawn = require("child_process").spawn;
 var exec = require("child_process").exec;
+var pathlib = require("path");
 
 var ipc = require("ipc");
 
@@ -27,6 +29,10 @@ app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
     console.log("Login Wars 2: " + $rootScope.appVersion + ", Electron: " + $rootScope.electronVersion);
 
     $rootScope.executable = function() {
+        if($rootScope.os().osx) {
+            return pathlib.resolve($localStorage.gw2Path, "Contents", "MacOS", "cider") + " -use-dos-cwd C:Gw2 -- C:\\GW2\\GW2.exe";
+        }
+
         return $localStorage.gw2Path;
     };
 
