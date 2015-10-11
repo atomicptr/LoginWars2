@@ -13,29 +13,13 @@ An alternative launcher for Guild Wars 2 with support for multiple accounts and 
 * Still no update functionality, the launcher should be able to update itself.
 * No working OS X version. I've added some code for compatibility, but [command line options aren't working on OS X.](https://forum-en.guildwars2.com/forum/support/support/Mac-Command-line-args-not-working/first)
 
-## What it actually does
+## How does this work?
 
-No magic, no botting or any form of "automation". It's just a nicer, more secure and frankly better interface for your old shortcuts with command line options (e.g. -email ... -password ... -nopatchui)
+No magic, no botting or any form of "automation". It's just a nicer, more secure and frankly better interface for your old shortcuts with command line options (e.g. -email ... -password ... -nopatchui).
 
 ## FAQ
 
-### Can I get banned for using Login Wars 2?
-
-LoginWars2 is just calling the Gw2 executable with the [command line interface we're using for years](https://wiki.guildwars2.com/wiki/Command_line_arguments). It doesn't violate the "Guild Wars 2 Terms of Service" in any known way. Getting banned for using LW2 is HIGHLY unlikely.
-
-### Why is my screen black and nothing happens?
-
-For some odd reasons Guild Wars 2 won't tell you if your credentials are wrong (or some other kind of problem occured).
-
-Reasons this might happen:
-* Your email/password is wrong (Fix: Use the right credentials)
-* You need to authenticate this system (Fix: Log in with the normal launcher once, after that it should work)
-
-Please ArenaNet add error messages :).
-
-### Why Login Wars >>"2"<<, is there also a "1"?
-
-I wanted to call the app "Login Wars" but it somewhat would sound like it's for GW1 instead of GW2.
+You can find the [FAQ on the website](http://kasoki.github.io/LoginWars2).
 
 ## Powered by
 
