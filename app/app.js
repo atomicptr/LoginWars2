@@ -40,17 +40,24 @@ var os = {
 
 function runSquirrel(arguments, callback) {
     var updateDotExe = path.resolve(process.execPath, "..", "..", "Update.exe");
-    var update = spawn(updateDotExe, arguments);
 
-    update.stdout.on("data", function(data) {
-        console.log("Squirrel [" + arguments.join(",") + "]: " + data.toString());
+    fs.exists(updateDotExe, function(fileExists) {
+        if(fileExists) {
+            var update = spawn(updateDotExe, arguments);
+
+            update.stdout.on("data", function(data) {
+                console.log("Squirrel [" + arguments.join(",") + "]: " + data.toString());
+            });
+
+            update.stderr.on("data", function(data) {
+                console.error("Squirrel Error [" + arguments.join(",") + "]: " + data.toString());
+            });
+
+            update.on("close", callback);
+        } else {
+            console.warn("Update.exe not found, assuming this is a development or portable build. Updating won't work with this!");
+        }
     });
-
-    update.stderr.on("data", function(data) {
-        console.error("Squirrel Error [" + arguments.join(",") + "]: " + data.toString());
-    });
-
-    update.on("close", callback);
 }
 
 function createShortcut(callback) {
@@ -108,6 +115,12 @@ app.on("ready", function() {
 
     win.webContents.on("did-finish-load", function() {
         win.setTitle(app.getName());
+
+        console.log("App finished loading, searching for updates...");
+
+        checkForUpdate(function() {
+            console.log("Done checking for updates.");
+        });
     });
 
     win.on("closed", function() {
