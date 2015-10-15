@@ -369,7 +369,7 @@ app.controller("EncryptionController", function($scope, $localStorage, $sessionS
             $scope.encryptData($scope.encryption.password);
             $scope.enterEncryptionDialog.close();
         } else {
-            // TODO: do error stuff
+            query("#encrypt-dialog-error").innerHTML = $scope.translate("PASSWORD_DONT_MATCH");
             console.log("Passwords don't match");
         }
     };
@@ -385,6 +385,7 @@ app.controller("EncryptionController", function($scope, $localStorage, $sessionS
             $scope.decryptDialog.close();
         } else {
             // TODO: password wrong add error message
+            query("#decrypt-dialog-error").innerHTML = $scope.translate("MASTER_PASSWORD_WRONG");
             console.log("Wrong password " + $localStorage.encryptionTest);
         }
     };

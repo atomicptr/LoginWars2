@@ -217,6 +217,8 @@
                             <label for="enter-encryption-master-password-retype">{{translate("MASTER_PASSWORD_CONFIRM")}}</label>
                             <input ng-model="encryption.passwordConfirm" type="password" id="enter-encryption-master-password-retype" class="textfield" required />
 
+                            <div id="encrypt-dialog-error" class="dialog-error"></div>
+
                             <div class="dialog-button-container">
                                 <button type="button" ng-click="enterDialogCancel()"class="btn right"><span>{{translate("CANCEL")}}</span></button>
                                 <button type="submit" class="btn"><span>{{translate("SAVE")}}</span></button>
@@ -230,6 +232,8 @@
                         <form ng-submit="submitDecryptDialog()">
                             <label for="decrypt-password">{{translate("MASTER_PASSWORD_ENTER")}}</label>
                             <input ng-model="decryptPassword" type="password" id="decrypt-password" class="textfield" required />
+
+                            <div id="decrypt-dialog-error" class="dialog-error"></div>
 
                             <div class="dialog-button-container">
                                 <button type="button" ng-click="closeWindow()" class="btn right"><span>{{translate("CANCEL")}}</span></button>

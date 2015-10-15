@@ -88,6 +88,8 @@ translations.en.DAILY_SHORTCUTS = [
         short: "Necro"
     }
 ];
+translations.en.MASTER_PASSWORD_WRONG = "Error: Wrong master password!";
+translations.en.PASSWORD_DONT_MATCH = "Error: Master password doesn't match!";
 
 // german translations
 translations.de = {};
@@ -197,6 +199,8 @@ translations.de.DAILY_SHORTCUTS = [
         short: "Waldi"
     }
 ];
+translations.de.MASTER_PASSWORD_WRONG = "Fehler: Falscher Schlüssel angegeben!";
+translations.de.PASSWORD_DONT_MATCH = "Fehler: Die Schlüssel unterscheiden sich!";
 
 // french translations
 translations.fr = {};
