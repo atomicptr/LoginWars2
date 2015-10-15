@@ -38,19 +38,19 @@ var os = {
     windows: process.platform == "win32"
 };
 
-function runSquirrel(arguments, callback) {
+function runSquirrel(args, callback) {
     var updateDotExe = path.resolve(process.execPath, "..", "..", "Update.exe");
 
     fs.exists(updateDotExe, function(fileExists) {
         if(fileExists) {
-            var update = spawn(updateDotExe, arguments);
+            var update = spawn(updateDotExe, args);
 
             update.stdout.on("data", function(data) {
-                console.log("Squirrel [" + arguments.join(",") + "]: " + data.toString());
+                console.log("Squirrel [" + args.join(",") + "]: " + data.toString());
             });
 
             update.stderr.on("data", function(data) {
-                console.error("Squirrel Error [" + arguments.join(",") + "]: " + data.toString());
+                console.error("Squirrel Error [" + args.join(",") + "]: " + data.toString());
             });
 
             update.on("close", callback);
