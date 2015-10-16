@@ -9,4 +9,23 @@ install:
     - bower install
 
 build_script: gulp build
-after_build: gulp build-installer
+after_build:
+    - gulp build-installer
+    - 7z a -r LoginWars2.zip %APPVEYOR_BUILD_FOLDER%\build\LoginWars2-win32-x64
+
+artifacts:
+    - path: installer/*.nupkg
+    - path: installer/RELEASES
+    - path: installer/LoginWars2Setup.exe
+    - path: LoginWars2.zip
+
+deploy:
+    release: LoginWars2
+    auth_token:
+        secure: iRgRsA8WT+KKg5tm8dNWPfQ/1gyfRPh1nVqvQ1aE7hNRtoezGTV5Sg0n3BE+c6lY8TJS7ml/9xNT8z3cdlvgHXj3h9i9VN8X+34gvJd481iGYYiGgk2hF5gfrQXZYJ2RB9XTAOorBuA4x+06k2JYtWv0F4afMgaqN+tAX6+LN2L3jvRW1UYPF0O2MeVP2a+9/qWyJejFncBHLqhxaZ2XtSCsX/mSkcS6OZbdvVjwXztTJ0nGKrEgp+rqfDQRoeC8cEXlP9Q3CE+KijMsJzmO/+f/IzezMbgA2gYfdzGpIelz05eEF+XK2gObzbvQpuDbHq+ej5n++fm+lAKUZSvkug6THBwkO+lsxKI5Gl7BvXiGzaWxPmwN6NrPlxlWqUlOLH7OSkjXcP9RHf3WkmIc0/8ABYoE1JeofEA7wfk/RKTHUoye4L3xLXV205Hybu714CicHeZSpAVttVFp6zB5kdirJ71E8m2AourbBTPL4nDrXdGZzYIUO3ELqolRM06GB6/t2TfJnrl10BX6tH3WzD5chbefWBtSXnptkVm6XXnlJMgZnvkxlG08B99Xv2w+YpgZs9Zjg10K/UUUPbYd28Z/mwVr6Vk8AZQnY/fmyDYEUOJoocPthXBLToXzKL4OV++v/kdASAZ2egodykKHmQ7scAM2DzvccYBykZjDKW8=
+    artifact:
+    draft: false
+    prerelease: false
+    on:
+        branch: master
+        appveyor_repo_tag: true
