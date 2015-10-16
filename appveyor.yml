@@ -30,8 +30,8 @@ deploy:
 
     artifact: nupkgs, release, setup, zip
 
-    description: "LoginWars2 release"
-    draft: true
+    description: "changelog coming soon..."
+    draft: false
     prerelease: false
     on:
         appveyor_repo_tag: true

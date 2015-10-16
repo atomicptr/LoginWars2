@@ -5,12 +5,11 @@ An alternative launcher for Guild Wars 2 with support for multiple accounts and 
 ## Features
 * Manage multiple accounts!
 * Account data can (and should) be encrypted (No more plain text password shortcuts!)
-* ~~Check your dailies, in the launcher!~~ (It retrieves the data from the GW2 daily API which is still a non-functional placeholder)
+* Check your dailies, in the launcher!
 * Check your latest Trading Post transactions!
 * Check how much money and laurels you have on your alternative accounts without the need to log into them!
 
 ## Work in progress
-* Still no update functionality, the launcher should be able to update itself.
 * No working OS X version. I've added some code for compatibility, but [command line options aren't working on OS X.](https://forum-en.guildwars2.com/forum/support/support/Mac-Command-line-args-not-working/first)
 
 ## How does this work?
