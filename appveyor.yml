@@ -13,15 +13,25 @@ after_build:
     - gulp build-installer
     - 7z a -r LoginWars2.zip %APPVEYOR_BUILD_FOLDER%\build\LoginWars2-win32-x64
 
+artifacts:
+    - path: installer/*.nupkg
+      name: nupkgs
+    - path: installer/RELEASES
+      name: release
+    - path: installer/LoginWars2Setup.exe
+      name: setup
+    - path: LoginWars2.zip
+      name: zip
+
 deploy:
     provider: GitHub
     auth_token:
         secure: 3BXDg8DUFbAB7x2kUA7VSnx1dK8Pej/S2SOREIn4YieSaPFYQcT1z/po8DFqhyYm
 
-    artifact: installer/*.nupkg, installer/RELEASES, installer/LoginWars2Setup.exe, LoginWars2.zip
+    artifact: nupkgs, release, setup, zip
 
     description: "LoginWars2 release"
-    draft: false
+    draft: true
     prerelease: false
     on:
         appveyor_repo_tag: true
