@@ -60,11 +60,6 @@ gulp.task("build", ["build-less"], function() {
         if(error) {
             throw error;
         }
-
-        if(process.platform == "win32") {
-            var exec = require("child_process").exec;
-            exec("explorer.exe " + appPath);
-        }
     });
 });
 

@@ -9,4 +9,8 @@ before_script:
     - sudo apt-get update -q
     - sudo apt-get install -y wine1.7
 script: gulp build
-after_success: gulp build-installer
+after_success:
+    - gulp build-installer
+    - zip -r LoginWars2.zip build/LoginWars2-win32-x64
+    - ls
+    - ls installer
