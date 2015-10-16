@@ -4,8 +4,9 @@ node_js:
 before_script:
     - npm install -g gulp
     - npm install -g bower
-    - npm install
     - bower install
-    - sudo apt-get install wine
+    - sudo add-apt-repository ppa:ubuntu-wine/ppa -y
+    - sudo apt-get update -q
+    - sudo apt-get install -y wine1.7
 script: gulp build
 after_success: gulp build-installer
