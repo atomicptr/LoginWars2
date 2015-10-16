@@ -14,10 +14,12 @@ after_build:
     - 7z a -r LoginWars2.zip %APPVEYOR_BUILD_FOLDER%\build\LoginWars2-win32-x64
 
 deploy:
-    release: LoginWars2
-    provider: Github
+    provider: GitHub
     auth_token:
         secure: 3BXDg8DUFbAB7x2kUA7VSnx1dK8Pej/S2SOREIn4YieSaPFYQcT1z/po8DFqhyYm
+
+    release: LoginWars2-$(appveyor_build_version)
+    description: "LoginWars2 release"
     draft: false
     prerelease: false
     on:
