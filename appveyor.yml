@@ -18,7 +18,8 @@ deploy:
     auth_token:
         secure: 3BXDg8DUFbAB7x2kUA7VSnx1dK8Pej/S2SOREIn4YieSaPFYQcT1z/po8DFqhyYm
 
-    release: LoginWars2-$(appveyor_build_version)
+    artifact: installer/*.nupkg, installer/RELEASES, installer/LoginWars2Setup.exe, LoginWars2.zip
+
     description: "LoginWars2 release"
     draft: false
     prerelease: false
