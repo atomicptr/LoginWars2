@@ -61,8 +61,10 @@ gulp.task("build", ["build-less"], function() {
             throw error;
         }
 
-        var exec = require("child_process").exec;
-        exec("explorer.exe " + appPath);
+        if(process.platform == "win32") {
+            var exec = require("child_process").exec;
+            exec("explorer.exe " + appPath);
+        }
     });
 });
 
@@ -74,7 +76,6 @@ gulp.task("build-installer", [], function(done) {
         description: configs.DESCRIPTION,
         version: configs.APP_VERSION,
         iconUrl: configs.ICON_URL_PNG,
-        setupIcon: path.resolve(__dirname, "app", "icons", "icon.ico"),
-        //remoteReleases: packageJson.updateUrl // TODO: delta updates
+        setupIcon: path.resolve(__dirname, "app", "icons", "icon.ico")
     });
 });
