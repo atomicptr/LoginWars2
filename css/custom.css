@@ -13,6 +13,11 @@
     color: white !important;
 }
 
+
+.download-box {
+    margin-top: 50vh;
+}
+
 .button-download {
     font-size: 18px;
 }
@@ -39,10 +44,16 @@ a:hover {
 }
 
 .section-top {
-    background: url('../images/bg-top.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/bg-top.jpg');
     background-size: cover;
-    color: #fff;
-    padding-bottom: 5rem;
+
+    color: white;
+
+    padding: 0 0 0 0 !important;
+
+    vertical-align: center;
+
+    height: 100vh !important;
 }
 
 .footer {
@@ -66,41 +77,30 @@ form {
     margin: 0 !important;
 }
 
-/* Values
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.values {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../images/bg-evon.jpg');
+.points {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../images/bg-points.jpg');
     background-size: cover;
     color: #fff;
     padding-bottom: 5rem;
 }
-.value-multiplier {
+.point-multiplier {
     margin-bottom: .5rem;
     color: white;
 }
-.value-heading {
+.point-heading {
     margin-bottom: .3rem;
 }
-.value-description {
+.point-description {
     opacity: .8;
     font-weight: 300;
 }
 
 /* Help
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.get-help {
+.faq {
     border-bottom: 1px solid #ddd;
-}
 
-/* Categories
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.categories {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../images/bg-ellen.jpg');
-    background-size: cover;
-    color: #fff;
-}
-.categories .section-description {
-    margin-bottom: 4rem;
+    background-color: white;
 }
 
 /* Bigger than 550 */
