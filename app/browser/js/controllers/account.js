@@ -108,6 +108,10 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         return "Snaff";
     };
 
+    $scope.presentationModeFriendlyAccountEmail = function(account) {
+        return $scope.presentationModeFriendlyAccountName(account).toLowerCase() + "@guildwars2.com";
+    }
+
     $scope.parsePermissions = function(permissions) {
         var usedPermissions = [];
 

@@ -76,7 +76,7 @@
                             </div>
                             <div class="accname">
                                 <mail ng-if="!configs().presentationMode">{{account.email}}</mail>
-                                <mail ng-if="configs().presentationMode">{{presentationModeFriendlyAccountName(account)}}@presentation.mode</mail>
+                                <mail ng-if="configs().presentationMode">{{presentationModeFriendlyAccountEmail(account)}}</mail>
                                 <br/>
                                 <name-container ng-if="!configs().presentationMode">
                                     <name ng-if="account.apikey">{{account.name}}</name>
