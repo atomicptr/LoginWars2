@@ -31,7 +31,7 @@ deploy:
     artifact: nupkgs, release, setup, zip
 
     description: "changelog coming soon..."
-    draft: false
+    draft: true
     prerelease: false
     on:
         appveyor_repo_tag: true
