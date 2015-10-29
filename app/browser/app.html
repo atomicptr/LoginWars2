@@ -79,11 +79,11 @@
                                 <mail ng-if="configs().presentationMode">{{presentationModeFriendlyAccountEmail(account)}}</mail>
                                 <br/>
                                 <name-container ng-if="!configs().presentationMode">
-                                    <name ng-if="account.apikey">{{account.name}}<span> <i ng-if="apiErrorOcurred(account)" class="api-error fa fa-exclamation-circle"></i></span></name>
+                                    <name ng-if="account.apikey">{{account.name}}<span> <i ng-if="apiErrorOccurred(account)" class="api-error fa fa-exclamation-circle"></i></span></name>
                                     <name ng-if="!account.apikey">No API key specified</name>
                                 </name-container>
                                 <name-container ng-if="configs().presentationMode">
-                                    <name ng-if="account.apikey">{{presentationModeFriendlyAccountName(account)}}.1337 <i ng-if="apiErrorOcurred(account)" class="api-error fa fa-exclamation-circle"></i></name>
+                                    <name ng-if="account.apikey">{{presentationModeFriendlyAccountName(account)}}.1337 <i ng-if="apiErrorOccurred(account)" class="api-error fa fa-exclamation-circle"></i></name>
                                     <name ng-if="!account.apikey">No API key specified</name>
                                 </name-container>
                             </div>

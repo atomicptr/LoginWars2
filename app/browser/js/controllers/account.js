@@ -176,8 +176,8 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         });
     };
 
-    $scope.apiErrorOcurred = function(account) {
-        return account.requestError && account.requestError.ocurred;
+    $scope.apiErrorOccurred = function(account) {
+        return account.requestError && account.requestError.occurred;
     };
 
     $scope.updateAccountInformations = function(account) {
@@ -189,9 +189,9 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         if(account.apikey) {
             var apikey = $scope.decrypt(account.apikey);
             Gw2Service.getAccountInformations(apikey).then(function(res) {
-                if(account.requestError && account.requestError.ocurred) {
+                if(account.requestError && account.requestError.occurred) {
                     // connection seems fine now
-                    account.requestError.ocurred = false;
+                    account.requestError.occurred = false;
                 }
 
                 var data = res.data;
@@ -267,7 +267,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
                     var errorNumber = $scope.fileApiError(res.status, res.data);
 
                     account.requestError = {
-                        ocurred: true,
+                        occurred: true,
                         number: errorNumber
                     };
 
