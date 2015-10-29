@@ -1,5 +1,7 @@
 # Login Wars 2
 
+[![Build status](https://ci.appveyor.com/api/projects/status/iqbonfmpb6cd0y6o?svg=true)](https://ci.appveyor.com/project/kasoki/loginwars2)
+
 An alternative launcher for Guild Wars 2 with support for multiple accounts and some extra cheese.
 
 ## Features
