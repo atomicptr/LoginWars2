@@ -79,6 +79,22 @@ app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
         return string;
     };
 
+    $rootScope.fileApiError = function(statusCode, data) {
+        if(!$localStorage.apiErrorLog) {
+            $localStorage.apiErrorLog = [];
+        }
+
+        var index = $localStorage.apiErrorLog.length;
+
+        $localStorage.apiErrorLog.push({
+            id: index,
+            status: statusCode,
+            data: data
+        });
+
+        return index;
+    };
+
     $rootScope.registerUpdateCallback = function(func) {
         $rootScope._updateFunctions.push(func);
     };

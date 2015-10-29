@@ -79,15 +79,15 @@
                                 <mail ng-if="configs().presentationMode">{{presentationModeFriendlyAccountEmail(account)}}</mail>
                                 <br/>
                                 <name-container ng-if="!configs().presentationMode">
-                                    <name ng-if="account.apikey">{{account.name}}</name>
+                                    <name ng-if="account.apikey">{{account.name}}<span> <i ng-if="apiErrorOcurred(account)" class="api-error fa fa-exclamation-circle"></i></span></name>
                                     <name ng-if="!account.apikey">No API key specified</name>
                                 </name-container>
                                 <name-container ng-if="configs().presentationMode">
-                                    <name ng-if="account.apikey">{{presentationModeFriendlyAccountName(account)}}.1337</name>
+                                    <name ng-if="account.apikey">{{presentationModeFriendlyAccountName(account)}}.1337 <i ng-if="apiErrorOcurred(account)" class="api-error fa fa-exclamation-circle"></i></name>
                                     <name ng-if="!account.apikey">No API key specified</name>
                                 </name-container>
                             </div>
-                            <div class="accwallet" ng-if="canUseWallet(account)">
+                            <div class="accwallet" ng-if="canUseWallet(account) && account.wallet && account.wallet.canShow">
                                 <span class="laurels">
                                     <img class="laurel" src="assets/laurel.png" /> {{account.wallet.laurels}}
                                 </span>

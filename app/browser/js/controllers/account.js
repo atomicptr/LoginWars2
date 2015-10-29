@@ -176,6 +176,10 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         });
     };
 
+    $scope.apiErrorOcurred = function(account) {
+        return account.requestError && account.requestError.ocurred;
+    };
+
     $scope.updateAccountInformations = function(account) {
         // HACK: add attribute if some old account doesn't have it
         if(!account.created) {
@@ -185,6 +189,11 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         if(account.apikey) {
             var apikey = $scope.decrypt(account.apikey);
             Gw2Service.getAccountInformations(apikey).then(function(res) {
+                if(account.requestError && account.requestError.ocurred) {
+                    // connection seems fine now
+                    account.requestError.ocurred = false;
+                }
+
                 var data = res.data;
 
                 account.name = data.name;
@@ -209,6 +218,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
                             if(!account.wallet) {
                                 account.wallet = {};
                                 account.wallet.coins = {};
+                                account.wallet.canShow = false;
                             }
 
                             // get laurels and coins
@@ -238,6 +248,8 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
                                     account.wallet.laurels = item.value;
                                 }
                             });
+
+                            account.wallet.canShow = true;
                         });
                     }
 
@@ -247,12 +259,20 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
             }, function(res) {
                 console.error(res.status + " (" + res.statusText + "): " + JSON.stringify(res.data));
 
-                // 400 means invalid key, 403 usually means the key is just some random crap
+                // This usually occurs when an API key is revoked or wrong
                 if(res.status == 400 || res.status == 403) {
-                    console.warn("Status was: " + res.status + " remove API key: " + apikey);
+                    console.warn("Status was: " + res.status + " potential invalid apikey on account " + account.email);
                     console.warn(res.data);
 
-                    delete account.apikey;
+                    var errorNumber = $scope.fileApiError(res.status, res.data);
+
+                    account.requestError = {
+                        ocurred: true,
+                        number: errorNumber
+                    };
+
+                    console.warn("Logged new API error with number: " + errorNumber);
+
                     account.permissions = [];
                     $localStorage.accounts = $scope.accounts;
                 }
