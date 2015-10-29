@@ -78,7 +78,7 @@ app.controller("WindowController", function($scope, $rootScope, $localStorage, F
 
             if(lastBuildNumber != undefined) {
                 if(lastBuildNumber != res.data.id) {
-                    console.log("Current build: " + lastBuildNumber + ", but server claims to have a new one ready: " +
+                    juicy.log("Current build: " + lastBuildNumber + ", but server claims to have a new one ready: " +
                         res.data.id + "... trying to update...");
 
                     if($scope.configs().autoUpdates) {
@@ -123,11 +123,11 @@ app.controller("WindowController", function($scope, $rootScope, $localStorage, F
         var game = exec(launch);
 
         game.stdout.on("data", function(data) {
-            console.log(data.toString());
+            juicy.log(data.toString());
         });
 
         game.stderr.on("data", function(data) {
-            console.error(data.toString());
+            juicy.error(data.toString());
         });
 
         game.on("exit", function(code, signal) {

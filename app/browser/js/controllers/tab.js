@@ -94,7 +94,7 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
                 var dailyChecksum = CryptoJS.MD5(ids.join("-")).toString(CryptoJS.enc.Hex);
 
                 if(dailyChecksum != $localStorage.dailyChecksum) {
-                    console.log("new daily data found, reset the 'done' values");
+                    juicy.log("new daily data found, reset the 'done' values");
 
                     // found different dailies, reset the "done" values
                     $scope.dailyDone = {};
@@ -213,7 +213,7 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
 
             $localStorage.itemCache[itemId] = res.data;
             $localStorage.itemCache[itemId].cacheDate = new Date();
-            console.log("Added " + res.data.name + " to item cache.");
+            juicy.log("Added " + res.data.name + " to item cache.");
         });
     }
 
@@ -293,7 +293,7 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
                 var item = $localStorage.itemCache[i];
 
                 if(!item) {
-                    console.warn("Invalid item found. Item cache size: " + $localStorage.itemCache.length);
+                    juicy.warn("Invalid item found. Item cache size: " + $localStorage.itemCache.length);
                     return;
                 }
 

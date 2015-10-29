@@ -27,7 +27,7 @@ app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
 
     $rootScope._updateFunctions = [];
 
-    console.log("Login Wars 2: " + $rootScope.appVersion + ", Electron: " + $rootScope.electronVersion);
+    juicy.log("Login Wars 2: {0}, Electron: {1}", $rootScope.appVersion, $rootScope.electronVersion);
 
     $rootScope.executable = function() {
         if($rootScope.os().osx) {

@@ -1,6 +1,6 @@
 function checkAPIKey(apikey) {
     if(!apikey) {
-        console.error("Tried to run Gw2Service without specifying an API key (or it's undefined?).");
+        juicy.error("Tried to run Gw2Service without specifying an API key (or it's undefined?).");
     }
 }
 

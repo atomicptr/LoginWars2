@@ -71,7 +71,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         } else {
             if(account.apikey) {
                 // user removed the apikey so the old account also shouldn't have it anymore
-                console.log("user removed apikey from old account, removing it");
+                juicy.log("user removed apikey from old account, removing it");
                 delete account.apikey;
             }
         }
@@ -170,7 +170,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
             // update known account informations
             $scope.accounts.forEach(function(account) {
                 var now = new Date();
-                console.log(now.getHours() + ":" + now.getMinutes() + " update account: " + account.email);
+                juicy.log("update account: " + account.email);
                 $scope.updateAccountInformations(account);
             });
         });
@@ -257,12 +257,12 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
                     $localStorage.accounts = $scope.accounts;
                 });
             }, function(res) {
-                console.error(res.status + " (" + res.statusText + "): " + JSON.stringify(res.data));
+                juicy.error(res.status + " (" + res.statusText + "): " + JSON.stringify(res.data));
 
                 // This usually occurs when an API key is revoked or wrong
                 if(res.status == 400 || res.status == 403) {
-                    console.warn("Status was: " + res.status + " potential invalid apikey on account " + account.email);
-                    console.warn(res.data);
+                    juicy.warn("Status was: {0} potential invalid apikey on account {1}", res.status, account.email);
+                    juicy.warn(res.data);
 
                     var errorNumber = $scope.fileApiError(res.status, res.data);
 
@@ -271,7 +271,7 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
                         number: errorNumber
                     };
 
-                    console.warn("Logged new API error with number: " + errorNumber);
+                    juicy.warn("Logged new API error with number: " + errorNumber);
 
                     account.permissions = [];
                     $localStorage.accounts = $scope.accounts;
@@ -346,7 +346,7 @@ app.controller("ActionsController", function($scope, $rootScope, $localStorage, 
 
         // language changed invalidate the item cache
         if(oldLanguage != $scope.settings.language) {
-            console.log("invalidating item cache...");
+            juicy.log("invalidating item cache...");
             $rootScope.$broadcast("language-changed");
         }
 
@@ -394,7 +394,7 @@ app.controller("EncryptionController", function($scope, $localStorage, $sessionS
             $scope.enterEncryptionDialog.close();
         } else {
             query("#encrypt-dialog-error").innerHTML = $scope.translate("PASSWORD_DONT_MATCH");
-            console.log("Passwords don't match");
+            juicy.log("Passwords don't match");
         }
     };
 
@@ -410,7 +410,7 @@ app.controller("EncryptionController", function($scope, $localStorage, $sessionS
         } else {
             // TODO: password wrong add error message
             query("#decrypt-dialog-error").innerHTML = $scope.translate("MASTER_PASSWORD_WRONG");
-            console.log("Wrong password " + $localStorage.encryptionTest);
+            juicy.log("Wrong password " + $localStorage.encryptionTest);
         }
     };
 });
