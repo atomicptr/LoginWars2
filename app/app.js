@@ -130,7 +130,9 @@ app.on("ready", function() {
 
 ipc.on("open-devtools", function(event) {
     if(win) {
-        win.openDevTools();
+        win.openDevTools({
+            detach: true
+        });
     }
 })
 
