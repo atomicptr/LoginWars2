@@ -64,6 +64,14 @@ app.factory("Gw2Service", function($http) {
             }
 
             return $http.get("https://api.guildwars2.com/v2/achievements/" + id + "?lang=" + lang);
+        },
+
+        getPvPStats(apikey) {
+            checkAPIKey(apikey);
+
+            return $http.get("https://api.guildwars2.com/v2/pvp/stats", {
+                headers: {"Authorization": "Bearer " + apikey}
+            });
         }
     };
 });

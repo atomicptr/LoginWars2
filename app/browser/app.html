@@ -71,8 +71,7 @@
                     <div class="account-list">
                         <item ng-if="accounts.length > 0" ng-click="accountItemClicked(account)" ng-repeat="account in accounts | orderBy: sortAccounts">
                             <div class="accicon">
-                                <img src="assets/acc.png" ng-hide="gameRunning" />
-                                <img src="assets/acclocked.png" ng-show="gameRunning" />
+                                <img ng-src="{{accountImage(account)}}" />
                             </div>
                             <div class="accname">
                                 <mail ng-if="!configs().presentationMode">{{account.email}}</mail>

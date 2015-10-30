@@ -47,6 +47,25 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
         return account.permissions != undefined && account.permissions.indexOf("wallet") > -1;
     };
 
+    $scope.canUsePvP = function(account) {
+        return account.permissions != undefined && account.permissions.indexOf("pvp") > -1;
+    }
+
+    $scope.accountImage = function(account) {
+        // can use pvp rank icons
+        if($scope.canUsePvP(account) && account.pvprank != undefined) {
+            var rank = Math.floor(account.pvprank / 10);
+
+            return "assets/ranks/" + rank + ($scope.gameRunning ? "-locked" : "")+ ".png";
+        }
+
+        if($scope.gameRunning) {
+            return "assets/acclocked.png";
+        }
+
+        return "assets/acc.png";
+    };
+
     $scope.sortAccounts = function(account) {
         if($scope.configs().sortAccountsByLastUsage) {
             return -(new Date(account.lastUsage).getTime());
@@ -251,6 +270,14 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
 
                             account.wallet.canShow = true;
                         });
+                    }
+
+                    if($scope.canUsePvP(account)) {
+                        Gw2Service.getPvPStats(apikey).then(function(res) {
+                            var data = res.data;
+
+                            account.pvprank = res.data.pvp_rank;
+                        })
                     }
 
                     // update accounts in localStorage
