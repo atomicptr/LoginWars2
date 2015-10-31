@@ -122,14 +122,11 @@
                             <label for="add-account-apikey">{{translate("API_KEY")}} <a href="https://account.arena.net/applications/create">({{translate("API_KEY_CREATE_TEXT")}})</a></label>
                             <input ng-model="account.apikey" ng-change="checkApiKey()" type="text" id="add-account-apikey" class="textfield" placeholder="{{translate('API_KEY_PLACEHOLDER_TEXT')}}" tabindex="3" />
 
-                            <label>{{translate("USED_PERMISSIONS")}}</label>
-                            <ul>
-                                <li ng-repeat="p in permissions">
-                                    {{p.name}}
-                                    <i ng-if="p.granted" class="fa fa-check granted"></i>
-                                    <i ng-if="!p.granted" class="fa fa-times not-granted"></i>
-                                </li>
-                            </ul>
+                            <div class="dialog-used-permissions">
+                                <span class="dialog-used-permission" ng-repeat="p in permissions">
+                                    <i ng-if="p.granted" class="fa fa-check granted"></i><i ng-if="!p.granted" class="fa fa-times not-granted"></i> {{p.name}}
+                                </span>
+                            </div>
 
                             <label for="add-account-addparams">{{translate("COMMAND_LINE_PARAMS_LABEL")}} <a href="https://wiki.guildwars2.com/wiki/Command_line_arguments">({{translate("COMMAND_LINE_DOCS")}})</a></label>
                             <input ng-model="account.addparams" type="text" id="add-account-addparams" class="textfield" placeholder="{{translate('COMMAND_LINE_PARAMS_PLACEHOLDER')}}" tabindex="4" />
@@ -260,13 +257,11 @@
                         <input ng-model="editAcc.apikey" ng-change="checkApiKey()" type="text" id="edit-account-apikey" class="textfield" placeholder="{{translate('API_KEY_PLACEHOLDER_TEXT')}}" tabindex="3" />
 
                         <label>{{translate("USED_PERMISSIONS")}}</label>
-                        <ul>
-                            <li ng-repeat="p in editAcc._permissions">
-                                {{p.name}}
-                                <i ng-if="p.granted" class="fa fa-check granted"></i>
-                                <i ng-if="!p.granted" class="fa fa-times not-granted"></i>
-                            </li>
-                        </ul>
+                        <div class="dialog-used-permissions">
+                            <span class="dialog-used-permission" ng-repeat="p in editAcc._permissions">
+                                <i ng-if="p.granted" class="fa fa-check granted"></i><i ng-if="!p.granted" class="fa fa-times not-granted"></i> {{p.name}}
+                            </span>
+                        </div>
 
                         <label for="edit-account-addparams">{{translate("COMMAND_LINE_PARAMS_LABEL")}} <a href="https://wiki.guildwars2.com/wiki/Command_line_arguments">({{translate("COMMAND_LINE_DOCS")}})</a></label>
                         <input ng-model="editAcc.addparams" type="text" id="edit-account-addparams" class="textfield" placeholder="{{translate('COMMAND_LINE_PARAMS_PLACEHOLDER')}}" tabindex="4" />
