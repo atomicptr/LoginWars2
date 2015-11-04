@@ -315,6 +315,8 @@ app.controller("ActionsController", function($scope, $rootScope, $localStorage, 
     $scope.permissions = [];
     $scope.settings = angular.copy($localStorage.configs);
 
+    $scope.gw2Path = $rootScope.path();
+
     $scope.submitAddAccountDialog = function() {
         $scope.addAccount(angular.copy($scope.account));
         $scope.account = {};
@@ -379,6 +381,17 @@ app.controller("ActionsController", function($scope, $rootScope, $localStorage, 
 
         $scope.showSettingsDialog(false);
     };
+
+    $scope.resetGw2Path = function() {
+        juicy.log("Reset gw2 exe path...");
+        ipc.send("gw2-find-path", null);
+
+        // HACK
+        setTimeout(function() {
+            $scope.gw2Path = $localStorage.gw2Path;
+            $scope.$apply();
+        }, 500);
+    }
 });
 
 app.controller("EncryptionController", function($scope, $localStorage, $sessionStorage) {

@@ -17,7 +17,11 @@ var win = null;
 var osValues = {
     darwin: {
         executableName: "Guild Wars 2.app",
-        defaultPath: "/Applications/Guild Wars 2.app",
+        defaultPaths: [
+            {
+                "path": "/Applications/Guild Wars 2.app"
+            }
+        ],
         defaultSearchPath: "/Applications",
         typeName: "Application",
         typeExtension: "app"
@@ -25,7 +29,12 @@ var osValues = {
 
     win32: {
         executableName: "Gw2.exe",
-        defaultPath: "C:\\Program Files (x86)\\Guild Wars 2\\Gw2.exe",
+        defaultPaths: [
+            {
+                "path": "C:\\Program Files (x86)\\Guild Wars 2\\Gw2.exe",
+                "path64": "C:\\Program Files (x86)\\Guild Wars 2\\Gw2-64.exe"
+            }
+        ],
         defaultSearchPath: "C:\\Program Files (x86)\\",
         typeName: "Executable",
         typeExtension: "exe"
@@ -35,7 +44,8 @@ var osValues = {
 var os = {
     current: process.platform,
     osx: process.platform == "darwin",
-    windows: process.platform == "win32"
+    windows: process.platform == "win32",
+    is64: process.arch == "x64"
 };
 
 function runSquirrel(args, callback) {
@@ -152,18 +162,38 @@ ipc.on("gw2-find-path", function(event, knownPath) {
 
         var values = osValues[os.current];
 
+        var foundPath = null;
+
         // We don't know where the Gw2.exe is atm...
-        // Maybe at the default location?
-        var path = values.defaultPath;
+        // Maybe at one of the default location?
+        for(var i = 0; i < values.defaultPaths.length; i++) {
+            var executable = values.defaultPaths[i];
 
-        fs.exists(path, function(executableExists) {
-            if(executableExists) {
-                console.log("path at default location found");
-                event.sender.send("gw2-find-path-reply", path);
+            var exists = fs.existsSync(executable.path);
 
-                return;
+            if(exists) {
+                // is 64bit os and has an 64bit path
+                if(os.is64 && executable.path64 != undefined) {
+                    console.log("64bit OS found, check if the user has a 64bit client installed");
+
+                    var exists64bitPath = fs.existsSync(executable.path64)
+
+                    if(exists64bitPath) {
+                        console.log("64bit executable found at default location: " + executable.path64);
+                        foundPath = executable.path64;
+                        break;
+                    }
+                }
+
+                // either os is not 64bit or no 64bit client path known, use 32bit client instead
+                console.log("32bit executable found at default location: " + executable.path);
+                foundPath = executable.path;
+                break;
             }
+        }
 
+        // TODO check if found path if yes do stuff if not more stuff
+        if(!foundPath) {
             // Not at the default location... user needs to tell us him/herself where it is...
             Dialog.showMessageBox(win, {
                 type: "info",
@@ -185,7 +215,9 @@ ipc.on("gw2-find-path", function(event, knownPath) {
             });
 
             console.log("selected path: " + path);
-            event.sender.send("gw2-find-path-reply", path);
-        });
+            foundPath = path;
+        }
+
+        event.sender.send("gw2-find-path-reply", foundPath);
     });
 });

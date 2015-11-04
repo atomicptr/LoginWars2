@@ -20,6 +20,7 @@ app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
 
     ipc.on("gw2-find-path-reply", function(path) {
         $localStorage.gw2Path = path;
+        juicy.log("GW2 executable found at " + path);
     });
 
     $rootScope.appVersion = "v" + packageJson.version;
@@ -36,6 +37,10 @@ app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
 
         return $localStorage.gw2Path;
     };
+
+    $rootScope.path = function() {
+        return $localStorage.gw2Path;
+    }
 
     $rootScope.useEncryption = function() {
         return $localStorage.useEncryption;

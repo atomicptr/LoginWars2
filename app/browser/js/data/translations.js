@@ -90,6 +90,8 @@ translations.en.DAILY_SHORTCUTS = [
 ];
 translations.en.MASTER_PASSWORD_WRONG = "Error: Wrong master password!";
 translations.en.PASSWORD_DONT_MATCH = "Error: Master password doesn't match!";
+translations.en.GW2_PATH = "Executable Path";
+translations.en.PATH_RESET = "Reset";
 
 // german translations
 translations.de = {};
@@ -201,6 +203,8 @@ translations.de.DAILY_SHORTCUTS = [
 ];
 translations.de.MASTER_PASSWORD_WRONG = "Fehler: Falscher Schlüssel angegeben!";
 translations.de.PASSWORD_DONT_MATCH = "Fehler: Die Schlüssel unterscheiden sich!";
+translations.de.GW2_PATH = "Programmpfad";
+translations.de.PATH_RESET = "Zurücksetzen";
 
 // french translations
 translations.fr = {};
