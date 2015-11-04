@@ -30,6 +30,20 @@ app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
 
     juicy.log("Login Wars 2: {0}, Electron: {1}", $rootScope.appVersion, $rootScope.electronVersion);
 
+    var lastVersion = $localStorage.lastVersion;
+
+    // new app version found, lets me set some new stuff
+    if(!lastVersion || lastVersion != $rootScope.appVersion) {
+        // if user comes from 0.7.x
+        if(lastVersion.indexOf("0.7.") > -1) {
+            // re-evaluate path since the app now supports 64 bit
+            ipc.send("gw2-find-path", null);
+        }
+
+        // set lastVersion to current version
+        $localStorage.lastVersion = $rootScope.appVersion;
+    }
+
     $rootScope.executable = function() {
         if($rootScope.os().osx) {
             return pathlib.resolve($localStorage.gw2Path, "Contents", "MacOS", "cider");
