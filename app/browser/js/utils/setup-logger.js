@@ -15,23 +15,13 @@ juicy.add(function(type, message, time) {
     }
 });
 
-// log to localStorage
+// log to file
 juicy.add(function(type, message, time) {
-    var logsString = localStorage.getItem("logs");
+    var appdata = process.env["appdata"];
 
-    if(!logsString) {
-        logsString = "[]";
-    }
-
-    var logs = JSON.parse(logsString);
-
-    var typeString = type == Logger.type.ERROR ? "error" : type == Logger.type.WARNING ? "warning" : "info";
-
-    logs.push({
-        type: typeString,
-        message: message,
-        time: time.getTime()
+    fs.appendFile(pathlib.resolve(appdata, "LoginWars2", "LoginWars2.window.log"), "[" + time.getTime() + "] " + message + "\r\n", function(err) {
+        if(err) {
+            throw err;
+        }
     });
-
-    localStorage.setItem("logs", JSON.stringify(logs));
 });

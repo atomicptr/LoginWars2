@@ -3,6 +3,7 @@ var app = angular.module("LoginWars2", ["ngStorage"]);
 var spawn = require("child_process").spawn;
 var exec = require("child_process").exec;
 var pathlib = require("path");
+var fs = require("fs");
 
 var ipc = require("ipc");
 
@@ -34,8 +35,7 @@ app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
 
     // new app version found, lets me set some new stuff
     if(!lastVersion || lastVersion != $rootScope.appVersion) {
-        // reevaluate path once
-        ipc.send("gw2-find-path", null);
+        localStorage.removeItem("logs")
 
         // set lastVersion to current version
         $localStorage.lastVersion = $rootScope.appVersion;
