@@ -18,7 +18,7 @@
                 <tabs>
                     <h1 ng-class="{'active': currentTab == 0}" ng-click="changeTab(0)" class="tab-title">{{translate("LATEST_NEWS")}}</h1>
                     <h1 ng-class="{'active': currentTab == 1}" ng-click="changeTab(1)" class="tab-title" ng-if="!configs().hideDailies">{{translate("DAILIES")}}</h1>
-                    <h1 ng-class="{'active': currentTab == 2}" ng-click="changeTab(2)" class="tab-title" ng-if="currentTab == 2 || canUseTradingPost()">{{translate("TRADING_POST")}}</h1>
+                    <h1 ng-class="{'active': currentTab == 2}" ng-click="changeTab(2)" class="tab-title" ng-if="currentTab == 2 || canUseTradingPost()">{{translate("TRADING_POST")}} <i ng-if="newTradesFound" class="new-tp fa fa-exclamation"></i></h1>
                 </tabs>
                 <div class="latest-news" ng-if="currentTab == 0">
                     <h2>{{feed.title}}</h2>

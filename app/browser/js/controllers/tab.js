@@ -1,5 +1,6 @@
 app.controller("TabController", function($scope, $rootScope, $localStorage, FeedService, Gw2Service) {
     $scope.currentTab = $localStorage.lastUsedTab != undefined ? $localStorage.lastUsedTab : 0;
+    $scope.newTradesFound = false;
 
     $scope.feed = {
         title: $localStorage.cachedNewsTitle,
@@ -31,6 +32,10 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
     $scope.changeTab = function(num) {
         $scope.currentTab = num;
         $localStorage.lastUsedTab = num;
+
+        if(num == 2) {
+            $scope.newTradesFound = false;
+        }
     }
 
     $scope.updateNews = function() {
@@ -271,6 +276,37 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
                     Gw2Service.getTransactionHistoryForSells(apikey).then(processTransactionData(account, "sell"));
                 }
             });
+
+            setTimeout(function() {
+                var sorted = $scope.tpTransactions.sort($scope.sortTransactions);
+
+                var currentFirstItem = sorted.length > 0 ? sorted[0] : null;
+                var lastItem = $localStorage.lastItem;
+
+                if(!lastItem) {
+                    $localStorage.lastItem = first;
+                    return;
+                }
+
+                if(!currentFirstItem) {
+                    return;
+                }
+
+                var currentFirstItemDate = new Date(currentFirstItem.purchased).getTime();
+                var lastItemDate = new Date(lastItem.purchased).getTime();
+
+                // if the current first item trade date lies behind the last cached item, it's new
+                if(currentFirstItemDate > lastItemDate) {
+                    juicy.log(currentFirstItem);
+
+                    if($scope.currentTab != 2) {
+                        $scope.newTradesFound = true;
+                        $scope.$apply();
+                    }
+
+                    $localStorage.lastItem = currentFirstItem;
+                }
+            }, 2000);
         }
     };
 
