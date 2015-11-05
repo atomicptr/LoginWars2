@@ -153,7 +153,7 @@
                                 <option value="fr" ng-selected="settings.language == 'fr'">Français</option>
                                 <option value="es" ng-selected="settings.language == 'es'">Español</option>
                             </select> <b>{{translate("LANGUAGE_TITLE")}}</b> - {{translate("LANGUAGE_TEXT")}}<br/>
-                            <b>{{translate("GW2_PATH")}}</b> - <i>{{gw2Path}}</i> <span class="reset-link" ng-click="resetGw2Path()">({{translate("PATH_RESET")}})</span>
+                            <b>{{translate("GW2_PATH")}}</b> - <i>{{gw2Path}}</i> <span class="reset-link" ng-click="resetGw2Path()">({{translate("PATH_RESET")}})</span> <span class="reset-link" ng-click="selectCustomGw2Path()">({{translate("PATH_CUSTOM")}})</span>
 
                             <div class="dialog-button-container">
                                 <button type="button" ng-click="startClassicLauncher()" class="btn left"><span>{{translate("CLASSIC_LAUNCHER")}}</span></button>

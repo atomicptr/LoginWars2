@@ -192,9 +192,7 @@ ipc.on("gw2-find-path", function(event, knownPath) {
             }
         }
 
-        // TODO check if found path if yes do stuff if not more stuff
         if(!foundPath) {
-            // Not at the default location... user needs to tell us him/herself where it is...
             Dialog.showMessageBox(win, {
                 type: "info",
                 title: packageJson.name + ": Select " + values.executableName,
@@ -202,22 +200,39 @@ ipc.on("gw2-find-path", function(event, knownPath) {
                 message: packageJson.name + " couldn't find your Guild Wars 2 executable (" + values.executableName + "). Please select it now!"
             });
 
-            path = Dialog.showOpenDialog({
-                title: packageJson.name + ": Select " + values.executableName,
-                defaultPath: values.defaultSearchPath,
-                properties: ["openFile"],
-                filters: [
-                    {
-                        name: values.typeName,
-                        extensions: [values.typeExtension]
-                    }
-                ]
-            });
-
-            console.log("selected path: " + path);
-            foundPath = path;
+            selectPath(event);
+            return;
         }
 
         event.sender.send("gw2-find-path-reply", foundPath);
     });
 });
+
+ipc.on("gw2-select-path", function(event) {
+    selectPath(event);
+});
+
+function selectPath(event, callback) {
+    var values = osValues[os.current];
+
+    var path = Dialog.showOpenDialog({
+        title: packageJson.name + ": Select " + values.executableName,
+        defaultPath: values.defaultSearchPath,
+        properties: ["openFile"],
+        filters: [
+            {
+                name: values.typeName,
+                extensions: [values.typeExtension]
+            }
+        ]
+    });
+
+    if(!path) {
+        console.log("User canceled selection...");
+        return;
+    }
+
+    console.log("selected path: " + path[0]);
+    event.sender.send("gw2-selected-path", path[0]);
+    event.sender.send("gw2-find-path-reply", path[0]);
+}

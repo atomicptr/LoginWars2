@@ -392,6 +392,18 @@ app.controller("ActionsController", function($scope, $rootScope, $localStorage, 
             $scope.$apply();
         }, 500);
     }
+
+    $scope.selectCustomGw2Path = function() {
+        juicy.log("Select custom gw2 exe path...");
+
+        ipc.on("gw2-selected-path", function(path) {
+            console.log("ASDF " + path);
+            $scope.gw2Path = path;
+            $scope.$apply();
+        });
+
+        ipc.send("gw2-select-path");
+    }
 });
 
 app.controller("EncryptionController", function($scope, $localStorage, $sessionStorage) {
