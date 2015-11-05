@@ -52,7 +52,7 @@ app.controller("WindowController", function($scope, $rootScope, $localStorage, F
             params = ciderParams.concat(params);
         }
 
-        var game = spawn($scope.executable(), params);
+        var game = spawn($rootScope.executable(), params);
 
         game.on("exit", function(code, signal) {
             $scope.loadingDialog.close();
@@ -62,7 +62,7 @@ app.controller("WindowController", function($scope, $rootScope, $localStorage, F
     $scope.startClassicLauncher = function() {
         $scope.loadingDialog.showModal();
 
-        var game = spawn($scope.executable());
+        var game = spawn($rootScope.executable());
 
         game.on("exit", function(code, signal) {
             $scope.loadingDialog.close();
@@ -110,7 +110,7 @@ app.controller("WindowController", function($scope, $rootScope, $localStorage, F
 
         launchParams = launchParams.concat(parameters);
 
-        var launch = "\"" + $scope.executable() + "\" " + launchParams.join(" ");
+        var launch = "\"" + $rootScope.executable() + "\" " + launchParams.join(" ");
 
         $scope.gameRunning = true;
         $scope.loadingDialog.showModal();

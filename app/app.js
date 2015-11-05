@@ -3,6 +3,7 @@ var BrowserWindow = require("browser-window");
 var Dialog = require("dialog");
 
 var quirl = require("./vendor/quirl.js").init();
+var Logger = require("./vendor/juicy-log.js");
 
 var fs = require("fs");
 var spawn = require("child_process").spawn;
@@ -48,6 +49,34 @@ var os = {
     is64: process.arch == "x64"
 };
 
+var juicy = new Logger();
+
+// log to console
+juicy.add(function(type, message, time) {
+    var pad = function(num) {
+        return num < 10 ? "0" + num : num;
+    }
+
+    var messageToPrint = "[" + pad(time.getHours()) + ":" + pad(time.getMinutes()) + "] " + message;
+
+    switch(type) {
+        case Logger.type.WARNING: console.warn(messageToPrint); break;
+        case Logger.type.ERROR: console.error(messageToPrint); break;
+        default: console.log(messageToPrint); break;
+    }
+});
+
+// log to file
+juicy.add(function(type, message, time) {
+    var appdata = process.env["appdata"];
+
+    fs.appendFile(path.resolve(appdata, "LoginWars2", "LoginWars2.main.log"), "[" + time.getTime() + "] " + message + "\r\n", function(err) {
+        if(err) {
+            throw err;
+        }
+    });
+});
+
 function runSquirrel(args, callback) {
     var updateDotExe = path.resolve(process.execPath, "..", "..", "Update.exe");
 
@@ -56,16 +85,16 @@ function runSquirrel(args, callback) {
             var update = spawn(updateDotExe, args);
 
             update.stdout.on("data", function(data) {
-                console.log("Squirrel [" + args.join(",") + "]: " + data.toString());
+                juicy.log("Squirrel [" + args.join(",") + "]: " + data.toString());
             });
 
             update.stderr.on("data", function(data) {
-                console.error("Squirrel Error [" + args.join(",") + "]: " + data.toString());
+                juicy.error("Squirrel Error [" + args.join(",") + "]: " + data.toString());
             });
 
             update.on("close", callback);
         } else {
-            console.warn("Update.exe not found, assuming this is a development or portable build. Updating won't work with this!");
+            juicy.warn("Update.exe not found, assuming this is a development or portable build. Updating won't work with this!");
         }
     });
 }
@@ -126,10 +155,10 @@ app.on("ready", function() {
     win.webContents.on("did-finish-load", function() {
         win.setTitle(app.getName());
 
-        console.log("App finished loading, searching for updates...");
+        juicy.log("App finished loading, searching for updates...");
 
         checkForUpdate(function() {
-            console.log("Done checking for updates.");
+            juicy.log("Done checking for updates.");
         });
     });
 
@@ -154,7 +183,7 @@ ipc.on("gw2-find-path", function(event, knownPath) {
 
     fs.exists(knownPath, function(knownPathStillValid) {
         if(knownPathStillValid) {
-            console.log("known path: " + knownPath + " is valid");
+            juicy.log("known path: " + knownPath + " is valid");
             event.sender.send("gw2-find-path-reply", knownPath);
 
             return;
@@ -174,19 +203,19 @@ ipc.on("gw2-find-path", function(event, knownPath) {
             if(exists) {
                 // is 64bit os and has an 64bit path
                 if(os.is64 && executable.path64 != undefined) {
-                    console.log("64bit OS found, check if the user has a 64bit client installed");
+                    juicy.log("64bit OS found, check if the user has a 64bit client installed");
 
                     var exists64bitPath = fs.existsSync(executable.path64)
 
                     if(exists64bitPath) {
-                        console.log("64bit executable found at default location: " + executable.path64);
+                        juicy.log("64bit executable found at default location: " + executable.path64);
                         foundPath = executable.path64;
                         break;
                     }
                 }
 
                 // either os is not 64bit or no 64bit client path known, use 32bit client instead
-                console.log("32bit executable found at default location: " + executable.path);
+                juicy.log("32bit executable found at default location: " + executable.path);
                 foundPath = executable.path;
                 break;
             }
@@ -228,11 +257,11 @@ function selectPath(event, callback) {
     });
 
     if(!path) {
-        console.log("User canceled selection...");
+        juicy.log("User canceled selection...");
         return;
     }
 
-    console.log("selected path: " + path[0]);
+    juicy.log("selected path: " + path[0]);
     event.sender.send("gw2-selected-path", path[0]);
     event.sender.send("gw2-find-path-reply", path[0]);
 }
