@@ -215,7 +215,13 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
 
                 var data = res.data;
 
+                account.account_id = data.id;
                 account.name = data.name;
+                account.world = data.world;
+                account.guilds = data.guilds;
+
+                // The first character in the world id represents the location 1 = NA, 2 = EU
+                account.location = ("" + account.world)[0] == "1" ? "na" : "eu";
 
                 Gw2Service.getTokenInfo(apikey).then(function(res) {
                     var data = res.data;
