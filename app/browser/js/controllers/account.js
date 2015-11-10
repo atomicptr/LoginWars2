@@ -220,8 +220,18 @@ app.controller("AccountsController", function($scope, $rootScope, $localStorage,
                 account.world = data.world;
                 account.guilds = data.guilds;
 
-                // The first character in the world id represents the location 1 = NA, 2 = EU
+                // The first digit in the world id represents the location 1 = NA, 2 = EU
                 account.location = ("" + account.world)[0] == "1" ? "na" : "eu";
+
+                // determine the language of your world
+                if(account.location == "na") {
+                    account.worldlang = "en";
+                } else {
+                    // second digit in the world id seems to represent language 0 = EN, 1 = FR, 2 = DE, 3 = SP
+                    var langid = ("" + account.world)[1];
+
+                    account.worldlang = langid == 1 ? "fr" : langid == 2 ? "de" : langid == 3 ? "es" : "en";
+                }
 
                 Gw2Service.getTokenInfo(apikey).then(function(res) {
                     var data = res.data;
