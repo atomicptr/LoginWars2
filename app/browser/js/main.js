@@ -35,7 +35,7 @@ app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
 
     // new app version found, lets me set some new stuff
     if(!lastVersion || lastVersion != $rootScope.appVersion) {
-        localStorage.removeItem("logs")
+        localStorage.removeItem("logs");
 
         // set lastVersion to current version
         $localStorage.lastVersion = $rootScope.appVersion;
