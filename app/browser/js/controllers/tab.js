@@ -284,7 +284,7 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
                 var lastItem = $localStorage.lastItem;
 
                 if(!lastItem) {
-                    $localStorage.lastItem = first;
+                    $localStorage.lastItem = currentFirstItem;
                     return;
                 }
 
