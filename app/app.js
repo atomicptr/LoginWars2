@@ -141,9 +141,9 @@ app.on("window-all-closed", function() {
     app.quit();
 });
 
-app.on("ready", function() {
-    app.setAppUserModelId("de.kasoki.LoginWars2");
+app.setAppUserModelId("com.squirrel.LoginWars2.LoginWars2");
 
+app.on("ready", function() {
     win = new BrowserWindow({
         width: 1024,
         height: 600,
