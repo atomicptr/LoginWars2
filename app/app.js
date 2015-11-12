@@ -142,6 +142,8 @@ app.on("window-all-closed", function() {
 });
 
 app.on("ready", function() {
+    app.setAppUserModelId("de.kasoki.LoginWars2");
+
     win = new BrowserWindow({
         width: 1024,
         height: 600,
