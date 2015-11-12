@@ -1,3 +1,4 @@
+var Logger = require("../vendor/juicy-log.js");
 var juicy = new Logger();
 
 // log to console
