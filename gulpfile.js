@@ -72,6 +72,6 @@ gulp.task("build-installer", [], function(done) {
         version: configs.APP_VERSION,
         iconUrl: configs.ICON_URL_PNG,
         setupIcon: path.resolve(__dirname, "app", "icons", "icon.ico"),
-        loadingGif: path.resolve(__dirname, "app", "icons", "loading.gif")
+        loadingGif: path.resolve(__dirname, "app", "icons", "loading.png")
     });
 });
