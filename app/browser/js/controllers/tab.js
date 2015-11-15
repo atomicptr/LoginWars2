@@ -220,7 +220,23 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
             $localStorage.itemCache[itemId].cacheDate = new Date();
             juicy.log("Added " + res.data.name + " to item cache.");
         });
-    }
+    };
+
+    $scope.accountName = function(accountMail) {
+        for(var i = 0; i < $scope.accounts.length; i++) {
+            var account = $scope.accounts[i];
+
+            if(account.email == accountMail) {
+                if($scope.configs().presentationMode) {
+                    return account.name.split(".")[0] + ".1337";
+                }
+
+                return account.name;
+            }
+        }
+
+        return "Snaff";
+    };
 
     $scope.updateTradingPost = function() {
         if($scope.canUseTradingPost()) {
