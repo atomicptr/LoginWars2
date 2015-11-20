@@ -1,10 +1,10 @@
 {
   "name": "LoginWars2",
   "dependencies": {
-    "gulp": "^3.9.0",
-    "electron-packager": "^5.0.2",
-    "gulp-less": "^3.0.3",
-    "gulp-run-electron": "^1.2.1",
-    "electron-windows-installer": "^1.1.0"
+    "gulp": "*",
+    "electron-packager": "*",
+    "gulp-less": "*",
+    "gulp-run-electron": "*",
+    "electron-windows-installer": "*"
   }
 }
