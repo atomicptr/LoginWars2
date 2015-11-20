@@ -1,7 +1,5 @@
 environment:
     nodejs_version: "0.12"
-    virustotal_apikey:
-        secure: hvKv/Iat286vN6iH88eh1yesAgbq7XTXR+3/P37Jdn8EzUzmI3QIOWgsDi/80neS9vAmDf8UIWjSWUqBGqHn/I39it4p3Vaj+dhGN/mhaAU=
 
 install:
     - ps: Install-Product node $env:nodejs_version
@@ -14,7 +12,6 @@ build_script: gulp build
 after_build:
     - gulp build-installer
     - 7z a -r LoginWars2.zip %APPVEYOR_BUILD_FOLDER%\build\LoginWars2-win32-x64
-    - ps: curl -fsS -X POST "https://www.virustotal.com/vtapi/v2/file/scan" --form apikey=$env:virustotal_apikey --form file=LoginWars2Setup.exe
 
 artifacts:
     - path: installer/*.nupkg
