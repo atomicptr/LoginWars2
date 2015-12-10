@@ -49,6 +49,10 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
     }
 
     $scope.scrollToOpenDailySection = function() {
+        if($scope.openedDailySection == -1) {
+            return;
+        }
+
         var type = $scope.openedDailySection == 0 ? "pve" : $scope.openedDailySection == 1 ? "pvp" : $scope.openedDailySection == 2 ? "wvw" : "fractals";
 
         setTimeout(function() {
@@ -99,6 +103,7 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
         }
 
         $localStorage.openedDailySection = $scope.openedDailySection;
+        $scope.scrollToOpenDailySection();
     };
 
     $scope.updateDailies = function() {

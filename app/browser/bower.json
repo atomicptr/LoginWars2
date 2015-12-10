@@ -2,7 +2,7 @@
   "name": "LoginWars2",
   "dependencies": {
     "font-awesome": "~4.4.0",
-    "angular": "~1.4.6",
+    "angular": "~1.4.8",
     "ngstorage": "~0.3.7",
     "cryptojslib": "~3.1.2",
     "konami.js": "~1.0.1"
