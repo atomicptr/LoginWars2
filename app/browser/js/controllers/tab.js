@@ -23,6 +23,10 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
         $localStorage.dailyChecksum = "coming soon...";
     }
 
+    if(!$localStorage.dailyCache) {
+        $localStorage.dailyCache = {};
+    }
+
     $scope.tpTransactions = [];
 
     if($localStorage.tpTransactions) {
@@ -58,15 +62,52 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
         });
     };
 
+    $scope.dailyCache = function(dailyId) {
+        if(!$localStorage.dailyCache[dailyId]) {
+            return {
+                name: "...",
+                notCached: true
+            };
+        }
+
+        return $localStorage.dailyCache[dailyId];
+    }
+
     $scope.updateDailies = function() {
+        var dailies = {};
+
+        var ids = [];
+
+        var cacheDaily = function(daily) {
+            ids.push(daily.id);
+
+            var cacheExists = $scope.dailyCache(daily.id).notCached == undefined;
+            var dailyCacheExpired = true;
+
+            if(cacheExists) {
+                var dailyCacheExpireDate = new Date();
+                dailyCacheExpireDate.setDate(new Date($scope.dailyCache(daily.id).cacheDate).getDate() + 7);
+
+                var now = new Date();
+
+                dailyCacheExpired = now > dailyCacheExpireDate;
+            }
+
+            if(!cacheExists || dailyCacheExpired) {
+                Gw2Service.getAchievement(daily.id, $scope.configs().language).then(function(res) {
+                    res.data.shortname = $scope.shortenDailyName(res.data.name);
+
+                    res.data.cacheDate = new Date();
+
+                    $localStorage.dailyCache[daily.id] = res.data;
+
+                    juicy.log("Cached Achievement: " + res.data.name + " (" + res.data.id + ")");
+                });
+            }
+        }
+
         Gw2Service.getDailies().then(function(res) {
-            var data = res.data;
-
-            var dailies = {};
-
-            var ids = [];
-
-            // only get the for 80 achievements for now.
+            // only get the for 80 achievements.
             dailies.pve = res.data.pve.filter(function(item) {
                 return item.level.max == 80;
             });
@@ -74,40 +115,56 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
             dailies.pvp = res.data.pvp;
             dailies.wvw = res.data.wvw;
 
-            var getDailyData = function(daily) {
-                ids.push(daily.id);
+            dailies.pve.forEach(cacheDaily);
+            dailies.pvp.forEach(cacheDaily);
+            dailies.wvw.forEach(cacheDaily);
 
-                Gw2Service.getAchievement(daily.id, $scope.configs().language).then(function(res) {
-                    res.data.shortname = $scope.shortenDailyName(res.data.name);
-
-                    daily.data = res.data;
-                });
-            }
-
-            dailies.pve.forEach(getDailyData);
-            dailies.pvp.forEach(getDailyData);
-            dailies.wvw.forEach(getDailyData);
-
-            setTimeout(function() {
-                $scope.dailies = dailies;
-                $localStorage.dailies = $scope.dailies;
-
-                ids.sort(function(a, b) {
-                    return a - b;
+            Gw2Service.getTomrrowsDailies().then(function(res) {
+                // only get the for 80 achievements.
+                dailies.pve_tomrrow = res.data.pve.filter(function(item) {
+                    return item.level.max == 80;
                 });
 
-                var dailyChecksum = CryptoJS.MD5(ids.join("-")).toString(CryptoJS.enc.Hex);
+                dailies.pvp_tomrrow = res.data.pvp;
+                dailies.wvw_tomrrow = res.data.wvw;
 
-                if(dailyChecksum != $localStorage.dailyChecksum) {
-                    juicy.log("new daily data found, reset the 'done' values");
+                dailies.pve_tomrrow.forEach(cacheDaily);
+                dailies.pvp_tomrrow.forEach(cacheDaily);
+                dailies.wvw_tomrrow.forEach(cacheDaily);
 
-                    // found different dailies, reset the "done" values
-                    $scope.dailyDone = {};
-                    $localStorage.dailyDone = {};
+                Gw2Service.getDailyFractals().then(function(res) {
+                    dailies.fractals = res.data.achievements;
 
-                    $localStorage.dailyChecksum = dailyChecksum;
-                }
-            }, 300);
+                    dailies.fractals.forEach(function(achievementId) {
+                        var daily = {
+                            id: achievementId
+                        };
+
+                        cacheDaily(daily);
+                    });
+
+                    setTimeout(function() {
+                        $scope.dailies = dailies;
+                        $localStorage.dailies = $scope.dailies;
+
+                        ids.sort(function(a, b) {
+                            return a - b;
+                        });
+
+                        var dailyChecksum = CryptoJS.MD5(ids.join("-")).toString(CryptoJS.enc.Hex);
+
+                        if(dailyChecksum != $localStorage.dailyChecksum) {
+                            juicy.log("new daily data found, reset the 'done' values");
+
+                            // found different dailies, reset the "done" values
+                            $scope.dailyDone = {};
+                            $localStorage.dailyDone = {};
+
+                            $localStorage.dailyChecksum = dailyChecksum;
+                        }
+                    }, 300);
+                })
+            });
         });
     };
 

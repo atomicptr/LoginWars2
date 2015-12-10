@@ -58,6 +58,14 @@ app.factory("Gw2Service", function($http) {
             return $http.get("https://api.guildwars2.com/v2/achievements/daily");
         },
 
+        getTomrrowsDailies() {
+            return $http.get("https://api.guildwars2.com/v2/achievements/daily/tomorrow");
+        },
+
+        getDailyFractals() {
+            return $http.get("https://api.guildwars2.com/v2/achievements/categories/88");
+        },
+
         getAchievement(id, lang) {
             if(lang == "undefined") {
                 lang = "en";
