@@ -58,7 +58,7 @@ app.factory("Gw2Service", function($http) {
             return $http.get("https://api.guildwars2.com/v2/achievements/daily");
         },
 
-        getTomrrowsDailies() {
+        getTomorrowsDailies() {
             return $http.get("https://api.guildwars2.com/v2/achievements/daily/tomorrow");
         },
 

@@ -63,31 +63,10 @@ translations.en.MASTER_PASSWORD_CONFIRM = "Confirm your master password";
 translations.en.MASTER_PASSWORD_ENTER_TO_DECRYPT = "Please enter your master password to decrypt your account data.";
 translations.en.MASTER_PASSWORD_ENTER = "Enter your master password";
 translations.en.ABOUT_LOGIN_WARS_2 = "Login Wars 2 is open source software developed and maintained primary by";
-translations.en.PVE_DAILIES = "PvE Dailies";
-translations.en.PVP_DAILIES = "PvP Dailies";
-translations.en.WVW_DAILIES = "WvW Dailies";
-translations.en.DAILY_SHORTCUTS = [
-    {
-        word: "Daily",
-        short: ""
-    },
-    {
-        word: "PvP",
-        short: ""
-    },
-    {
-        word: "WvW",
-        short: ""
-    },
-    {
-        word: "Event Completer",
-        short: "Events"
-    },
-    {
-        word: "Necromancer",
-        short: "Necro"
-    }
-];
+translations.en.PVE_DAILIES = "Daily PvE";
+translations.en.PVP_DAILIES = "Daily PvP";
+translations.en.WVW_DAILIES = "Daily WvW";
+translations.en.FRACTALS_DAILIES = "Daily Fractals of the Mists";
 translations.en.MASTER_PASSWORD_WRONG = "Error: Wrong master password!";
 translations.en.PASSWORD_DONT_MATCH = "Error: Master password doesn't match!";
 translations.en.GW2_PATH = "Executable Path";
@@ -160,48 +139,7 @@ translations.de.ABOUT_LOGIN_WARS_2 = "Login Wars 2 ist offene Software primär e
 translations.de.PVE_DAILIES = "Tägliche PvE Erfolge";
 translations.de.PVP_DAILIES = "Tägliche PvP Erfolge";
 translations.de.WVW_DAILIES = "Tägliche WvW Erfolge";
-translations.de.DAILY_SHORTCUTS = [
-    {
-        word: "Täglicher ",
-        short: ""
-    },
-    {
-        word: "Tägliche ",
-        short: ""
-    },
-    {
-        word: "Tägliche-",
-        short: ""
-    },
-    {
-        word: "PvP-",
-        short: ""
-    },
-    {
-        word: "WvW-",
-        short: ""
-    },
-    {
-        word: "Event-Koryphäe der",
-        short: "Events"
-    },
-    {
-        word: "Event-Koryphäe des",
-        short: "Events"
-    },
-    {
-        word: "Event-Koryphäe von",
-        short: "Events"
-    },
-    {
-        word: "Nekromant",
-        short: "Nekro"
-    },
-    {
-        word: "Waldläufer",
-        short: "Waldi"
-    }
-];
+translations.en.FRACTALS_DAILIES = "Tägliche Fraktale der Nebel Erfolge";
 translations.de.MASTER_PASSWORD_WRONG = "Fehler: Falscher Schlüssel angegeben!";
 translations.de.PASSWORD_DONT_MATCH = "Fehler: Die Schlüssel unterscheiden sich!";
 translations.de.GW2_PATH = "Programmpfad";
@@ -213,8 +151,6 @@ translations.fr = {};
 translations.fr.FEED_URL = "https://www.guildwars2.com/fr/feed/";
 translations.fr.READ_MORE = "Lire la suite";
 translations.fr.READ_MORE_REMOVE_TEXT = "Lire la suite";
-
-//translations.fr.DAILY_SHORTCUTS: It's long but I can't see a system here to remove some words :(
 
 // spanish translations
 translations.es = {};

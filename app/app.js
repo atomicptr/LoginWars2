@@ -143,6 +143,8 @@ app.on("window-all-closed", function() {
 
 app.setAppUserModelId("com.squirrel.LoginWars2.LoginWars2");
 
+app.commandLine.appendSwitch('remote-debugging-port', '8888');
+
 app.on("ready", function() {
     win = new BrowserWindow({
         width: 1024,

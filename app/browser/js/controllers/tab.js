@@ -11,6 +11,8 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
     $scope.dailies = {};
     $scope.dailyDone = {};
 
+    $scope.openedDailySection = $localStorage.openedDailySection ? $localStorage.openedDailySection : 0;
+
     if($localStorage.dailies) {
         $scope.dailies = $localStorage.dailies;
     }
@@ -37,9 +39,25 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
         $scope.currentTab = num;
         $localStorage.lastUsedTab = num;
 
+        if(num == 1) {
+            $scope.scrollToOpenDailySection();
+        }
+
         if(num == 2) {
             $scope.newTradesFound = false;
         }
+    }
+
+    $scope.scrollToOpenDailySection = function() {
+        var type = $scope.openedDailySection == 0 ? "pve" : $scope.openedDailySection == 1 ? "pvp" : $scope.openedDailySection == 2 ? "wvw" : "fractals";
+
+        setTimeout(function() {
+            document.querySelector(".daily-" + type).scrollIntoView(false);
+        }, 50);
+    }
+
+    if($scope.currentTab == 1) {
+        $scope.scrollToOpenDailySection();
     }
 
     $scope.updateNews = function() {
@@ -73,6 +91,16 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
         return $localStorage.dailyCache[dailyId];
     }
 
+    $scope.toggleDailySection = function(index) {
+        if($scope.openedDailySection == index) {
+            $scope.openedDailySection = -1;
+        } else {
+            $scope.openedDailySection = index;
+        }
+
+        $localStorage.openedDailySection = $scope.openedDailySection;
+    };
+
     $scope.updateDailies = function() {
         var dailies = {};
 
@@ -95,8 +123,6 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
 
             if(!cacheExists || dailyCacheExpired) {
                 Gw2Service.getAchievement(daily.id, $scope.configs().language).then(function(res) {
-                    res.data.shortname = $scope.shortenDailyName(res.data.name);
-
                     res.data.cacheDate = new Date();
 
                     $localStorage.dailyCache[daily.id] = res.data;
@@ -119,29 +145,30 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
             dailies.pvp.forEach(cacheDaily);
             dailies.wvw.forEach(cacheDaily);
 
-            Gw2Service.getTomrrowsDailies().then(function(res) {
+            Gw2Service.getTomorrowsDailies().then(function(res) {
                 // only get the for 80 achievements.
-                dailies.pve_tomrrow = res.data.pve.filter(function(item) {
+                dailies.pve_tomorrow = res.data.pve.filter(function(item) {
                     return item.level.max == 80;
                 });
 
-                dailies.pvp_tomrrow = res.data.pvp;
-                dailies.wvw_tomrrow = res.data.wvw;
+                dailies.pvp_tomorrow = res.data.pvp;
+                dailies.wvw_tomorrow = res.data.wvw;
 
-                dailies.pve_tomrrow.forEach(cacheDaily);
-                dailies.pvp_tomrrow.forEach(cacheDaily);
-                dailies.wvw_tomrrow.forEach(cacheDaily);
+                dailies.pve_tomorrow.forEach(cacheDaily);
+                dailies.pvp_tomorrow.forEach(cacheDaily);
+                dailies.wvw_tomorrow.forEach(cacheDaily);
 
                 Gw2Service.getDailyFractals().then(function(res) {
-                    dailies.fractals = res.data.achievements;
+                    dailies.fractals = [];
 
-                    dailies.fractals.forEach(function(achievementId) {
+                    res.data.achievements.forEach(function(achievementId) {
                         var daily = {
                             id: achievementId
                         };
 
+                        dailies.fractals.push(daily);
                         cacheDaily(daily);
-                    });
+                    })
 
                     setTimeout(function() {
                         $scope.dailies = dailies;
@@ -180,20 +207,6 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
 
     $scope.isDailyDone = function(id) {
         return $scope.dailyDone[id] ? $scope.dailyDone[id] : false;
-    };
-
-    $scope.shortenDailyName = function(name) {
-        var shortcuts = $scope.translate("DAILY_SHORTCUTS");
-
-        var newname = name;
-
-        for(var i = 0; i < shortcuts.length; i++) {
-            var shortcut = shortcuts[i];
-
-            newname = newname.replace(shortcut.word, shortcut.short);
-        }
-
-        return newname;
     };
 
     $scope.canUseTradingPost = function() {

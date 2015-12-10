@@ -21,27 +21,23 @@ tab-area {
 }
 
 .dailies {
-    display: flex;
     font-size: 14px;
+    overflow-y: auto;
+
+    height: 150px;
+    max-height: 130px;
 }
 
-.dailies h2 {
-    .dailies;
+.daily-title {
+    font-size: 16px;
+    margin: 0px;
+    padding: 0px;
 
-    margin-bottom: 0px;
+    border-bottom: 1px solid #EEE;
 }
 
 .daily-container {
-    display: inline-block;
 
-    flex-grow: 1;
-}
-
-.daily {
-    display: block;
-    word-break: normal;
-
-    vertical-align: top;
 }
 
 @opacity: 0.6;
@@ -74,6 +70,52 @@ tab-area {
             url("../assets/daily/wvw.png")
             no-repeat;
     background-position: center bottom;
+}
+
+.daily-fractals {
+    background:
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, @opacity) 0%,
+            rgba(255, 255, 255, @opacity) 100%),
+            url("../assets/daily/fractals.png")
+            no-repeat;
+    background-position: center bottom;
+}
+
+.daily-data {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.daily-data.ng-enter, .daily-data.ng-leave {
+    transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.daily-data.ng-enter,
+.daily-data.ng-leave.ng-leave-active {
+    max-height: 0;
+}
+
+.daily-data.ng-leave,
+.daily-data.ng-enter.ng-enter-active {
+    overflow-y: hidden;
+	max-height: 500px; /* approximate max height */
+}
+
+.daily-data-title {
+    font-size: 13px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.daily-data-container {
+}
+
+.daily {
+    display: block;
 }
 
 .strike {

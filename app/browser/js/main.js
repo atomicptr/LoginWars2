@@ -1,4 +1,4 @@
-var app = angular.module("LoginWars2", ["ngStorage"]);
+var app = angular.module("LoginWars2", ["ngStorage", "ngAnimate"]);
 
 var spawn = require("child_process").spawn;
 var exec = require("child_process").exec;

@@ -25,17 +25,52 @@
                     {{feed.news}} <a href="{{feed.link}}">{{translate("READ_MORE")}}...</a>
                 </div>
                 <div class="dailies no-text-selection" ng-if="currentTab == 1">
-                    <div class="daily-container daily-pve">
-                        <h2>{{translate("PVE_DAILIES")}}</h2>
-                        <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pve">- {{dailyCache(daily.id).shortname}}</span>
+                    <div class="daily-container">
+                        <h2 class="daily-title" ng-click="toggleDailySection(0)"><i ng-class="openedDailySection == 0 ? 'fa fa-folder-open' : 'fa fa-folder'"></i> {{translate("PVE_DAILIES")}}</h2>
+                        <div class="daily-data daily-pve" ng-if="openedDailySection == 0">
+                            <div class="daily-data-container">
+                                <h3 class="daily-data-title">Today</h3>
+                                <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pve"> - {{dailyCache(daily.id).name}}
+                            </div>
+                            <div class="daily-data-container">
+                                <h3 class="daily-data-title">Tomorrow</h3>
+                                <span class="daily" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pve_tomorrow"> - {{dailyCache(daily.id).name}}
+                            </div>
+                        </div>
                     </div>
-                    <div class="daily-container daily-pvp">
-                        <h2>{{translate("PVP_DAILIES")}}</h2>
-                        <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pvp">- {{dailyCache(daily.id).shortname}}</span>
+                    <div class="daily-container">
+                        <h2 class="daily-title" ng-click="toggleDailySection(1)"><i ng-class="openedDailySection == 1 ? 'fa fa-folder-open' : 'fa fa-folder'"></i> {{translate("PVP_DAILIES")}}</h2>
+                        <div class="daily-data daily-pvp" ng-if="openedDailySection == 1">
+                            <div class="daily-data-container">
+                                <h3 class="daily-data-title">Today</h3>
+                                <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pvp"> - {{dailyCache(daily.id).name}}
+                            </div>
+                            <div class="daily-data-container">
+                                <h3 class="daily-data-title">Tomorrow</h3>
+                                <span class="daily" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pvp_tomorrow"> - {{dailyCache(daily.id).name}}
+                            </div>
+                        </div>
                     </div>
-                    <div class="daily-container daily-wvw">
-                        <h2>{{translate("WVW_DAILIES")}}</h2>
-                        <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.wvw">- {{dailyCache(daily.id).shortname}}</span>
+                    <div class="daily-container">
+                        <h2 class="daily-title" ng-click="toggleDailySection(2)"><i ng-class="openedDailySection == 2 ? 'fa fa-folder-open' : 'fa fa-folder'"></i> {{translate("WVW_DAILIES")}}</h2>
+                        <div class="daily-data daily-wvw" ng-if="openedDailySection == 2">
+                            <div class="daily-data-container">
+                                <h3 class="daily-data-title">Today</h3>
+                                <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.wvw"> - {{dailyCache(daily.id).name}}
+                            </div>
+                            <div class="daily-data-container">
+                                <h3 class="daily-data-title">Tomorrow</h3>
+                                <span class="daily" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.wvw_tomorrow"> - {{dailyCache(daily.id).name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="daily-container">
+                        <h2 class="daily-title" ng-click="toggleDailySection(3)"><i ng-class="openedDailySection == 3 ? 'fa fa-folder-open' : 'fa fa-folder'"></i> Daily Fractals of the Mists</h2>
+                        <div class="daily-data daily-fractals" ng-if="openedDailySection == 3">
+                            <div class="daily-data-container">
+                                <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.fractals"> - {{dailyCache(daily.id).name}}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="trading-post" ng-if="currentTab == 2">
@@ -287,6 +322,7 @@
 <!-- libraries -->
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/ngstorage/ngStorage.min.js"></script>
+<script src="bower_components/angular-animate/angular-animate.min.js"></script>
 <script src="bower_components/cryptojslib/rollups/aes.js"></script>
 <script src="bower_components/konami.js/konami.min.js"></script>
 
