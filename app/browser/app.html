@@ -30,11 +30,11 @@
                         <div class="daily-data daily-pve" ng-if="openedDailySection == 0">
                             <div class="daily-data-container">
                                 <h3 class="daily-data-title">Today</h3>
-                                <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pve"> - {{dailyCache(daily.id).name}}
+                                <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pve" ng-hide="dailyCache(daily.id).hide"> - {{dailyCache(daily.id).name}}
                             </div>
                             <div class="daily-data-container">
                                 <h3 class="daily-data-title">Tomorrow</h3>
-                                <span class="daily" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pve_tomorrow"> - {{dailyCache(daily.id).name}}
+                                <span class="daily" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pve_tomorrow" ng-hide="dailyCache(daily.id).hide"> - {{dailyCache(daily.id).name}}
                             </div>
                         </div>
                     </div>
@@ -43,11 +43,11 @@
                         <div class="daily-data daily-pvp" ng-if="openedDailySection == 1">
                             <div class="daily-data-container">
                                 <h3 class="daily-data-title">Today</h3>
-                                <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pvp"> - {{dailyCache(daily.id).name}}
+                                <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pvp" ng-hide="dailyCache(daily.id).hide"> - {{dailyCache(daily.id).name}}
                             </div>
                             <div class="daily-data-container">
                                 <h3 class="daily-data-title">Tomorrow</h3>
-                                <span class="daily" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pvp_tomorrow"> - {{dailyCache(daily.id).name}}
+                                <span class="daily" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.pvp_tomorrow" ng-hide="dailyCache(daily.id).hide"> - {{dailyCache(daily.id).name}}
                             </div>
                         </div>
                     </div>
@@ -56,11 +56,11 @@
                         <div class="daily-data daily-wvw" ng-if="openedDailySection == 2">
                             <div class="daily-data-container">
                                 <h3 class="daily-data-title">Today</h3>
-                                <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.wvw"> - {{dailyCache(daily.id).name}}
+                                <span class="daily" ng-dblclick="toggleDaily(daily.id)" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.wvw" ng-hide="dailyCache(daily.id).hide"> - {{dailyCache(daily.id).name}}
                             </div>
                             <div class="daily-data-container">
                                 <h3 class="daily-data-title">Tomorrow</h3>
-                                <span class="daily" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.wvw_tomorrow"> - {{dailyCache(daily.id).name}}
+                                <span class="daily" ng-class="{strike: isDailyDone(daily.id)}" ng-repeat="daily in dailies.wvw_tomorrow" ng-hide="dailyCache(daily.id).hide"> - {{dailyCache(daily.id).name}}
                             </div>
                         </div>
                     </div>

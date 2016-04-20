@@ -133,6 +133,11 @@ app.controller("TabController", function($scope, $rootScope, $localStorage, Feed
                     $localStorage.dailyCache[daily.id] = res.data;
 
                     juicy.log("Cached Achievement: " + res.data.name + " (" + res.data.id + ")");
+                }, function(err) {
+                    if(err && err.status == 404) {
+                        juicy.log("(404) Daily Achievement for url: " + err.config.url + " not found? Okay...");
+                        $localStorage.dailyCache[daily.id] = { hide: true };
+                    }
                 });
             }
         }
