@@ -6,8 +6,5 @@
     "gulp-less": "*",
     "gulp-run-electron": "*",
     "electron-windows-installer": "*"
-  },
-  "engines": {
-    "node": "5.4.0"
   }
 }
