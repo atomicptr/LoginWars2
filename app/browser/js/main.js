@@ -5,7 +5,7 @@ var exec = require("child_process").exec;
 var pathlib = require("path");
 var fs = require("fs");
 
-var ipc = require("ipc");
+var ipc = require("electron").ipcRenderer;
 
 // WARNING: Never change this variable!
 var ENCRYPTION_TEST_STRING = "Bookah!";
@@ -16,11 +16,12 @@ var packageJson = require("../package.json");
 
 app.run(function($rootScope, $localStorage, $sessionStorage, TranslateService) {
     var path = $localStorage.gw2Path;
-
+    console.log(path);
     ipc.send("gw2-find-path", path);
 
-    ipc.on("gw2-find-path-reply", function(path) {
+    ipc.on("gw2-find-path-reply", function(e, path) {
         $localStorage.gw2Path = path;
+
         juicy.log("GW2 executable found at " + path);
     });
 

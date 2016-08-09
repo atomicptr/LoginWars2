@@ -1,6 +1,6 @@
-var app = require("app");
-var BrowserWindow = require("browser-window");
-var Dialog = require("dialog");
+var app = require("electron").app;
+var BrowserWindow = require('electron').BrowserWindow;
+var Dialog = require("electron").dialog;
 
 var quirl = require("./vendor/quirl.js").init();
 var Logger = require("./vendor/juicy-log.js");
@@ -9,7 +9,7 @@ var fs = require("fs");
 var spawn = require("child_process").spawn;
 var path = require("path");
 
-var ipc = require("ipc");
+var ipc = require("electron").ipcMain;
 
 var packageJson = require("./package.json");
 
@@ -154,7 +154,7 @@ app.on("ready", function() {
         icon: __dirname + "/icons/icon.png"
     });
 
-    win.loadUrl("file://" + __dirname + "/browser/app.html");
+    win.loadURL("file://" + __dirname + "/browser/app.html");
 
     win.webContents.on("did-finish-load", function() {
         win.setTitle(app.getName());
@@ -184,6 +184,8 @@ ipc.on("gw2-find-path", function(event, knownPath) {
         // need some path which is def. invalid (SHA-256 of Bookah!)
         knownPath = "./A3AB445C5D0DDB8A833EA7C6E7B2900FAF38A7D326F6C8C4054455879B59236F";
     }
+
+    console.log(knownPath);
 
     fs.exists(knownPath, function(knownPathStillValid) {
         if(knownPathStillValid) {
