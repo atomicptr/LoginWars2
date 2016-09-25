@@ -1,9 +1,12 @@
 {
     "name": "LoginWars2",
     "productName": "LoginWars2",
-    "version": "1.2.0",
-    "electronVersion": "1.3.2",
+    "version": "1.3.0",
+    "electronVersion": "1.4.1",
     "main": "app.js",
     "description": "Login Wars 2",
-    "updateUrl": "http://updates.kasoki.de/app/loginwars2"
+    "githubReleasesApiUrl": "https://api.github.com/repos/atomicptr/LoginWars2/releases/latest",
+    "dependencies": {
+        "request": "^2.75.0"
+    }
 }

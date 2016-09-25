@@ -4,6 +4,7 @@ var Dialog = require("electron").dialog;
 
 var quirl = require("./vendor/quirl.js").init();
 var Logger = require("./vendor/juicy-log.js");
+var request = require("request");
 
 var fs = require("fs");
 var spawn = require("child_process").spawn;
@@ -110,7 +111,30 @@ function removeShortcut(callback) {
 }
 
 function checkForUpdate(callback) {
-    runSquirrel(["--update", packageJson.updateUrl], callback);
+    var requestOptions = {
+        url: packageJson.githubReleasesApiUrl,
+        headers: {
+            "User-Agent": "atomicptr/LoginWars2"
+        }
+    };
+
+    request(requestOptions, function(err, response, body) {
+        if(err) {
+            juicy.error("Could not connect to Github API: ");
+            juicy.error(err);
+            return;
+        }
+
+        var data = JSON.parse(body);
+
+        var updateUrl = "https://github.com/atomicptr/LoginWars2/releases/download/" + data.tag_name + "/";
+
+        juicy.log("Update Url is: " + updateUrl);
+
+        // TODO: maybe throw the info at the render side? who knows
+
+        runSquirrel(["--update", updateUrl], callback);
+    });
 }
 
 quirl.on("install", function() {
