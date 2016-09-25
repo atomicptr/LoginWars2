@@ -6,7 +6,7 @@ install:
     - npm install
     - npm install -g bower
     - npm install -g gulp
-    - npm install --prefix .\app
+    - cd app; npm install; cd ..
     - bower install
 
 build_script: gulp build
