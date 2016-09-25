@@ -6,8 +6,7 @@ install:
     - npm install
     - npm install -g bower
     - npm install -g gulp
-    - ps: echo $APPVEYOR_BUILD_FOLDER
-    - ps: cd $APPVEYOR_BUILD_FOLDER\app; npm install; cd $APPVEYOR_BUILD_FOLDER
+    - ps: cd app; npm install; cd ..
     - bower install
 
 build_script: gulp build
