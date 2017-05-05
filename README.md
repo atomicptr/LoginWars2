@@ -20,7 +20,7 @@ No magic, no botting or any form of "automation". It's just a nicer, more secure
 
 ## FAQ
 
-You can find the [FAQ on the website](http://kasoki.github.io/LoginWars2).
+You can find the [FAQ on the website](http://loginwars2.qr9.de).
 
 ## Powered by
 
